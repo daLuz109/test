@@ -1,0 +1,185 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Parse payload",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Notify Vini in Slack": {
+      "main": [
+        []
+      ]
+    },
+    "Parse payload": {
+      "main": [
+        [
+          {
+            "node": "Fetch tracker for given IMEI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch tracker for given IMEI": {
+      "main": [
+        [
+          {
+            "node": "Set last tracker location",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set last tracker location": {
+      "main": [
+        [
+          {
+            "node": "Notify Vini in Slack",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-07-23T14:31:24.473Z",
+  "id": "FypVa6lRoqg38n7P",
+  "isArchived": false,
+  "meta": null,
+  "name": "[PRODUCTION] LoRa webhook - tw2P89txf1LCNgoJ",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "84f7f8cf-be0b-45c5-8674-9844e212f246",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -64,
+        16
+      ],
+      "id": "5cbea0b5-e9ca-4220-ae03-4ecdfd1f5ae6",
+      "name": "Webhook",
+      "webhookId": "84f7f8cf-be0b-45c5-8674-9844e212f246"
+    },
+    {
+      "parameters": {
+        "select": "user",
+        "user": {
+          "__rl": true,
+          "value": "U0581PDBJES",
+          "mode": "list",
+          "cachedResultName": "spadotto.mobiltracker"
+        },
+        "text": "=LoRa message:\n```\n{{ JSON.stringify($json.body, null, 2) }}\n```\nParsed values:\n```\nLat: {{ $('Parse payload').item.json.latitude }}\nLon: {{ $('Parse payload').item.json.longitude }}\nDate: {{ $('Parse payload').item.json.date.toISOString() }}\n```",
+        "otherOptions": {
+          "includeLinkToWorkflow": false
+        }
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.3,
+      "position": [
+        832,
+        16
+      ],
+      "id": "b681191c-b826-4e14-bc63-41b5b2fe8388",
+      "name": "Notify Vini in Slack",
+      "webhookId": "b9045d4e-53ef-4cfa-b47c-628af6a772a1",
+      "credentials": {
+        "slackApi": {
+          "id": "QMoJh8hcmWWspMvU",
+          "name": "Slack account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "function parseCoordinate(coordinate) {\n  const isNegative = (coordinate & 0x80000000) !== 0;\n  if (isNegative) {\n    coordinate &= 0x7fffffff;\n  }\n  coordinate /= 1e6;\n  if (isNegative) {\n    return -coordinate;\n  }\n  return coordinate;\n}\n\nconst payload = Buffer.from($('Webhook').first().json.body.params.payload, \"base64\");\nconst dateTimeValues = payload.slice(16, 22);\nconst year = 2000 + dateTimeValues[0];\nconst month = dateTimeValues[1];\nconst day = dateTimeValues[2];\nconst hour = dateTimeValues[3];\nconst minute = dateTimeValues[4];\nconst second = dateTimeValues[5];\n\nconst communicationDate = new Date(year, month, day, hour, minute, second);\nconst imei = Buffer.from(payload.slice(3, 8), \"binary\").toString(\"hex\");\n\nconst latitude = parseCoordinate(payload.slice(26, 30).readUInt32BE(0));\nconst longitude = parseCoordinate(payload.slice(30, 34).readUInt32BE(0));\n\nreturn {\n  date: communicationDate,\n  imei: imei,\n  latitude: latitude,\n  longitude: longitude\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        160,
+        16
+      ],
+      "id": "91ac6f08-ad7c-4661-a6cb-2946183a510f",
+      "name": "Parse payload"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT TOP 1 * FROM Mobiltracker.dbo.Trackers WHERE IMEI = '{{ $json.imei }}'"
+      },
+      "type": "n8n-nodes-base.microsoftSql",
+      "typeVersion": 1.1,
+      "position": [
+        384,
+        16
+      ],
+      "id": "685cf870-79f3-4827-baf4-dfdb00e7157b",
+      "name": "Fetch tracker for given IMEI",
+      "credentials": {
+        "microsoftSql": {
+          "id": "q8QnAyDOfZ8HwqL2",
+          "name": "SQLServer account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "set",
+        "key": "=ltl:{{ $json.TrackerId }}",
+        "value": "={\n  \"lastCommunication\": \"{{ $('Parse payload').item.json.date }}\",\n  \"imei\": \"{{ $('Parse payload').item.json.imei }}\"\n}",
+        "keyType": "hash"
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        608,
+        16
+      ],
+      "id": "d126cb4f-34a0-43ee-95f6-2fb978879fe8",
+      "name": "Set last tracker location",
+      "credentials": {
+        "redis": {
+          "id": "x8KuS83oyqKTv9IX",
+          "name": "Redis database 0"
+        }
+      }
+    }
+  ],
+  "owner": "daLuz109",
+  "path": "https://github.com/daLuz109/test",
+  "pinData": {},
+  "repo": "test",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-07-23T14:31:24.473Z",
+      "createdAt": "2025-07-23T14:31:24.473Z",
+      "role": "workflow:owner",
+      "workflowId": "FypVa6lRoqg38n7P",
+      "projectId": "ibRx4KzVa8okoVWI"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2025-08-19T20:22:54.534Z",
+  "versionId": "bd35c652-3b99-4868-8a7f-d1a3f35aacb9"
+}
