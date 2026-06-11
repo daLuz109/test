@@ -1,0 +1,215 @@
+{
+  "active": true,
+  "activeVersion": {
+    "updatedAt": "2026-05-11T20:53:26.932Z",
+    "createdAt": "2026-02-13T15:12:42.460Z",
+    "versionId": "d8931118-e515-4240-a91f-d55ae503201d",
+    "workflowId": "jlLb6Przi1lyPt5o",
+    "nodes": [
+      {
+        "parameters": {
+          "workflowInputs": {
+            "values": [
+              {
+                "name": "evolutionInstanceName"
+              },
+              {
+                "name": "phoneNumber"
+              },
+              {
+                "name": "message"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.executeWorkflowTrigger",
+        "typeVersion": 1.1,
+        "position": [
+          0,
+          -192
+        ],
+        "id": "5575626e-6672-41c0-897f-ffc3c52ac420",
+        "name": "When Executed by Another Workflow"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "={{ `${$env.FABIO_URL}/evolution-api/message/sendText/${$json.evolutionInstanceName}` }}",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpHeaderAuth",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              }
+            ]
+          },
+          "sendBody": true,
+          "bodyParameters": {
+            "parameters": [
+              {
+                "name": "number",
+                "value": "={{ $json.phoneNumber }}"
+              },
+              {
+                "name": "text",
+                "value": "={{ $json.message }}"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.3,
+        "position": [
+          224,
+          -192
+        ],
+        "id": "54cf2c1d-ddad-439c-a345-01b4b9e66ca0",
+        "name": "Send message",
+        "credentials": {
+          "httpHeaderAuth": {
+            "id": "6kDmA09P8PHL5oLh",
+            "name": "Evolution API header"
+          }
+        }
+      }
+    ],
+    "connections": {
+      "When Executed by Another Workflow": {
+        "main": [
+          [
+            {
+              "node": "Send message",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Contato Mobiltracker",
+    "name": "Version d8931118",
+    "description": "",
+    "autosaved": false
+  },
+  "activeVersionId": "d8931118-e515-4240-a91f-d55ae503201d",
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Send message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-09-19T13:43:01.699Z",
+  "id": "jlLb6Przi1lyPt5o",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "WhatsApp message sender",
+  "nodes": [
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "evolutionInstanceName"
+            },
+            {
+              "name": "phoneNumber"
+            },
+            {
+              "name": "message"
+            },
+            {
+              "name": "document"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        -192
+      ],
+      "id": "5575626e-6672-41c0-897f-ffc3c52ac420",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ `${$env.FABIO_URL}/evolution-api/message/sendText/${$json.evolutionInstanceName}` }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "number",
+              "value": "={{ $json.phoneNumber }}"
+            },
+            {
+              "name": "text",
+              "value": "={{ $json.message }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        224,
+        -192
+      ],
+      "id": "54cf2c1d-ddad-439c-a345-01b4b9e66ca0",
+      "name": "Send message",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "6kDmA09P8PHL5oLh",
+          "name": "Evolution API header"
+        }
+      }
+    }
+  ],
+  "owner": "daLuz109",
+  "path": "https://github.com/daLuz109/test",
+  "pinData": {},
+  "repo": "test",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-09-19T13:43:01.699Z",
+      "createdAt": "2025-09-19T13:43:01.699Z",
+      "role": "workflow:owner",
+      "workflowId": "jlLb6Przi1lyPt5o",
+      "projectId": "ibRx4KzVa8okoVWI"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-06-03T20:19:10.215Z",
+  "versionId": "31c8197e-0ff3-415e-af42-65c43126859b"
+}
