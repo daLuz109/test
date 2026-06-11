@@ -1,0 +1,369 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Fetch user sellers",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch user sellers": {
+      "main": [
+        [
+          {
+            "node": "Fetch seller account",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch seller account": {
+      "main": [
+        [
+          {
+            "node": "Route based on domain ID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Route based on domain ID": {
+      "main": [
+        [
+          {
+            "node": "Fetch VanEscola user",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Fetch Partner user",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch VanEscola user": {
+      "main": [
+        [
+          {
+            "node": "Set field to be updated for VanEscola",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set field to be updated for VanEscola": {
+      "main": [
+        [
+          {
+            "node": "Update seller",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Partner user": {
+      "main": [
+        [
+          {
+            "node": "Set field to be updated for Partner",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set field to be updated for Partner": {
+      "main": [
+        [
+          {
+            "node": "Update seller",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-01-08T15:10:02.877Z",
+  "id": "Dk7NM9AXc4nStLOd",
+  "isArchived": false,
+  "isProd": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Fill MTKContract  WhatsAppNumber",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        -16
+      ],
+      "id": "4e201adc-7c17-46b1-b36f-34e18346d052",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT SellerId, SellerAccountId FROM MtkContract.dbo.UserSellers\nWHERE WhatsAppNumber IS NULL"
+      },
+      "type": "n8n-nodes-base.microsoftSql",
+      "typeVersion": 1.1,
+      "position": [
+        224,
+        -16
+      ],
+      "id": "93bd3a7f-6185-43a5-9218-b0d1a4ced77f",
+      "name": "Fetch user sellers",
+      "credentials": {
+        "microsoftSql": {
+          "id": "q8QnAyDOfZ8HwqL2",
+          "name": "SQLServer account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT DomainId, DomainUserId FROM MtkContract.dbo.UserSellerAccounts\nWHERE SellerAccountId = '{{ $json.SellerAccountId }}'"
+      },
+      "type": "n8n-nodes-base.microsoftSql",
+      "typeVersion": 1.1,
+      "position": [
+        448,
+        -16
+      ],
+      "id": "d9c10b94-db3c-4d7c-86e4-41309605558e",
+      "name": "Fetch seller account",
+      "credentials": {
+        "microsoftSql": {
+          "id": "q8QnAyDOfZ8HwqL2",
+          "name": "SQLServer account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.DomainId }}",
+                    "rightValue": "VANESCOLA",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "2ded4306-fa5e-4d2a-bb3d-bdb9203d3e2c"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "VanEscola"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "3ce9d81f-cbfe-47c2-8d6a-432edc8326a6",
+                    "leftValue": "={{ $json.DomainId }}",
+                    "rightValue": "PARTNER",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Partner"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.3,
+      "position": [
+        672,
+        -16
+      ],
+      "id": "10a8e585-8a11-4bda-85c5-a42a80cb41a5",
+      "name": "Route based on domain ID"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT PhoneNumber, WhatsappNumber FROM VanEscola.dbo.UsersVanOwner\nWHERE UserId = '{{ $json.DomainUserId }}'"
+      },
+      "type": "n8n-nodes-base.microsoftSql",
+      "typeVersion": 1.1,
+      "position": [
+        896,
+        -112
+      ],
+      "id": "34345523-f161-4d21-af03-af7057dc746a",
+      "name": "Fetch VanEscola user",
+      "credentials": {
+        "microsoftSql": {
+          "id": "q8QnAyDOfZ8HwqL2",
+          "name": "SQLServer account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "table": "[MtkContract].[dbo].[UserSellers]",
+        "updateKey": "SellerId",
+        "columns": "WhatsAppNumber"
+      },
+      "type": "n8n-nodes-base.microsoftSql",
+      "typeVersion": 1.1,
+      "position": [
+        1344,
+        -16
+      ],
+      "id": "6e7c448d-d8fd-47d3-b1a7-fa71a5993ab2",
+      "name": "Update seller",
+      "credentials": {
+        "microsoftSql": {
+          "id": "q8QnAyDOfZ8HwqL2",
+          "name": "SQLServer account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT PhoneNumber, PhoneNumber2 FROM MobiltrackerPartner.dbo.Users\nWHERE UserId = '{{ $json.DomainUserId }}'"
+      },
+      "type": "n8n-nodes-base.microsoftSql",
+      "typeVersion": 1.1,
+      "position": [
+        896,
+        80
+      ],
+      "id": "ee7f6cec-7273-4b7e-9b2e-8b3502707506",
+      "name": "Fetch Partner user",
+      "credentials": {
+        "microsoftSql": {
+          "id": "q8QnAyDOfZ8HwqL2",
+          "name": "SQLServer account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b0c43b0d-b7aa-47cb-9056-41039d0d6abe",
+              "name": "WhatsAppNumber",
+              "value": "={{ $json.WhatsappNumber ?? $json.PhoneNumber }}",
+              "type": "string"
+            },
+            {
+              "id": "328a790b-988a-49fa-a145-cef9bdcc00c5",
+              "name": "SellerId",
+              "value": "={{ $('Fetch user sellers').item.json.SellerId }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1120,
+        -112
+      ],
+      "id": "6d2d1c0c-dace-4e4d-a93b-82fbbfd9208c",
+      "name": "Set field to be updated for VanEscola"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b0c43b0d-b7aa-47cb-9056-41039d0d6abe",
+              "name": "WhatsAppNumber",
+              "value": "={{ $json.PhoneNumber ?? $json.PhoneNumber2 }}",
+              "type": "string"
+            },
+            {
+              "id": "328a790b-988a-49fa-a145-cef9bdcc00c5",
+              "name": "SellerId",
+              "value": "={{ $('Fetch user sellers').item.json.SellerId }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1120,
+        80
+      ],
+      "id": "f078c40f-5950-416d-993e-e61c9ad82191",
+      "name": "Set field to be updated for Partner"
+    }
+  ],
+  "owner": "daLuz109",
+  "path": "https://github.com/daLuz109/test",
+  "pinData": {},
+  "repo": "test",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-01-08T15:10:02.877Z",
+      "createdAt": "2026-01-08T15:10:02.877Z",
+      "role": "workflow:owner",
+      "workflowId": "Dk7NM9AXc4nStLOd",
+      "projectId": "ibRx4KzVa8okoVWI"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-01-08T15:37:13.458Z",
+  "versionId": "178a1b46-4adb-44cc-ac6b-c940412312f2"
+}
