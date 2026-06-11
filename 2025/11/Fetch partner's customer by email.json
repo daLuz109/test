@@ -1,0 +1,150 @@
+{
+  "active": true,
+  "activeVersion": {
+    "updatedAt": "2025-11-26T17:53:54.609Z",
+    "createdAt": "2025-11-26T17:53:54.609Z",
+    "versionId": "3d8224ad-59f7-4284-a4cb-5bb1ad0e2b61",
+    "workflowId": "obrxjKZdsOr7yOMR",
+    "nodes": [
+      {
+        "parameters": {
+          "workflowInputs": {
+            "values": [
+              {
+                "name": "customerEmail"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.executeWorkflowTrigger",
+        "typeVersion": 1.1,
+        "position": [
+          -608,
+          -16
+        ],
+        "id": "0b73cca2-86e7-4406-9664-8d74a453d738",
+        "name": "When Executed by Another Workflow"
+      },
+      {
+        "parameters": {
+          "operation": "executeQuery",
+          "query": "SELECT [UserId], (FirstName + '' + LastName) as [Name]\n  FROM [Mobiltracker].[dbo].[Users]\n WHERE [UserName] = '{{ $json.customerEmail }}'"
+        },
+        "type": "n8n-nodes-base.microsoftSql",
+        "typeVersion": 1.1,
+        "position": [
+          -416,
+          -16
+        ],
+        "id": "ac8a4739-a41f-4a47-9d30-6d0c81b688b3",
+        "name": "Fetch client tracker",
+        "credentials": {
+          "microsoftSql": {
+            "id": "q8QnAyDOfZ8HwqL2",
+            "name": "SQLServer account"
+          }
+        }
+      }
+    ],
+    "connections": {
+      "When Executed by Another Workflow": {
+        "main": [
+          [
+            {
+              "node": "Fetch client tracker",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Contato Mobiltracker",
+    "name": null,
+    "description": null,
+    "autosaved": false
+  },
+  "activeVersionId": "3d8224ad-59f7-4284-a4cb-5bb1ad0e2b61",
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Fetch client tracker",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-11-25T19:24:01.723Z",
+  "id": "obrxjKZdsOr7yOMR",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Fetch partner's customer by email",
+  "nodes": [
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "customerEmail"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -608,
+        -16
+      ],
+      "id": "0b73cca2-86e7-4406-9664-8d74a453d738",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT [UserId], (FirstName + '' + LastName) as [Name]\n  FROM [Mobiltracker].[dbo].[Users]\n WHERE [UserName] = '{{ $json.customerEmail }}'"
+      },
+      "type": "n8n-nodes-base.microsoftSql",
+      "typeVersion": 1.1,
+      "position": [
+        -416,
+        -16
+      ],
+      "id": "ac8a4739-a41f-4a47-9d30-6d0c81b688b3",
+      "name": "Fetch client tracker",
+      "credentials": {
+        "microsoftSql": {
+          "id": "q8QnAyDOfZ8HwqL2",
+          "name": "SQLServer account"
+        }
+      }
+    }
+  ],
+  "owner": "daLuz109",
+  "path": "https://github.com/daLuz109/test",
+  "pinData": {},
+  "repo": "test",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-11-25T19:24:01.723Z",
+      "createdAt": "2025-11-25T19:24:01.723Z",
+      "role": "workflow:owner",
+      "workflowId": "obrxjKZdsOr7yOMR",
+      "projectId": "ibRx4KzVa8okoVWI"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-11-26T17:53:54.605Z",
+  "versionId": "3d8224ad-59f7-4284-a4cb-5bb1ad0e2b61"
+}
