@@ -1,0 +1,80 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Retrieve VanEscola users",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-09-11T16:21:08.752Z",
+  "id": "cwTOx8YrkZcY8sri",
+  "isArchived": true,
+  "isProd": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "ad623bc0-6b9e-4f05-a281-1a322a7f7b07",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT Users.UserId, Users.IsCanceled, Users.Email, Subscriptions.ReleasedUntilDate\nFROM VanEscola.dbo.Users\n        JOIN VanEscola.dbo.Subscriptions ON Users.UserId = Subscriptions.UserId\nWHERE Subscriptions.IsFreeTrial = 0\n  AND Subscriptions.Period = 1\n  AND Subscriptions.EndDate > GETDATE()\n"
+      },
+      "type": "n8n-nodes-base.microsoftSql",
+      "typeVersion": 1.1,
+      "position": [
+        208,
+        0
+      ],
+      "id": "93363eb0-9466-425b-8db9-e134738e428e",
+      "name": "Retrieve VanEscola users",
+      "credentials": {
+        "microsoftSql": {
+          "id": "q8QnAyDOfZ8HwqL2",
+          "name": "SQLServer account"
+        }
+      }
+    }
+  ],
+  "owner": "daLuz109",
+  "path": "https://github.com/daLuz109/test",
+  "pinData": {},
+  "repo": "test",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-09-11T16:21:08.752Z",
+      "createdAt": "2025-09-11T16:21:08.752Z",
+      "role": "workflow:owner",
+      "workflowId": "cwTOx8YrkZcY8sri",
+      "projectId": "ibRx4KzVa8okoVWI"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-09-11T16:40:01.116Z",
+  "versionId": "0350dd26-ecdc-4d81-8adb-d1b2bb7c7739"
+}
