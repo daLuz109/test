@@ -1,0 +1,330 @@
+{
+  "active": true,
+  "activeVersion": {
+    "updatedAt": "2025-11-27T16:50:56.963Z",
+    "createdAt": "2025-11-27T16:50:56.963Z",
+    "versionId": "b658b927-7e15-40ab-b168-171402b2dd44",
+    "workflowId": "WcKQ6J7wfJkGMROE",
+    "nodes": [
+      {
+        "parameters": {
+          "workflowInputs": {
+            "values": [
+              {
+                "name": "trackerId",
+                "type": "number"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.executeWorkflowTrigger",
+        "typeVersion": 1.1,
+        "position": [
+          0,
+          -56
+        ],
+        "id": "de48a2a3-385f-4410-8dcb-3de1b6e7e2d6",
+        "name": "When Executed by Another Workflow"
+      },
+      {
+        "parameters": {
+          "operation": "executeQuery",
+          "query": "SELECT * FROM Mobiltracker.dbo.Trackers\n  WHERE TrackerId = {{ $json.trackerId }}"
+        },
+        "type": "n8n-nodes-base.microsoftSql",
+        "typeVersion": 1.1,
+        "position": [
+          224,
+          -56
+        ],
+        "id": "26bdf037-adbb-4935-b435-e7d70c18b5f7",
+        "name": "Fetch tracker by ID",
+        "alwaysOutputData": true,
+        "credentials": {
+          "microsoftSql": {
+            "id": "q8QnAyDOfZ8HwqL2",
+            "name": "SQLServer account"
+          }
+        },
+        "onError": "continueErrorOutput"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "693dc1db-3be1-46fa-ad61-8cd10c63f864",
+                "name": "error",
+                "value": "Failed to fetch tracker data. Please make sure you provided a valid tracker ID (bigint).",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          672,
+          -56
+        ],
+        "id": "1807f1f4-5c8f-4425-b14c-fcc1b91e5078",
+        "name": "Set error message"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "c198d5dd-ea3c-4afa-b430-bf3061c19ea0",
+                "leftValue": "={{ $json.isNotEmpty() }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "boolean",
+                  "operation": "true",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          448,
+          -128
+        ],
+        "id": "65306764-2b3c-4d98-8ae6-3c93567fae3c",
+        "name": "Was it successful?"
+      }
+    ],
+    "connections": {
+      "When Executed by Another Workflow": {
+        "main": [
+          [
+            {
+              "node": "Fetch tracker by ID",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Fetch tracker by ID": {
+        "main": [
+          [
+            {
+              "node": "Was it successful?",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Set error message",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Was it successful?": {
+        "main": [
+          [],
+          [
+            {
+              "node": "Set error message",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "system migration",
+    "name": null,
+    "description": null,
+    "autosaved": false
+  },
+  "activeVersionId": "b658b927-7e15-40ab-b168-171402b2dd44",
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Fetch tracker by ID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch tracker by ID": {
+      "main": [
+        [
+          {
+            "node": "Was it successful?",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Set error message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Was it successful?": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Set error message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-09-24T14:40:24.555Z",
+  "id": "WcKQ6J7wfJkGMROE",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Fetch tracker by ID",
+  "nodes": [
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "trackerId",
+              "type": "number"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        -56
+      ],
+      "id": "de48a2a3-385f-4410-8dcb-3de1b6e7e2d6",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT * FROM Mobiltracker.dbo.Trackers\n  WHERE TrackerId = {{ $json.trackerId }}"
+      },
+      "type": "n8n-nodes-base.microsoftSql",
+      "typeVersion": 1.1,
+      "position": [
+        224,
+        -56
+      ],
+      "id": "26bdf037-adbb-4935-b435-e7d70c18b5f7",
+      "name": "Fetch tracker by ID",
+      "alwaysOutputData": true,
+      "credentials": {
+        "microsoftSql": {
+          "id": "q8QnAyDOfZ8HwqL2",
+          "name": "SQLServer account"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "693dc1db-3be1-46fa-ad61-8cd10c63f864",
+              "name": "error",
+              "value": "Failed to fetch tracker data. Please make sure you provided a valid tracker ID (bigint).",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        672,
+        -56
+      ],
+      "id": "1807f1f4-5c8f-4425-b14c-fcc1b91e5078",
+      "name": "Set error message"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "c198d5dd-ea3c-4afa-b430-bf3061c19ea0",
+              "leftValue": "={{ $json.isNotEmpty() }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        448,
+        -128
+      ],
+      "id": "65306764-2b3c-4d98-8ae6-3c93567fae3c",
+      "name": "Was it successful?"
+    }
+  ],
+  "owner": "daLuz109",
+  "path": "https://github.com/daLuz109/test",
+  "pinData": {},
+  "repo": "test",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-09-24T14:40:24.555Z",
+      "createdAt": "2025-09-24T14:40:24.555Z",
+      "role": "workflow:owner",
+      "workflowId": "WcKQ6J7wfJkGMROE",
+      "projectId": "ibRx4KzVa8okoVWI"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-10-09T14:39:38.145Z",
+  "versionId": "b658b927-7e15-40ab-b168-171402b2dd44"
+}
