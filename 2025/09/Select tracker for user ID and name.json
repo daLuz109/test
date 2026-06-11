@@ -1,0 +1,336 @@
+{
+  "active": true,
+  "activeVersion": {
+    "updatedAt": "2025-11-27T16:50:56.963Z",
+    "createdAt": "2025-11-27T16:50:56.963Z",
+    "versionId": "b95e7373-8861-495a-9cb0-5fdbacb4966f",
+    "workflowId": "FLiF92JpXlYrRoZA",
+    "nodes": [
+      {
+        "parameters": {
+          "workflowInputs": {
+            "values": [
+              {
+                "name": "userId"
+              },
+              {
+                "name": "trackerName"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.executeWorkflowTrigger",
+        "typeVersion": 1.1,
+        "position": [
+          0,
+          -88
+        ],
+        "id": "9e40f29c-773e-4693-87a9-65f008d648e8",
+        "name": "When Executed by Another Workflow"
+      },
+      {
+        "parameters": {
+          "operation": "executeQuery",
+          "query": "SELECT * FROM Mobiltracker.dbo.Trackers\n  WHERE UserId = '{{ $json.userId }}'\n    AND Name = '{{ $json.trackerName }}'"
+        },
+        "type": "n8n-nodes-base.microsoftSql",
+        "typeVersion": 1.1,
+        "position": [
+          224,
+          -88
+        ],
+        "id": "4a56304d-50f9-44f3-bff5-4c96602fc557",
+        "name": "Select tracker for user ID and tracker name",
+        "alwaysOutputData": true,
+        "retryOnFail": false,
+        "credentials": {
+          "microsoftSql": {
+            "id": "q8QnAyDOfZ8HwqL2",
+            "name": "SQLServer account"
+          }
+        },
+        "onError": "continueErrorOutput"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "3b50d9ff-7f4c-4969-a4d3-0b1fca7ba37f",
+                "name": "error",
+                "value": "Failed to fetch tracker data. Please make sure you provided a valid user ID (GUID) and tracker name.",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          672,
+          -88
+        ],
+        "id": "acca04ef-eb35-4bfb-a55b-e89f0298ef3b",
+        "name": "Set error message"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "4e3318c5-e54c-4a2c-83a0-3387e33c0f5d",
+                "leftValue": "={{ $json.isNotEmpty() }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "boolean",
+                  "operation": "true",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          448,
+          -160
+        ],
+        "id": "8af00ca2-9a12-4b60-8ad7-138035ed275c",
+        "name": "Was it successful?"
+      }
+    ],
+    "connections": {
+      "When Executed by Another Workflow": {
+        "main": [
+          [
+            {
+              "node": "Select tracker for user ID and tracker name",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Select tracker for user ID and tracker name": {
+        "main": [
+          [
+            {
+              "node": "Was it successful?",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Set error message",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Was it successful?": {
+        "main": [
+          [],
+          [
+            {
+              "node": "Set error message",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "system migration",
+    "name": null,
+    "description": null,
+    "autosaved": false
+  },
+  "activeVersionId": "b95e7373-8861-495a-9cb0-5fdbacb4966f",
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Select tracker for user ID and tracker name",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Select tracker for user ID and tracker name": {
+      "main": [
+        [
+          {
+            "node": "Was it successful?",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Set error message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Was it successful?": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Set error message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-09-24T18:52:14.587Z",
+  "id": "FLiF92JpXlYrRoZA",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Select tracker for user ID and name",
+  "nodes": [
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "userId"
+            },
+            {
+              "name": "trackerName"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        -88
+      ],
+      "id": "9e40f29c-773e-4693-87a9-65f008d648e8",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT * FROM Mobiltracker.dbo.Trackers\n  WHERE UserId = '{{ $json.userId }}'\n    AND Name = '{{ $json.trackerName }}'"
+      },
+      "type": "n8n-nodes-base.microsoftSql",
+      "typeVersion": 1.1,
+      "position": [
+        224,
+        -88
+      ],
+      "id": "4a56304d-50f9-44f3-bff5-4c96602fc557",
+      "name": "Select tracker for user ID and tracker name",
+      "alwaysOutputData": true,
+      "retryOnFail": false,
+      "credentials": {
+        "microsoftSql": {
+          "id": "q8QnAyDOfZ8HwqL2",
+          "name": "SQLServer account"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3b50d9ff-7f4c-4969-a4d3-0b1fca7ba37f",
+              "name": "error",
+              "value": "Failed to fetch tracker data. Please make sure you provided a valid user ID (GUID) and tracker name.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        672,
+        -88
+      ],
+      "id": "acca04ef-eb35-4bfb-a55b-e89f0298ef3b",
+      "name": "Set error message"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "4e3318c5-e54c-4a2c-83a0-3387e33c0f5d",
+              "leftValue": "={{ $json.isNotEmpty() }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        448,
+        -160
+      ],
+      "id": "8af00ca2-9a12-4b60-8ad7-138035ed275c",
+      "name": "Was it successful?"
+    }
+  ],
+  "owner": "daLuz109",
+  "path": "https://github.com/daLuz109/test",
+  "pinData": {},
+  "repo": "test",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-09-24T18:52:14.587Z",
+      "createdAt": "2025-09-24T18:52:14.587Z",
+      "role": "workflow:owner",
+      "workflowId": "FLiF92JpXlYrRoZA",
+      "projectId": "ibRx4KzVa8okoVWI"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-10-09T14:37:49.477Z",
+  "versionId": "b95e7373-8861-495a-9cb0-5fdbacb4966f"
+}
