@@ -1,0 +1,726 @@
+{
+  "active": true,
+  "activeVersion": {
+    "updatedAt": "2025-11-27T16:50:56.963Z",
+    "createdAt": "2025-11-27T16:50:56.963Z",
+    "versionId": "9f2c0bb7-b63f-4c92-b033-6e65e1a7821e",
+    "workflowId": "2L3Lr1vlRJf21SHO",
+    "nodes": [
+      {
+        "parameters": {
+          "workflowInputs": {
+            "values": [
+              {
+                "name": "trackerId",
+                "type": "number"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.executeWorkflowTrigger",
+        "typeVersion": 1.1,
+        "position": [
+          0,
+          -96
+        ],
+        "id": "94dca569-b1c2-4f40-8a8d-f2b83f70d5f0",
+        "name": "When Executed by Another Workflow"
+      },
+      {
+        "parameters": {
+          "operation": "executeQuery",
+          "query": "SELECT OprOperationTemplates.Name AS OperationName,\n       OprOperationTemplateId     AS OperationTemplateId,\n       OperationType,\n       TrackerId,\n       Trackers.Name              AS TrackerName\nFROM Mobiltracker.dbo.Trackers\n         JOIN Mobiltracker.dbo.TrackerClasses ON Trackers.TrackerClassId = TrackerClasses.TrackerClassId\n         JOIN Mobiltracker.dbo.OprOperationTemplates\n              ON OperationType = '{{ $json.operationType }}' AND\n                 OprOperationTemplates.SmsProtocol = TrackerClasses.SmsProtocol\nWHERE TrackerId = {{ $('When Executed by Another Workflow').item.json.trackerId }}"
+        },
+        "type": "n8n-nodes-base.microsoftSql",
+        "typeVersion": 1.1,
+        "position": [
+          896,
+          -96
+        ],
+        "id": "8a699ea2-4b61-4d70-b469-e32f984f0091",
+        "name": "Fetch tracker data for operation",
+        "credentials": {
+          "microsoftSql": {
+            "id": "q8QnAyDOfZ8HwqL2",
+            "name": "SQLServer account"
+          }
+        },
+        "onError": "continueErrorOutput"
+      },
+      {
+        "parameters": {
+          "table": "[Mobiltracker].[dbo].[OprOperationExecutions]",
+          "columns": "=OperationType, TrackerId, OperationTemplateId, OperationName"
+        },
+        "type": "n8n-nodes-base.microsoftSql",
+        "typeVersion": 1.1,
+        "position": [
+          1120,
+          -192
+        ],
+        "id": "ffbfcf58-73cc-49d9-9e57-03d37343a56e",
+        "name": "Create operation",
+        "credentials": {
+          "microsoftSql": {
+            "id": "q8QnAyDOfZ8HwqL2",
+            "name": "SQLServer account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "get",
+          "propertyName": "lastTrackerLocation",
+          "key": "=ltl:{{ $json.trackerId }}",
+          "keyType": "hash",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.redis",
+        "typeVersion": 1,
+        "position": [
+          224,
+          -96
+        ],
+        "id": "b078de47-ced2-4386-894d-b4da4b60e989",
+        "name": "Fetch last tracker location for creating operation",
+        "credentials": {
+          "redis": {
+            "id": "x8KuS83oyqKTv9IX",
+            "name": "Development Redis"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "rules": {
+            "values": [
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 2
+                  },
+                  "conditions": [
+                    {
+                      "leftValue": "={{ $json.lastTrackerLocation.isEmpty() }}",
+                      "rightValue": "",
+                      "operator": {
+                        "type": "boolean",
+                        "operation": "true",
+                        "singleValue": true
+                      },
+                      "id": "b822b39d-857a-4729-a344-ec5d83ef9d9f"
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "Never communicated"
+              },
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 2
+                  },
+                  "conditions": [
+                    {
+                      "id": "b41e64e4-0ede-4755-af98-a19728f5ea2d",
+                      "leftValue": "={{new Date().getTime() - new Date( $json.lastTrackerLocation.lastCommunication).getTime() }}",
+                      "rightValue": "={{ 30 * 24 * 60 * 60 * 1000}}",
+                      "operator": {
+                        "type": "number",
+                        "operation": "gt"
+                      }
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "More than 30 days"
+              },
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 2
+                  },
+                  "conditions": [
+                    {
+                      "id": "2c4dd013-4b10-4d6b-a702-dfde5ebdba99",
+                      "leftValue": "={{new Date().getTime() - new Date( $json.lastTrackerLocation.lastCommunication).getTime() }}",
+                      "rightValue": "={{ 30 * 24 * 60 * 60 * 1000}}",
+                      "operator": {
+                        "type": "number",
+                        "operation": "lte"
+                      }
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "Less than 30 days"
+              }
+            ]
+          },
+          "options": {
+            "fallbackOutput": "extra"
+          }
+        },
+        "type": "n8n-nodes-base.switch",
+        "typeVersion": 3.2,
+        "position": [
+          448,
+          -128
+        ],
+        "id": "18d8944b-4bdd-4f1b-8d06-ee1374f6d2fd",
+        "name": "Route based on last tracker communication for creating operation"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "d7e8bcab-d5d1-43fe-987e-6933f7b92824",
+                "name": "operationType",
+                "value": "FIRST_TIME_CFG",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          672,
+          -192
+        ],
+        "id": "9cba8c3a-df87-4c1f-bccc-702958d4a7dd",
+        "name": "Set operation type to first config for creating operation"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "d7e8bcab-d5d1-43fe-987e-6933f7b92824",
+                "name": "operationType",
+                "value": "RECONFIG",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          672,
+          0
+        ],
+        "id": "f1ed132c-f78b-4f76-a69e-bc02dbb2a9ed",
+        "name": "Set operation type to reconfig for creating operation"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "291c9a5e-97b8-4b2a-ba6d-d845809a6132",
+                "name": "error",
+                "value": "Failed to create operation. Please make sure you provided a valid tracker ID (bigint).",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          1120,
+          0
+        ],
+        "id": "a9827a9f-13ae-4d5c-b5f6-9ff749f4d7c9",
+        "name": "Set error message"
+      }
+    ],
+    "connections": {
+      "Fetch tracker data for operation": {
+        "main": [
+          [
+            {
+              "node": "Create operation",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Set error message",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Fetch last tracker location for creating operation": {
+        "main": [
+          [
+            {
+              "node": "Route based on last tracker communication for creating operation",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Route based on last tracker communication for creating operation": {
+        "main": [
+          [
+            {
+              "node": "Set operation type to first config for creating operation",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Set operation type to first config for creating operation",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Set operation type to reconfig for creating operation",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Set operation type to first config for creating operation",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Set operation type to first config for creating operation": {
+        "main": [
+          [
+            {
+              "node": "Fetch tracker data for operation",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Set operation type to reconfig for creating operation": {
+        "main": [
+          [
+            {
+              "node": "Fetch tracker data for operation",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "When Executed by Another Workflow": {
+        "main": [
+          [
+            {
+              "node": "Fetch last tracker location for creating operation",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "system migration",
+    "name": null,
+    "description": null,
+    "autosaved": false
+  },
+  "activeVersionId": "9f2c0bb7-b63f-4c92-b033-6e65e1a7821e",
+  "connections": {
+    "Fetch tracker data for operation": {
+      "main": [
+        [
+          {
+            "node": "Create operation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Set error message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch last tracker location for creating operation": {
+      "main": [
+        [
+          {
+            "node": "Route based on last tracker communication for creating operation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Route based on last tracker communication for creating operation": {
+      "main": [
+        [
+          {
+            "node": "Set operation type to first config for creating operation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Set operation type to first config for creating operation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Set operation type to reconfig for creating operation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Set operation type to first config for creating operation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set operation type to first config for creating operation": {
+      "main": [
+        [
+          {
+            "node": "Fetch tracker data for operation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set operation type to reconfig for creating operation": {
+      "main": [
+        [
+          {
+            "node": "Fetch tracker data for operation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Fetch last tracker location for creating operation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-09-16T20:23:09.948Z",
+  "id": "2L3Lr1vlRJf21SHO",
+  "isArchived": false,
+  "meta": null,
+  "name": "Tracker operation creator",
+  "nodes": [
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "trackerId",
+              "type": "number"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        -96
+      ],
+      "id": "94dca569-b1c2-4f40-8a8d-f2b83f70d5f0",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT OprOperationTemplates.Name AS OperationName,\n       OprOperationTemplateId     AS OperationTemplateId,\n       OperationType,\n       TrackerId,\n       Trackers.Name              AS TrackerName\nFROM Mobiltracker.dbo.Trackers\n         JOIN Mobiltracker.dbo.TrackerClasses ON Trackers.TrackerClassId = TrackerClasses.TrackerClassId\n         JOIN Mobiltracker.dbo.OprOperationTemplates\n              ON OperationType = '{{ $json.operationType }}' AND\n                 OprOperationTemplates.SmsProtocol = TrackerClasses.SmsProtocol\nWHERE TrackerId = {{ $('When Executed by Another Workflow').item.json.trackerId }}"
+      },
+      "type": "n8n-nodes-base.microsoftSql",
+      "typeVersion": 1.1,
+      "position": [
+        896,
+        -96
+      ],
+      "id": "8a699ea2-4b61-4d70-b469-e32f984f0091",
+      "name": "Fetch tracker data for operation",
+      "credentials": {
+        "microsoftSql": {
+          "id": "q8QnAyDOfZ8HwqL2",
+          "name": "SQLServer account"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "table": "[Mobiltracker].[dbo].[OprOperationExecutions]",
+        "columns": "=OperationType, TrackerId, OperationTemplateId, OperationName"
+      },
+      "type": "n8n-nodes-base.microsoftSql",
+      "typeVersion": 1.1,
+      "position": [
+        1120,
+        -192
+      ],
+      "id": "ffbfcf58-73cc-49d9-9e57-03d37343a56e",
+      "name": "Create operation",
+      "credentials": {
+        "microsoftSql": {
+          "id": "q8QnAyDOfZ8HwqL2",
+          "name": "SQLServer account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "propertyName": "lastTrackerLocation",
+        "key": "=ltl:{{ $json.trackerId }}",
+        "keyType": "hash",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        224,
+        -96
+      ],
+      "id": "b078de47-ced2-4386-894d-b4da4b60e989",
+      "name": "Fetch last tracker location for creating operation",
+      "credentials": {
+        "redis": {
+          "id": "x8KuS83oyqKTv9IX",
+          "name": "Development Redis"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.lastTrackerLocation.isEmpty() }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    },
+                    "id": "b822b39d-857a-4729-a344-ec5d83ef9d9f"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Never communicated"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "b41e64e4-0ede-4755-af98-a19728f5ea2d",
+                    "leftValue": "={{new Date().getTime() - new Date( $json.lastTrackerLocation.lastCommunication).getTime() }}",
+                    "rightValue": "={{ 30 * 24 * 60 * 60 * 1000}}",
+                    "operator": {
+                      "type": "number",
+                      "operation": "gt"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "More than 30 days"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "2c4dd013-4b10-4d6b-a702-dfde5ebdba99",
+                    "leftValue": "={{new Date().getTime() - new Date( $json.lastTrackerLocation.lastCommunication).getTime() }}",
+                    "rightValue": "={{ 30 * 24 * 60 * 60 * 1000}}",
+                    "operator": {
+                      "type": "number",
+                      "operation": "lte"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Less than 30 days"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra"
+        }
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        448,
+        -128
+      ],
+      "id": "18d8944b-4bdd-4f1b-8d06-ee1374f6d2fd",
+      "name": "Route based on last tracker communication for creating operation"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d7e8bcab-d5d1-43fe-987e-6933f7b92824",
+              "name": "operationType",
+              "value": "FIRST_TIME_CFG",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        672,
+        -192
+      ],
+      "id": "9cba8c3a-df87-4c1f-bccc-702958d4a7dd",
+      "name": "Set operation type to first config for creating operation"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d7e8bcab-d5d1-43fe-987e-6933f7b92824",
+              "name": "operationType",
+              "value": "RECONFIG",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        672,
+        0
+      ],
+      "id": "f1ed132c-f78b-4f76-a69e-bc02dbb2a9ed",
+      "name": "Set operation type to reconfig for creating operation"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "291c9a5e-97b8-4b2a-ba6d-d845809a6132",
+              "name": "error",
+              "value": "Failed to create operation. Please make sure you provided a valid tracker ID (bigint).",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1120,
+        0
+      ],
+      "id": "a9827a9f-13ae-4d5c-b5f6-9ff749f4d7c9",
+      "name": "Set error message"
+    }
+  ],
+  "owner": "daLuz109",
+  "path": "https://github.com/daLuz109/test",
+  "pinData": {},
+  "repo": "test",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-09-16T20:23:09.948Z",
+      "createdAt": "2025-09-16T20:23:09.948Z",
+      "role": "workflow:owner",
+      "workflowId": "2L3Lr1vlRJf21SHO",
+      "projectId": "ibRx4KzVa8okoVWI"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-10-08T17:48:59.995Z",
+  "versionId": "9f2c0bb7-b63f-4c92-b033-6e65e1a7821e"
+}
