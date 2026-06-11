@@ -1,0 +1,151 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Date & Time",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Date & Time": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Create or update a document",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-10-03T20:22:31.453Z",
+  "id": "855HYHaAEC3fyWiD",
+  "isArchived": true,
+  "isProd": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "My workflow 3",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "2c581b22-866e-475c-8b46-585b324cf98e",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "c57046fd-3d67-4626-a32b-2a79412a9dd0",
+              "name": "newDate",
+              "value": "={{ $json.newDate }}",
+              "type": "object"
+            },
+            {
+              "id": "3809839f-7a08-4709-96dd-cd26421ee879",
+              "name": "documentId",
+              "value": "04gzZXchscIj2mJdoQNk",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        416,
+        0
+      ],
+      "id": "5bf183ac-0ac2-42f6-ae0f-496c8bf204d0",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "operation": "addToDate",
+        "magnitude": "={{ new Date() }}",
+        "duration": 5,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dateTime",
+      "typeVersion": 2,
+      "position": [
+        208,
+        0
+      ],
+      "id": "a2daf88b-0b42-45ff-bf51-3e30a41eaf17",
+      "name": "Date & Time"
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "operation": "upsert",
+        "projectId": "parents-poc-app-jc45n7",
+        "collection": "saas_subscriptions",
+        "updateKey": "documentId",
+        "columns": "newDate"
+      },
+      "type": "n8n-nodes-base.googleFirebaseCloudFirestore",
+      "typeVersion": 1.1,
+      "position": [
+        624,
+        0
+      ],
+      "id": "a102e918-3e72-495b-a535-66fd8fa39ce6",
+      "name": "Create or update a document",
+      "credentials": {
+        "googleApi": {
+          "id": "Z0IQAyI3uZ3a8hmL",
+          "name": "ViaVan Firestore"
+        }
+      }
+    }
+  ],
+  "owner": "daLuz109",
+  "path": "https://github.com/daLuz109/test",
+  "pinData": {},
+  "repo": "test",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-10-03T20:22:31.453Z",
+      "createdAt": "2025-10-03T20:22:31.453Z",
+      "role": "workflow:owner",
+      "workflowId": "855HYHaAEC3fyWiD",
+      "projectId": "ibRx4KzVa8okoVWI"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-10-03T20:23:00.758Z",
+  "versionId": "9b3ffdfd-63de-46ef-bf4e-89ffa4c68450"
+}
