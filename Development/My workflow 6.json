@@ -1,0 +1,80 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-11-11T20:17:24.978Z",
+  "id": "C513BQIWhcXWzqyZ",
+  "isArchived": true,
+  "isProd": false,
+  "meta": null,
+  "name": "My workflow 6",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "ced6a145-43be-482e-bf12-d0d3024bf885",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "url": "http://evolution-api.inside.mobiltk.com.br/label/findLabes/vanescola_support",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "evolutionApi",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        208,
+        0
+      ],
+      "id": "735fd149-6de2-4edb-930f-3999f08949f1",
+      "name": "HTTP Request",
+      "credentials": {
+        "evolutionApi": {
+          "id": "JasOokgkfQnZ96h2",
+          "name": "Evolution account"
+        }
+      }
+    }
+  ],
+  "owner": "daLuz109",
+  "path": "https://github.com/daLuz109/test",
+  "pinData": {},
+  "repo": "test",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-11-11T20:17:24.978Z",
+      "createdAt": "2025-11-11T20:17:24.978Z",
+      "role": "workflow:owner",
+      "workflowId": "C513BQIWhcXWzqyZ",
+      "projectId": "ibRx4KzVa8okoVWI"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-11-11T20:19:17.928Z",
+  "versionId": "4a658cef-2c13-443c-b122-30b3a15c5958"
+}
