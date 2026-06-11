@@ -1,0 +1,81 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Procurar chats",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-12-05T15:52:06.711Z",
+  "id": "tvS4f8HCrUTCTgUD",
+  "isArchived": true,
+  "isProd": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "My workflow 10",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "e1facd64-a3d6-452c-b362-3173d4292e14",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "resource": "chat-api",
+        "operation": "find-chats",
+        "instanceName": "vanescola_support"
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        176,
+        0
+      ],
+      "id": "8d117c88-4de4-4532-a103-00585555c13b",
+      "name": "Procurar chats",
+      "credentials": {
+        "evolutionApi": {
+          "id": "JasOokgkfQnZ96h2",
+          "name": "Evolution account"
+        }
+      }
+    }
+  ],
+  "owner": "daLuz109",
+  "path": "https://github.com/daLuz109/test",
+  "pinData": {},
+  "repo": "test",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-12-05T15:52:06.711Z",
+      "createdAt": "2025-12-05T15:52:06.711Z",
+      "role": "workflow:owner",
+      "workflowId": "tvS4f8HCrUTCTgUD",
+      "projectId": "ibRx4KzVa8okoVWI"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-12-05T16:37:30.131Z",
+  "versionId": "bafab941-424c-4bfb-bd68-9287bff66b27"
+}
