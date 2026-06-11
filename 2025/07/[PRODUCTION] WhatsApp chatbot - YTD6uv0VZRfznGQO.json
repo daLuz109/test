@@ -1,0 +1,5528 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "Chat Memory Manager": {
+      "main": [
+        [
+          {
+            "node": "Is there an output?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Define states": {
+      "main": [
+        [
+          {
+            "node": "Fetch history",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "Chat Memory Manager",
+            "type": "ai_memory",
+            "index": 0
+          },
+          {
+            "node": "Clear chat for cancelling",
+            "type": "ai_memory",
+            "index": 0
+          },
+          {
+            "node": "Update chat with trackers response",
+            "type": "ai_memory",
+            "index": 0
+          },
+          {
+            "node": "Fetch history",
+            "type": "ai_memory",
+            "index": 0
+          },
+          {
+            "node": "Clear chat for other",
+            "type": "ai_memory",
+            "index": 0
+          },
+          {
+            "node": "Update chat with account selection",
+            "type": "ai_memory",
+            "index": 0
+          },
+          {
+            "node": "Insert UserId into history",
+            "type": "ai_memory",
+            "index": 0
+          },
+          {
+            "node": "Insert TrackerId into history",
+            "type": "ai_memory",
+            "index": 0
+          },
+          {
+            "node": "Insert verify phone state into history",
+            "type": "ai_memory",
+            "index": 0
+          },
+          {
+            "node": "Insert verify IMEI state into history",
+            "type": "ai_memory",
+            "index": 0
+          },
+          {
+            "node": "Clear chat after operation created",
+            "type": "ai_memory",
+            "index": 0
+          },
+          {
+            "node": "Clear chat after SMS fail",
+            "type": "ai_memory",
+            "index": 0
+          },
+          {
+            "node": "Clear chat for other account",
+            "type": "ai_memory",
+            "index": 0
+          },
+          {
+            "node": "Insert phone confirmation messages in history",
+            "type": "ai_memory",
+            "index": 0
+          },
+          {
+            "node": "Clear chat for no trackers",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch next state": {
+      "main": [
+        [
+          {
+            "node": "Chat Memory Manager",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "State routing": {
+      "main": [
+        [
+          {
+            "node": "Check if is admin",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Retrieve whether e-mail exists",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Parse account choice",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Issue type routing",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Refetch user tracker list",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Route based on simcard phone confirmation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Route based on device on confirmation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Route based on IMEI response",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Tell user to wait until operation is finished",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Route based on SMS confirm option",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Clear chat for other",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Route based on event received",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Redirect to other webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch authorized phone numbers": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Remove non-text messages": {
+      "main": [
+        [
+          {
+            "node": "Eliminate messages sent by me",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Eliminate messages sent by me": {
+      "main": [
+        [
+          {
+            "node": "Set WhatsApp conversation parameters",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Issue type routing": {
+      "main": [
+        [
+          {
+            "node": "Set next state to tracker selection",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Clear chat for other",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Clear chat for cancelling",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Fetch next state",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set WhatsApp conversation parameters": {
+      "main": [
+        [
+          {
+            "node": "Set conversation parameters",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set chat conversion parameters": {
+      "main": [
+        [
+          {
+            "node": "Set conversation parameters",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set conversation parameters": {
+      "main": [
+        [
+          {
+            "node": "Fetch authorized phone numbers",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If trigger was chat": {
+      "main": [
+        [
+          {
+            "node": "Set chat output",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Reply",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Retrieve response": {
+      "main": [
+        [
+          {
+            "node": "If trigger was chat",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set output to next state's message": {
+      "main": [
+        [
+          {
+            "node": "Retrieve response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set response to thank the user": {
+      "main": [
+        [
+          {
+            "node": "Retrieve response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Retrieve whether e-mail exists": {
+      "main": [
+        [
+          {
+            "node": "Check if e-mail exists",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check if e-mail exists": {
+      "main": [
+        [
+          {
+            "node": "Set e-mails as the specified",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Fetch next state",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set next state to tracker selection": {
+      "main": [
+        [
+          {
+            "node": "Fetch user tracker list",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch user tracker list": {
+      "main": [
+        [
+          {
+            "node": "Are there any trackers?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Combine names into a list": {
+      "main": [
+        [
+          {
+            "node": "Set tracker list response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set tracker list response": {
+      "main": [
+        [
+          {
+            "node": "Update chat with trackers response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Refetch user tracker list": {
+      "main": [
+        [
+          {
+            "node": "Recombine tracker names",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Recombine tracker names": {
+      "main": [
+        [
+          {
+            "node": "Set switch index",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set switch index": {
+      "main": [
+        [
+          {
+            "node": "Route based on tracker selection",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set next state back to issue selection": {
+      "main": [
+        [
+          {
+            "node": "Fetch next state",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Route based on tracker selection": {
+      "main": [
+        [
+          {
+            "node": "Fetch tracker info based on response",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Set next state back to issue selection",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Clear chat for cancelling",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Fetch user tracker list",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Route based on event received": {
+      "main": [
+        [
+          {
+            "node": "Remove non-text messages",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Filter desired events",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate": {
+      "main": [
+        [
+          {
+            "node": "Define states",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set next state to ask e-mail": {
+      "main": [
+        [
+          {
+            "node": "Fetch next state",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Define current state": {
+      "main": [
+        [
+          {
+            "node": "Set if phone number is admin",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Clear chat for cancelling": {
+      "main": [
+        [
+          {
+            "node": "Set response to thank the user",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Clear chat for other": {
+      "main": [
+        [
+          {
+            "node": "Set response to other",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set response to other": {
+      "main": [
+        [
+          {
+            "node": "Retrieve response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set if phone number is admin": {
+      "main": [
+        [
+          {
+            "node": "Set UserId",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check if is admin": {
+      "main": [
+        [
+          {
+            "node": "Set next state to ask e-mail",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Fetch users based on phone",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch users based on phone": {
+      "main": [
+        [
+          {
+            "node": "Join phone e-mails into array",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Join phone e-mails into array": {
+      "main": [
+        [
+          {
+            "node": "Set account selection response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set account selection response": {
+      "main": [
+        [
+          {
+            "node": "Update chat with account selection",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set e-mails as the specified": {
+      "main": [
+        [
+          {
+            "node": "Set account selection response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update chat with account selection": {
+      "main": [
+        [
+          {
+            "node": "Reset account selection response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reset account selection response": {
+      "main": [
+        [
+          {
+            "node": "Retrieve response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update chat with trackers response": {
+      "main": [
+        [
+          {
+            "node": "Reset tracker list response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reset tracker list response": {
+      "main": [
+        [
+          {
+            "node": "Retrieve response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch history": {
+      "main": [
+        [
+          {
+            "node": "Define current state",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse account choice": {
+      "main": [
+        [
+          {
+            "node": "Route based on account choice",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Route based on account choice": {
+      "main": [
+        [
+          {
+            "node": "Fetch UserId based on e-mail",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Clear chat for other account",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Clear chat for cancelling",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Check if is admin",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch UserId based on e-mail": {
+      "main": [
+        [
+          {
+            "node": "Insert UserId into history",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Insert UserId into history": {
+      "main": [
+        [
+          {
+            "node": "Set next state to issue selection",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set next state to issue selection": {
+      "main": [
+        [
+          {
+            "node": "Fetch next state",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set UserId": {
+      "main": [
+        [
+          {
+            "node": "Set TrackerId",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set TrackerId": {
+      "main": [
+        [
+          {
+            "node": "State routing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Insert TrackerId into history": {
+      "main": [
+        [
+          {
+            "node": "Set tracker data to freshly retrieved ones",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch tracker info based on response": {
+      "main": [
+        [
+          {
+            "node": "Insert TrackerId into history",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set verify phone response": {
+      "main": [
+        [
+          {
+            "node": "Insert verify phone state into history",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reset verify phone response": {
+      "main": [
+        [
+          {
+            "node": "Retrieve response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Insert verify phone state into history": {
+      "main": [
+        [
+          {
+            "node": "Reset verify phone response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Route based on simcard phone confirmation": {
+      "main": [
+        [
+          {
+            "node": "Fetch tracker name for device on",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Fetch e-mail for phone",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Set next state to tracker selection",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Clear chat for cancelling",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Fetch new phone number",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Inform user to update tracker number": {
+      "main": [
+        [
+          {
+            "node": "Retrieve response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch new phone number": {
+      "main": [
+        [
+          {
+            "node": "Set verify phone response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Route based on device on confirmation": {
+      "main": [
+        [
+          {
+            "node": "Fetch IMEI and Name",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Fetch tracker name for turn on device response",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Fetch new phone number",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Clear chat for cancelling",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Fetch tracker name for device on",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set turn on device response": {
+      "main": [
+        [
+          {
+            "node": "Retrieve response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set verify IMEI response": {
+      "main": [
+        [
+          {
+            "node": "Insert verify IMEI state into history",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Insert verify IMEI state into history": {
+      "main": [
+        [
+          {
+            "node": "Reset IMEI response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reset IMEI response": {
+      "main": [
+        [
+          {
+            "node": "Retrieve response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Route based on IMEI response": {
+      "main": [
+        [
+          {
+            "node": "Set next state to SMS test",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Fetch tracker name for fix IMEI response",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Fetch tracker name for device on",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Clear chat for cancelling",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Fetch IMEI and Name",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set fix IMEI response": {
+      "main": [
+        [
+          {
+            "node": "Retrieve response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set next state to SMS test": {
+      "main": [
+        [
+          {
+            "node": "Fetch next state",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Fetch phone number for SMS",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch phone number for SMS": {
+      "main": [
+        [
+          {
+            "node": "Send SMS",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send SMS": {
+      "main": [
+        [
+          {
+            "node": "Set current time",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Retrieve SMS status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Retrieve SMS status": {
+      "main": [
+        [
+          {
+            "node": "Route based on SMS result",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set current time": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Has the operation timed out?": {
+      "main": [
+        [
+          {
+            "node": " Set user e-mail for SMS fail",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Route based on SMS result": {
+      "main": [
+        [
+          {
+            "node": " Set user e-mail for SMS fail",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Has the operation timed out?",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Fetch tracker data for replacing",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Has the operation timed out?",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Has the operation timed out?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set response to SMS failed": {
+      "main": [
+        [
+          {
+            "node": "Retrieve response",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Clear chat after SMS fail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tell user to wait until operation is finished": {
+      "main": [
+        [
+          {
+            "node": "Retrieve response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Retrieve operation commands": {
+      "main": [
+        [
+          {
+            "node": "Command exists?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch tracker data for replacing": {
+      "main": [
+        [
+          {
+            "node": "Fetch last tracker location",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Replace tracker fields": {
+      "main": [
+        [
+          {
+            "node": "Aggregate SMS texts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate SMS texts": {
+      "main": [
+        [
+          {
+            "node": "Set next state to confirm SMS operation",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Fetch tracker name for operation commands response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is there an output?": {
+      "main": [
+        [
+          {
+            "node": "Set output to next state's message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set next state to confirm SMS operation": {
+      "main": [
+        [
+          {
+            "node": "Fetch next state",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set operation confirmation response": {
+      "main": [
+        [
+          {
+            "node": "Retrieve response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Route based on SMS confirm option": {
+      "main": [
+        [
+          {
+            "node": "Fetch last tracker location for creating operation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Clear chat for other",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Fetch tracker data for replacing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch tracker data for operation": {
+      "main": [
+        [
+          {
+            "node": "Create operation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create operation": {
+      "main": [
+        [
+          {
+            "node": "Set final message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set final message": {
+      "main": [
+        [
+          {
+            "node": "Retrieve response",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Clear chat after operation created",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Command exists?": {
+      "main": [
+        [
+          {
+            "node": "Replace tracker fields",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Clear chat for other",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set operation type to first config": {
+      "main": [
+        [
+          {
+            "node": "Retrieve operation commands",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set operation type to reconfig": {
+      "main": [
+        [
+          {
+            "node": "Retrieve operation commands",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch last tracker location": {
+      "main": [
+        [
+          {
+            "node": "Route based on last tracker communication",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Route based on last tracker communication": {
+      "main": [
+        [
+          {
+            "node": "Set operation type to first config",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Set operation type to first config",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Set operation type to reconfig",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Set operation type to first config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch last tracker location for creating operation": {
+      "main": [
+        [
+          {
+            "node": "Route based on last tracker communication for creating operation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Route based on last tracker communication for creating operation": {
+      "main": [
+        [
+          {
+            "node": "Set operation type to first config for creating operation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Set operation type to first config for creating operation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Set operation type to reconfig for creating operation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Set operation type to first config for creating operation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set operation type to first config for creating operation": {
+      "main": [
+        [
+          {
+            "node": "Fetch tracker data for operation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set operation type to reconfig for creating operation": {
+      "main": [
+        [
+          {
+            "node": "Fetch tracker data for operation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Clear chat for other account": {
+      "main": [
+        [
+          {
+            "node": "Set response for chat clearing after other account",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set response for chat clearing after other account": {
+      "main": [
+        [
+          {
+            "node": "Retrieve response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch tracker name for device on": {
+      "main": [
+        [
+          {
+            "node": "Set response to device on",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Insert phone confirmation messages in history": {
+      "main": [
+        [
+          {
+            "node": "Reset response for device on",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set response to device on": {
+      "main": [
+        [
+          {
+            "node": "Insert phone confirmation messages in history",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reset response for device on": {
+      "main": [
+        [
+          {
+            "node": "Retrieve response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch IMEI and Name": {
+      "main": [
+        [
+          {
+            "node": "Set verify IMEI response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch e-mail for phone": {
+      "main": [
+        [
+          {
+            "node": "Inform user to update tracker number",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch tracker name for turn on device response": {
+      "main": [
+        [
+          {
+            "node": "Set turn on device response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch tracker name for fix IMEI response": {
+      "main": [
+        [
+          {
+            "node": "Set fix IMEI response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    " Set user e-mail for SMS fail": {
+      "main": [
+        [
+          {
+            "node": "Set response to SMS failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch tracker name for operation commands response": {
+      "main": [
+        [
+          {
+            "node": "Set operation confirmation response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set tracker data to freshly retrieved ones": {
+      "main": [
+        [
+          {
+            "node": "Set verify phone response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Are there any trackers?": {
+      "main": [
+        [
+          {
+            "node": "Combine names into a list",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Clear chat for no trackers",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Clear chat for no trackers": {
+      "main": [
+        [
+          {
+            "node": "Set response for no trackers",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set response for no trackers": {
+      "main": [
+        [
+          {
+            "node": "Retrieve response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter desired events": {
+      "main": [
+        [
+          {
+            "node": "Notifies channel of update",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "Set chat conversion parameters",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-07-16T16:24:05.682Z",
+  "id": "RLtDXsJPciyugIfb",
+  "isArchived": false,
+  "meta": null,
+  "name": "[PRODUCTION] WhatsApp chatbot - YTD6uv0VZRfznGQO",
+  "nodes": [
+    {
+      "parameters": {
+        "mode": "insert",
+        "messages": {
+          "messageValues": [
+            {
+              "type": "user",
+              "message": "={{ $('Set conversation parameters').item.json.userMessage }}"
+            },
+            {
+              "type": "ai",
+              "message": "={{ $('Define states').item.json.states[$('Fetch next state').item.json.nextState].output }}"
+            },
+            {
+              "message": "={{ $('Fetch next state').item.json.nextState }}"
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryManager",
+      "typeVersion": 1.1,
+      "position": [
+        1456,
+        -2880
+      ],
+      "id": "ae1ad3a2-e522-48ad-b584-594ba222f933",
+      "name": "Chat Memory Manager"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "{\n  \"states\": {\n    \"initial\": {},\n    \"email_input\": {\n      \"output\": \"Qual o e-mail da conta, por gentileza?\"\n    },\n    \"account_selection\": {\"output\": \"\"},\n    \"issue_type_selection\": {\n      \"output\": \"Para quê você precisa de suporte?\\n1. Meu rastreador está offline\\n2. Preciso de suporte em outro tópico\\n3. Encerrar atendimento\"\n    },\n    \"tracker_selection\": {\"output\": \"\"},\n    \"simcard_number_confirmation\": {\"output\": \"\"},\n    \"is_device_on\": {\n      \"output\": \"\"\n    },\n    \"imei_confirmation\": {\"output\": \"\"},\n    \"sms_test\": {\n      \"output\": \"Tudo certo! Aguarde alguns minutos enquanto realizamos testes de SMS.\"\n    },\n    \"confirm_sms_operation\":{\"output\": \"\"},\n    \"other\": {\n      \"output\": \"Favor solicitar atendimento pelo WhatsApp do suporte Mobiltracker: (51) 98186-0143\\nhttps://wa.me/mobiltracker\"\n    }\n  }\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -4784,
+        -1344
+      ],
+      "id": "30da1cb2-e469-4ab2-85f8-ee7cc733f1e6",
+      "name": "Define states"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('Set conversation parameters').item.json.sessionId }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        1888,
+        -3552
+      ],
+      "id": "e82978f2-25d6-450b-8bce-1e5bdf489d4a",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "fd67d5e5-68bd-400b-b764-5dc5ea7eff32",
+              "name": "nextState",
+              "value": "={{ $json.nextState ?? $('Define current state').item.json.currentState }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1232,
+        -2880
+      ],
+      "id": "cfabbce0-ec3a-4a93-b5ab-85e40b02e2a8",
+      "name": "Fetch next state"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('Define current state').item.json.currentState }}",
+                    "rightValue": "initial",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "200f726b-ce53-40a8-9ecc-226ff7a76d39"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Initial state"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "5c267552-3011-45d4-9a3c-a41736ef6655",
+                    "leftValue": "={{ $('Define current state').item.json.currentState }}",
+                    "rightValue": "email_input",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "E-mail input"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "dcc21c74-7be5-4e54-89f1-18acb1821f7b",
+                    "leftValue": "={{ $('Define current state').item.json.currentState }}",
+                    "rightValue": "account_selection",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Account selection"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "86c53062-0c08-46b5-9527-8391f75976f0",
+                    "leftValue": "={{ $('Define current state').item.json.currentState }}",
+                    "rightValue": "issue_type_selection",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Issue type selection"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "56c0a088-7e68-4aac-87c8-8866a761a735",
+                    "leftValue": "={{ $('Define current state').item.json.currentState }}",
+                    "rightValue": "tracker_selection",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Tracker selection"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "92f658ee-7633-477a-9d67-f736ccbdb047",
+                    "leftValue": "={{ $('Define current state').item.json.currentState }}",
+                    "rightValue": "simcard_number_confirmation",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Simcard number confirmation"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "0dc7994d-10e4-4e11-8f0b-5b268b504a01",
+                    "leftValue": "={{ $('Define current state').item.json.currentState }}",
+                    "rightValue": "is_device_on",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Is device on"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "277c96e9-ee99-4e5a-8feb-3691a1bace12",
+                    "leftValue": "={{ $('Define current state').item.json.currentState }}",
+                    "rightValue": "imei_confirmation",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "IMEI confirmation"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "5ec96367-29a2-45e1-a768-9e238bdc1c1c",
+                    "leftValue": "={{ $('Define current state').item.json.currentState }}",
+                    "rightValue": "sms_test",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "SMS Test"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "328f2900-925d-4168-8662-30af078756a7",
+                    "leftValue": "={{ $('Define current state').item.json.currentState }}",
+                    "rightValue": "confirm_sms_operation",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Confirm SMS operation"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "7a70e799-a8d0-47a0-939e-2e80c2f00b9e",
+                    "leftValue": "={{ $('Define current state').item.json.currentState }}",
+                    "rightValue": "other",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Other"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        -3312,
+        -1488
+      ],
+      "id": "e4c73160-a5c6-46c2-9c08-952987953f09",
+      "name": "State routing"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "3172eb64-3b75-48cf-bbfc-4b666f0e4c40",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -6576,
+        -1536
+      ],
+      "id": "2b268b1c-03d6-4941-b59f-e5d189a0ec70",
+      "name": "Webhook",
+      "webhookId": "3172eb64-3b75-48cf-bbfc-4b666f0e4c40"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT PhoneNumber\nFROM MobiltrackerLab.dbo.AuthorizedPhoneNumbers"
+      },
+      "type": "n8n-nodes-base.microsoftSql",
+      "typeVersion": 1.1,
+      "position": [
+        -5232,
+        -1344
+      ],
+      "id": "2bb4a8ef-5731-442b-8752-38e4f672a893",
+      "name": "Fetch authorized phone numbers",
+      "credentials": {
+        "microsoftSql": {
+          "id": "q8QnAyDOfZ8HwqL2",
+          "name": "SQLServer account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "={{ $('Webhook').item.json.body.instance }}",
+        "remoteJid": "={{ $('Webhook').item.json.body.data.key.remoteJid }}",
+        "messageText": "={{ $('Retrieve response').item.json.response }}",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        2960,
+        -1472
+      ],
+      "id": "e349c75f-b24d-4251-b3bc-d94145ea339f",
+      "name": "Reply",
+      "credentials": {
+        "evolutionApi": {
+          "id": "JasOokgkfQnZ96h2",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "67c8b562-d65f-4d35-914b-3b74e3dc7fa4",
+              "leftValue": "={{ $json.body.data.messageType }}",
+              "rightValue": "conversation",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        -6128,
+        -1536
+      ],
+      "id": "8b9e992a-83aa-4650-bab1-09c2cbcfc074",
+      "name": "Remove non-text messages"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "ef008649-a4dd-417f-99b8-0d5ec3315d47",
+              "leftValue": "={{ $json.body.data.key.fromMe }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "e6cb1e23-0249-40e6-839e-98cb8b8bc6b0",
+              "leftValue": "={{ $('Webhook').item.json.body.data.key.remoteJid }}",
+              "rightValue": "555196609030@s.whatsapp.net",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        -5904,
+        -1536
+      ],
+      "id": "5e5633a2-c11c-420a-a8f6-f33ce575edb1",
+      "name": "Eliminate messages sent by me"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ ['1', 'meu rastreador está offline'].includes($('Set conversation parameters').item.json.userMessage.toLowerCase()) }}",
+                    "rightValue": "1",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    },
+                    "id": "69f31acc-bbbe-4985-a5f3-57ab48ea3876"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "=Offline tracker"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "c9c8d1a8-6f18-461c-a553-0717403c8d70",
+                    "leftValue": "={{ ['2', 'preciso de suporte em outro tópico'].includes($('Set conversation parameters').item.json.userMessage.toLowerCase()) }}",
+                    "rightValue": "2",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Other"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "1b5f4359-fee1-4e6e-acef-20fe1a9b99c1",
+                    "leftValue": "={{ ['3', 'encerrar atendimento'].includes($('Set conversation parameters').item.json.userMessage.toLowerCase()) }}",
+                    "rightValue": "3",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Cancel"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra"
+        }
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        -48,
+        -3184
+      ],
+      "id": "0d2469d6-b2e4-4b07-a0ef-391cba6eb172",
+      "name": "Issue type routing"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "9d2fbacf-52a6-4ffc-98e5-80babbed0df3",
+              "name": "sessionId",
+              "value": "={{ $('Webhook').item.json.body.data.key.remoteJid }}",
+              "type": "string"
+            },
+            {
+              "id": "de7132ab-de1f-487f-a302-526693e4e865",
+              "name": "userMessage",
+              "value": "={{ $('Webhook').item.json.body.data.message.conversation }}",
+              "type": "string"
+            },
+            {
+              "id": "0cfde146-1505-47c5-910c-b96b3696c1a4",
+              "name": "phoneNumber",
+              "value": "={{ $('Webhook').item.json.body.data.key.remoteJid.split(\"@\")[0].substring(2) }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -5680,
+        -1536
+      ],
+      "id": "61e7653c-a52d-43ff-ad93-e276c32766b2",
+      "name": "Set WhatsApp conversation parameters"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "9d2fbacf-52a6-4ffc-98e5-80babbed0df3",
+              "name": "sessionId",
+              "value": "={{ $json.sessionId }}",
+              "type": "string"
+            },
+            {
+              "id": "de7132ab-de1f-487f-a302-526693e4e865",
+              "name": "userMessage",
+              "value": "={{ $json.chatInput }}",
+              "type": "string"
+            },
+            {
+              "id": "4c9ddb2b-23dd-41a5-b280-9d278c93081b",
+              "name": "phoneNumber",
+              "value": "51996609030",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -5680,
+        -1152
+      ],
+      "id": "e8b52e0c-69ab-43ca-8cf5-a415895daad7",
+      "name": "Set chat conversion parameters"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1e0afd38-05a3-4037-87b1-9703608d11ae",
+              "name": "sessionId",
+              "value": "={{ $json.sessionId }}",
+              "type": "string"
+            },
+            {
+              "id": "88c03038-2725-46c3-be53-7a1c9540f024",
+              "name": "userMessage",
+              "value": "={{ $json.userMessage }}",
+              "type": "string"
+            },
+            {
+              "id": "1491a418-6b7a-4910-9ff0-ffd4243ca860",
+              "name": "phoneNumber",
+              "value": "={{ $json.phoneNumber.length === 10 ? `${$json.phoneNumber.substring(0, 2)}9${$json.phoneNumber.substring(2)}` : $json.phoneNumber }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -5456,
+        -1344
+      ],
+      "id": "a407a2f9-7f70-46b4-b2f5-28e58efb05e5",
+      "name": "Set conversation parameters"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "dd7e9be9-4157-4575-bdf8-50072e7d92af",
+              "leftValue": "={{ $('When chat message received').isExecuted }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2736,
+        -1568
+      ],
+      "id": "bc907c74-3c28-467c-991b-c5f5c6e14a28",
+      "name": "If trigger was chat"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "167e8e67-9b46-435c-aaac-2bc56bfbe301",
+              "name": "response",
+              "value": "={{ $json.response }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2448,
+        -1568
+      ],
+      "id": "9463ad52-67c3-41fb-bf51-c67ece0314ae",
+      "name": "Retrieve response"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f2129dff-8ecf-4c3a-b2dc-234b203a739d",
+              "name": "response",
+              "value": "={{ $('Define states').item.json.states[$('Fetch next state').item.json.nextState].output }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2160,
+        -2880
+      ],
+      "id": "1c0b1370-d53a-4b88-a44e-afd2b91ef287",
+      "name": "Set output to next state's message"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "2d7a5e0a-ca60-4274-9958-27b8bfcfc0d2",
+              "name": "response",
+              "value": "=Agradecemos pelo contato! Estamos sempre à disposição. 😉",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        592,
+        -3216
+      ],
+      "id": "84ef4131-5d73-4d58-bae3-56637fd210b7",
+      "name": "Set response to thank the user"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT IIF(EXISTS (SELECT *\n                   FROM Mobiltracker.dbo.Memberships\n                   WHERE Email = '{{ $('Set conversation parameters').item.json.userMessage }}'), 1, 0) AS EmailExists"
+      },
+      "type": "n8n-nodes-base.microsoftSql",
+      "typeVersion": 1.1,
+      "position": [
+        592,
+        1568
+      ],
+      "id": "b9233099-8802-474c-aa41-c84076812ee9",
+      "name": "Retrieve whether e-mail exists",
+      "credentials": {
+        "microsoftSql": {
+          "id": "q8QnAyDOfZ8HwqL2",
+          "name": "SQLServer account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "6a77e3d1-3284-4559-bac9-268e19713c5e",
+              "leftValue": "={{ $input.item.json.EmailExists }}",
+              "rightValue": 1,
+              "operator": {
+                "type": "number",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        944,
+        1568
+      ],
+      "id": "5e14d234-29d2-4728-b229-f910770e5e60",
+      "name": "Check if e-mail exists"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "2db43a11-82bd-4f33-9a79-cb29934da736",
+              "name": "nextState",
+              "value": "tracker_selection",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        240,
+        -3520
+      ],
+      "id": "b292e7f0-aea9-410e-b7dd-ab24f0a62bf3",
+      "name": "Set next state to tracker selection"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT Name FROM Mobiltracker.dbo.Trackers\nWHERE UserId = '{{ $('Set UserId').item.json.userId }}'"
+      },
+      "type": "n8n-nodes-base.microsoftSql",
+      "typeVersion": 1.1,
+      "position": [
+        592,
+        -3520
+      ],
+      "id": "20b8fe40-b4c5-46c2-8cd1-f64dc6ddfb4f",
+      "name": "Fetch user tracker list",
+      "alwaysOutputData": true,
+      "credentials": {
+        "microsoftSql": {
+          "id": "q8QnAyDOfZ8HwqL2",
+          "name": "SQLServer account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {
+              "fieldToAggregate": "Name",
+              "renameField": true,
+              "outputFieldName": "trackerNames"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        1232,
+        -3680
+      ],
+      "id": "2d6d4ada-46cd-470d-a149-9df38798c330",
+      "name": "Combine names into a list"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "7d6970ce-b9df-4847-a968-0cf75e91d5c3",
+              "name": "response",
+              "value": "=Qual rastreador está offline?\n{{ $json.trackerNames.map((name, index) => `${index + 1}. ${name}`).join(\"\\n\") }}\n{{ $json.trackerNames.length + 1 }}. Preciso de suporte em outro tópico\n{{ $json.trackerNames.length + 2 }}. Encerrar atendimento",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1520,
+        -3680
+      ],
+      "id": "f78efca0-e01c-4fb1-a636-7d92f90876eb",
+      "name": "Set tracker list response"
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "messages": {
+          "messageValues": [
+            {
+              "type": "user",
+              "message": "={{ $('Set conversation parameters').item.json.userMessage }}"
+            },
+            {
+              "type": "ai",
+              "message": "={{ $json.response }}"
+            },
+            {
+              "message": "=tracker_selection"
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryManager",
+      "typeVersion": 1.1,
+      "position": [
+        1808,
+        -3776
+      ],
+      "id": "73be4de2-7290-4a19-9254-d92150f215a1",
+      "name": "Update chat with trackers response"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT Name FROM Mobiltracker.dbo.Trackers\nWHERE UserId = '{{ $('Set UserId').item.json.userId }}'"
+      },
+      "type": "n8n-nodes-base.microsoftSql",
+      "typeVersion": 1.1,
+      "position": [
+        -848,
+        1280
+      ],
+      "id": "a17ace85-8adb-4e8d-bd36-ffb02a79d59b",
+      "name": "Refetch user tracker list",
+      "alwaysOutputData": true,
+      "credentials": {
+        "microsoftSql": {
+          "id": "q8QnAyDOfZ8HwqL2",
+          "name": "SQLServer account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {
+              "fieldToAggregate": "Name",
+              "renameField": true,
+              "outputFieldName": "trackerNames"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        -560,
+        1280
+      ],
+      "id": "867d009c-9db1-45e7-bb34-bc845aad9a0f",
+      "name": "Recombine tracker names"
+    },
+    {
+      "parameters": {
+        "jsCode": "const trackerNames = $input.last().json.trackerNames;\nconst message = $(\"Set conversation parameters\").last().json.userMessage;\nif(message.toLowerCase() === \"preciso de suporte em outro tópico\" || message.toLowerCase() === (trackerNames.length + 1).toString()) {\n  return {\n    index: 1\n  };\n}\nif(message.toLowerCase() === \"encerrar atendimento\" || message.toLowerCase() === (trackerNames.length + 2).toString()) {\n  return {\n    index: 2\n  };\n}\nconst indexByName = trackerNames.map((name) => name.toLowerCase()).indexOf(message);\nconst indexNumber = indexByName !== -1 ? indexByName : parseInt(message);\nif(isNaN(indexNumber)) {\n  return {\n    index: 3\n  }\n}\nif(indexNumber < 1 || indexNumber > trackerNames.length + 2) {\n  return {\n    index: 3\n  }\n}\nif(indexNumber > trackerNames.length) {\n  return {\n    index: indexNumber - trackerNames.length\n  }\n}\nreturn {\n  index: 0\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -272,
+        1280
+      ],
+      "id": "9cf7d192-aa60-4a74-abf2-d3655910ec31",
+      "name": "Set switch index"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a4b0437d-a579-42eb-9c51-f61d9036a3aa",
+              "name": "nextState",
+              "value": "issue_type_selection",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        944,
+        1184
+      ],
+      "id": "ba3f5894-89cd-4977-8dff-b6801af39e36",
+      "name": "Set next state back to issue selection"
+    },
+    {
+      "parameters": {
+        "mode": "expression",
+        "output": "={{ $json.index }}"
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        -48,
+        1248
+      ],
+      "id": "49ae1595-2b2a-469a-a064-47ab7162d577",
+      "name": "Route based on tracker selection"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.body.event }}",
+                    "rightValue": "messages.upsert",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "26ca1efe-a3a2-4624-ae7b-d1205dfa9131"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Message received"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "7619a292-593f-4d0e-a070-4f98b024630f",
+                    "leftValue": "={{ $json.body.event }}",
+                    "rightValue": "connection.update",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Connection update"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        -6352,
+        -1440
+      ],
+      "id": "f2e44eec-3657-40f1-a963-63194c191d5a",
+      "name": "Route based on event received"
+    },
+    {
+      "parameters": {
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "C07QMDRVB1P",
+          "mode": "list",
+          "cachedResultName": "workgroup-pesq-e-desenv"
+        },
+        "text": "=---------------------------------------------------\nEvento recebido:\n- Aplicação: *Evolution API*\n- Instância: *{{ $json.body.instance }}*\n- Evento: *{{ $json.body.event }}*\n- Estado: *{{ $json.body.data.state }}*",
+        "otherOptions": {
+          "includeLinkToWorkflow": false
+        }
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.3,
+      "position": [
+        -5904,
+        -1344
+      ],
+      "id": "bf830994-574d-4cc5-a507-c2d6f6785e86",
+      "name": "Notifies channel of update",
+      "webhookId": "08256779-7b98-4d26-adc0-deb591e62363",
+      "credentials": {
+        "slackApi": {
+          "id": "QMoJh8hcmWWspMvU",
+          "name": "Slack account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {
+              "fieldToAggregate": "PhoneNumber"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        -5008,
+        -1344
+      ],
+      "id": "1f408c64-2482-4ae8-b824-b2845e7a934c",
+      "name": "Aggregate"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f28ee47f-2c49-4fe2-817a-162cef210e8e",
+              "name": "nextState",
+              "value": "=email_input",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        944,
+        -2256
+      ],
+      "id": "506da8f2-5263-409d-9d4a-da9c2ff250a2",
+      "name": "Set next state to ask e-mail"
+    },
+    {
+      "parameters": {
+        "jsCode": "const messages = $(\"Fetch history\").last().json.messages;\nconst states = $(\"Define states\").last().json.states\nfor(let i = messages.length - 1; i >= 0; i--) {\n  const message = messages[i].system;\n  if(message) {\n    return {\n      currentState: message\n    }\n  }\n}\nreturn {\n  currentState: Object.keys(states)[0]\n}"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -4208,
+        -1344
+      ],
+      "id": "528edc4d-2104-453f-8c7f-c7cf88160c64",
+      "name": "Define current state"
+    },
+    {
+      "parameters": {
+        "mode": "delete",
+        "deleteMode": "all"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryManager",
+      "typeVersion": 1.1,
+      "position": [
+        176,
+        -3216
+      ],
+      "id": "470d40b6-d0fc-41e2-ac1a-73662825c6ca",
+      "name": "Clear chat for cancelling"
+    },
+    {
+      "parameters": {
+        "mode": "delete",
+        "deleteMode": "all"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryManager",
+      "typeVersion": 1.1,
+      "position": [
+        176,
+        -3024
+      ],
+      "id": "873e1ef7-1fe2-4234-a41f-e027668aa220",
+      "name": "Clear chat for other"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "afc5248f-1cc7-4863-8e6a-ac6f75ddd271",
+              "name": "response",
+              "value": "=Parece que não consigo fazer mais do que isso. Por favor, entre em contato com o suporte humano: 👉 wa.me/mobiltracker\nAgradecemos pelo contato! Estamos sempre à disposição. 😉",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        592,
+        -3024
+      ],
+      "id": "5541dc66-6b01-4a6a-a50b-806c98fd2a67",
+      "name": "Set response to other"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "bc7776ac-f949-46a4-b47a-479b17480ef9",
+              "name": "isAdmin",
+              "value": "={{ $('Aggregate').item.json.PhoneNumber.includes($('Set conversation parameters').item.json.phoneNumber) }}",
+              "type": "boolean"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -3984,
+        -1344
+      ],
+      "id": "d48be646-8744-4eb2-84cb-a014b03e59bd",
+      "name": "Set if phone number is admin"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "28ce32e3-c054-4be6-83e2-5b01475e0647",
+              "leftValue": "={{ $('Set if phone number is admin').item.json.isAdmin }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        592,
+        -2160
+      ],
+      "id": "0bb73ce3-8381-49af-b377-8b03be361313",
+      "name": "Check if is admin"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT Email\nFROM Mobiltracker.dbo.Users\n         JOIN Mobiltracker.dbo.Memberships ON Users.UserId = Memberships.UserId\nWHERE Phone = '{{ $('Set conversation parameters').item.json.phoneNumber }}'\n   OR Phone2 = '{{ $('Set conversation parameters').item.json.phoneNumber }}'"
+      },
+      "type": "n8n-nodes-base.microsoftSql",
+      "typeVersion": 1.1,
+      "position": [
+        944,
+        -2064
+      ],
+      "id": "7d6fee2a-74f8-43cd-89a4-4a738c242ce0",
+      "name": "Fetch users based on phone",
+      "credentials": {
+        "microsoftSql": {
+          "id": "q8QnAyDOfZ8HwqL2",
+          "name": "SQLServer account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {
+              "fieldToAggregate": "Email",
+              "renameField": true,
+              "outputFieldName": "emails"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        1232,
+        -2064
+      ],
+      "id": "59a80662-d7a6-4011-b856-2fe6ac8eb0f2",
+      "name": "Join phone e-mails into array"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a0d24bb2-8e6e-476f-b99c-029dc55cd4cf",
+              "name": "response",
+              "value": "=Olá! Eu sou o assistente virtual da Mobiltracker dedicado a *configuração de rastreadores*.\nPara entrar em contato com o suporte humano, use: 👉 wa.me/mobiltracker\nUtilize os números abaixo para responder as mensagens.\nPara qual conta você deseja suporte?\n{{ $json.emails.map((email, index) => `${index + 1}. Conta associada ao e-mail: ${email}`).join(\"\\n\") }}\n{{ $json.emails.length + 1 }}. Outra conta\n{{ $json.emails.length + 2 }}. Encerrar atendimento",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1520,
+        -2064
+      ],
+      "id": "5db4dedc-368d-4f50-b1d1-1098f5897f83",
+      "name": "Set account selection response"
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "messages": {
+          "messageValues": [
+            {
+              "type": "user",
+              "message": "={{ $('Set conversation parameters').item.json.userMessage }}"
+            },
+            {
+              "type": "ai",
+              "message": "={{ $json.response }}"
+            },
+            {
+              "message": "=account_selection"
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryManager",
+      "typeVersion": 1.1,
+      "position": [
+        1808,
+        -2064
+      ],
+      "id": "e5ac576f-78d1-4f6b-8098-81c8ce2d1870",
+      "name": "Update chat with account selection"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "2910ecb4-f97c-4673-8605-fa89ace060fa",
+              "name": "emails",
+              "value": "={{ [$('Set conversation parameters').item.json.userMessage] }}",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1232,
+        1568
+      ],
+      "id": "89339463-bbf1-440b-b79e-bb681316ea38",
+      "name": "Set e-mails as the specified"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a0d24bb2-8e6e-476f-b99c-029dc55cd4cf",
+              "name": "response",
+              "value": "={{ $('Set account selection response').item.json.response }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2160,
+        -2064
+      ],
+      "id": "3ac22859-1d2d-4449-a7e7-d75955d74dfa",
+      "name": "Reset account selection response"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "7d6970ce-b9df-4847-a968-0cf75e91d5c3",
+              "name": "response",
+              "value": "={{ $('Set tracker list response').item.json.response }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2160,
+        -3680
+      ],
+      "id": "033e353e-bd9b-4bc1-a4d7-9554e457965b",
+      "name": "Reset tracker list response"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryManager",
+      "typeVersion": 1.1,
+      "position": [
+        -4560,
+        -1344
+      ],
+      "id": "15d8ae8b-2049-48dc-8f2e-ddaaa451e552",
+      "name": "Fetch history"
+    },
+    {
+      "parameters": {
+        "jsCode": "const message = $('Fetch history').last().json.messages.find((message) => message.system && message.system === \"account_selection\");\nif(!message) {\n  return {\n    index: 3\n  }\n}\nconst userMessage = $('Set conversation parameters').last().json.userMessage;\nconst aiMessage = message.ai.substring(242);\nconst options = aiMessage.split(\"\\n\");\nconst selectedOption = options.find((option) => option.split(\".\")[0] === userMessage || option.split(\".\")[1].trim().toLowerCase() === userMessage.toLowerCase());\nif(!selectedOption) {\n  return {\n    index: 3\n  }\n}\nconst optionParts = selectedOption.substring(3).split(':');\nconst optionIndex = parseInt(selectedOption.substring(0, 1));\nconsole.log(selectedOption, optionIndex);\nif(optionIndex >= options.length - 1) {\n  return {\n    index: optionIndex - options.length + 2\n  }\n}\nreturn {\n  index: 0,\n  email: optionParts[1].trim()\n}"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -272,
+        -2480
+      ],
+      "id": "53113d7b-55ec-4938-a241-c2bc3a124911",
+      "name": "Parse account choice"
+    },
+    {
+      "parameters": {
+        "mode": "expression",
+        "output": "={{ $json.index }}"
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        -48,
+        -2512
+      ],
+      "id": "45cb6586-0599-4efa-99ab-800248556ec5",
+      "name": "Route based on account choice"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT UserId FROM Mobiltracker.dbo.Memberships\nWHERE Email = '{{ $('Parse account choice').item.json.email }}'"
+      },
+      "type": "n8n-nodes-base.microsoftSql",
+      "typeVersion": 1.1,
+      "position": [
+        240,
+        -2448
+      ],
+      "id": "88822b12-2c0b-497d-8326-598803d9d744",
+      "name": "Fetch UserId based on e-mail",
+      "credentials": {
+        "microsoftSql": {
+          "id": "q8QnAyDOfZ8HwqL2",
+          "name": "SQLServer account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "messages": {
+          "messageValues": [
+            {
+              "message": "=UserId {{ $json.UserId }}"
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryManager",
+      "typeVersion": 1.1,
+      "position": [
+        528,
+        -2448
+      ],
+      "id": "5c5479ad-2e9e-4830-b21d-445367ff53dd",
+      "name": "Insert UserId into history"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "6983b228-ab31-47c5-9e02-e787fbeb4867",
+              "name": "nextState",
+              "value": "issue_type_selection",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        944,
+        -2448
+      ],
+      "id": "e80f6d35-49f3-4f82-a5c6-f42b2a7c8fb9",
+      "name": "Set next state to issue selection"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "39fc0f9c-421d-43ac-9c37-1ccb63ffada9",
+              "name": "userId",
+              "value": "={{ $('Fetch history').item.json.messages.find((message) => message.system && message.system.startsWith(\"UserId\"))?.system.split(\" \")[1] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -3760,
+        -1344
+      ],
+      "id": "c0b4078d-8fe7-4560-bb25-591f6a96156e",
+      "name": "Set UserId"
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "messages": {
+          "messageValues": [
+            {
+              "message": "=TrackerId {{ $json.TrackerId }}"
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryManager",
+      "typeVersion": 1.1,
+      "position": [
+        528,
+        1376
+      ],
+      "id": "631f004e-009e-4796-9fd5-729a760c3ea9",
+      "name": "Insert TrackerId into history"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "15f36c24-64a0-4a95-9a50-aca27bf81b25",
+              "name": "trackerId",
+              "value": "={{ parseInt($('Fetch history').item.json.messages.find((message) => message.system && message.system.startsWith(\"TrackerId\"))?.system.split(\" \")[1] ?? -1) }}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -3536,
+        -1344
+      ],
+      "id": "a72a6986-a65e-41ef-a9c6-e5c3803d00be",
+      "name": "Set TrackerId"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT TOP 1 TrackerId, Name, PhoneNumber FROM Mobiltracker.dbo.Trackers\nWHERE UserId = '{{ $('Set UserId').item.json.userId }}'\n  AND Name = '{{ $('Fetch history').item.json.messages.filter(message => message.ai !== undefined).last().ai.split(\"\\n\").find(item => item.split(\".\")[0] === $('Set conversation parameters').item.json.userMessage).split(\".\").slice(1).join(\".\").trim() }}'"
+      },
+      "type": "n8n-nodes-base.microsoftSql",
+      "typeVersion": 1.1,
+      "position": [
+        240,
+        1376
+      ],
+      "id": "ff6c1c32-fc90-4ba4-8736-acefa2de64ce",
+      "name": "Fetch tracker info based on response",
+      "credentials": {
+        "microsoftSql": {
+          "id": "q8QnAyDOfZ8HwqL2",
+          "name": "SQLServer account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b8171729-e2c2-4cc0-8012-3bcda143edef",
+              "name": "response",
+              "value": "=O número do chip do seu rastreador de nome {{ $json.Name }} é {{ $json.PhoneNumber }}?\n1. Sim, esse é o número do chip\n2. Não, o número do chip é outro\n3. Outro rastreador está offline\n4. Encerrar atendimento",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1232,
+        -1488
+      ],
+      "id": "d09d9b42-9c73-4a35-bf70-f4009a24800c",
+      "name": "Set verify phone response"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b8171729-e2c2-4cc0-8012-3bcda143edef",
+              "name": "response",
+              "value": "={{ $('Set verify phone response').item.json.response }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1872,
+        -1488
+      ],
+      "id": "1ae6fffb-4f11-428d-a358-6ac3604b591c",
+      "name": "Reset verify phone response"
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "messages": {
+          "messageValues": [
+            {
+              "message": "simcard_number_confirmation"
+            },
+            {
+              "type": "ai",
+              "message": "={{ $json.response }}"
+            },
+            {
+              "type": "user",
+              "message": "={{ $('Set conversation parameters').item.json.userMessage }}"
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryManager",
+      "typeVersion": 1.1,
+      "position": [
+        1456,
+        -1488
+      ],
+      "id": "fb326ac6-2abf-4945-bde0-9faf82645c20",
+      "name": "Insert verify phone state into history"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ ['1', 'sim'].includes($('Set conversation parameters').item.json.userMessage.toLowerCase()) }}",
+                    "rightValue": "1",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    },
+                    "id": "d8b69456-c1de-4559-899b-c6c87b6f7ec5"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Yes"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "15d05c38-af8d-4f58-9b73-f4e8e8107aa3",
+                    "leftValue": "={{ ['2', 'nao', 'não'].includes($('Set conversation parameters').item.json.userMessage.toLowerCase()) }}",
+                    "rightValue": "2",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "No"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "0811508b-9481-4806-9fdc-304985141c2b",
+                    "leftValue": "={{ ['3', 'outro', 'outro rastreador'].includes($('Set conversation parameters').item.json.userMessage.toLowerCase()) }}",
+                    "rightValue": "3",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Return"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "42824145-1964-4ead-9f70-eb12048caa9f",
+                    "leftValue": "={{ ['4', 'encerrar atendimento'].includes($('Set conversation parameters').item.json.userMessage.toLowerCase()) }}",
+                    "rightValue": "4",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Cancel"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra"
+        }
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        -48,
+        -1776
+      ],
+      "id": "64c16dba-20b5-44d2-84e1-a01f1ed2eaae",
+      "name": "Route based on simcard phone confirmation"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3bb9167c-5cfe-421d-9518-49a139e7d930",
+              "name": "response",
+              "value": "=Não vai ser possível realizar os testes necessários. Atualize o número de telefone na conta de e-mail: {{ $json.Email }} e tente novamente.\nParece que seu rastreador está sem alguns dados, ou eles estão desatualizados. Para ver ou modificar os dados de cadastro do rastreador, utilize os passos abaixo e depois retome o contato caso precise de ajuda.\n  1. Faça login em http://portal.mobiltracker.com.br ou crie uma conta gratuita;\n  2. Vá em Menu > Gerenciar Rastreadores;\n  3. Escolha o rastreador que deseja ver ou modificar os dados;\n  4. Clique no ícone de lápis no canto direito de cada dado caso queira modificar algo;\n  5. Clique em Confirmar e seu rastreador estará com dados atualizados.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2160,
+        -1824
+      ],
+      "id": "331f82b4-2838-4bd0-8d89-b5f431066d01",
+      "name": "Inform user to update tracker number"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT Name, PhoneNumber FROM Mobiltracker.dbo.Trackers\nWHERE TrackerId = {{ $('Set TrackerId').item.json.trackerId }}"
+      },
+      "type": "n8n-nodes-base.microsoftSql",
+      "typeVersion": 1.1,
+      "position": [
+        240,
+        -1488
+      ],
+      "id": "1e878ab0-6b73-4b69-bad9-45443e0ed13a",
+      "name": "Fetch new phone number",
+      "credentials": {
+        "microsoftSql": {
+          "id": "q8QnAyDOfZ8HwqL2",
+          "name": "SQLServer account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ ['1', 'sim'].includes($('Set conversation parameters').item.json.userMessage) }}",
+                    "rightValue": "1",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    },
+                    "id": "c689b837-8f3e-4c02-9ff8-9fafd5a85bb9"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Yes"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "cbeaa9ba-16b0-4874-9782-a95563524bbb",
+                    "leftValue": "={{ ['2', 'nao', 'não'].includes($('Set conversation parameters').item.json.userMessage) }}",
+                    "rightValue": "2",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "No"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "04a83422-5751-4b2c-87ec-8ebdf6e0626e",
+                    "leftValue": "={{ ['3', 'voltar à etapa anterior'].includes($('Set conversation parameters').item.json.userMessage) }}",
+                    "rightValue": "3",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Return"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "5870f748-7d12-4f1d-b3b8-a46ba4836ff9",
+                    "leftValue": "={{ ['4', 'encerrar o atendimento'].includes($('Set conversation parameters').item.json.userMessage) }}",
+                    "rightValue": "4",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Cancel"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra"
+        }
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        -48,
+        752
+      ],
+      "id": "0548a7d3-4b44-4856-894c-b581604fc4e0",
+      "name": "Route based on device on confirmation"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f966d9f9-857b-439d-8d53-5407e6be85b9",
+              "name": "=response",
+              "value": "=Por favor, ligue o rastreador {{ $json.Name }} para que possamos realizar os testes.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2160,
+        896
+      ],
+      "id": "412f2e5f-bfd9-47f6-b52c-cd61f1cc0a78",
+      "name": "Set turn on device response"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "765fe8b0-5bd1-4d7c-90ec-456a082d4e3c",
+              "name": "response",
+              "value": "=O IMEI do rastreador {{ $json.Name }} é {{ $json.IMEI }}?\n1. Sim, o IMEI está correto\n2. Não, o IMEI é outro\n3. Voltar à etapa anterior\n4. Encerrar atendimento",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        592,
+        32
+      ],
+      "id": "3f56c08a-b885-4cd2-8956-fc0f63ca7fc5",
+      "name": "Set verify IMEI response"
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "messages": {
+          "messageValues": [
+            {
+              "message": "imei_confirmation"
+            },
+            {
+              "type": "ai",
+              "message": "={{ $json.response }}"
+            },
+            {
+              "type": "user",
+              "message": "={{ $('Set conversation parameters').item.json.userMessage }}"
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryManager",
+      "typeVersion": 1.1,
+      "position": [
+        880,
+        32
+      ],
+      "id": "709acb66-d3aa-45ed-a4bb-2b1604fa8b02",
+      "name": "Insert verify IMEI state into history"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3cdfba09-78da-4263-b5ed-7665c43eff35",
+              "name": "response",
+              "value": "={{ $('Set verify IMEI response').item.json.response }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1232,
+        32
+      ],
+      "id": "0cf295ba-1869-4f07-aeb9-2dee544ac9cb",
+      "name": "Reset IMEI response"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ [\"1\", \"sim\"].includes($('Set conversation parameters').item.json.userMessage.toLowerCase()) }}",
+                    "rightValue": "1",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    },
+                    "id": "206bbe13-e5bf-4d4c-b1d6-3e493184a655"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Yes"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "82ca3715-d326-408d-961e-8d7b0e8e9d18",
+                    "leftValue": "={{ [\"2\", \"nao\", \"não\"].includes( $('Set conversation parameters').item.json.userMessage.toLowerCase()) }}",
+                    "rightValue": "2",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "No"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "2878d1ac-7995-48f7-a074-fccac6d18aa6",
+                    "leftValue": "={{ [\"3\", \"voltar à etapa anterior\"].includes( $('Set conversation parameters').item.json.userMessage.toLowerCase()) }}",
+                    "rightValue": "3",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Return"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "2d8b9e07-a361-415a-af4b-3f76f88044d4",
+                    "leftValue": "={{ [\"4\", \"encerrar atendimento\"].includes( $('Set conversation parameters').item.json.userMessage.toLowerCase()) }}",
+                    "rightValue": "4",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Cancel"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra"
+        }
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        -3088,
+        -576
+      ],
+      "id": "80531410-d95a-414a-b044-6c20cb9af42b",
+      "name": "Route based on IMEI response"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "10bb209b-4aa2-486a-b498-3ccdede70c69",
+              "name": "response",
+              "value": "=Não vai ser possível realizar os testes necessários. Cadastre o IMEI corretamente no rastreador {{ $json.Name }} para que eu possa prosseguir com o atendimento.\nParece que seu rastreador está sem alguns dados, ou eles estão desatualizados. Para ver ou modificar os dados de cadastro do rastreador, utilize os passos abaixo e depois retome o contato caso precise de ajuda.\n  1. Faça login em http://portal.mobiltracker.com.br ou crie uma conta gratuita;\n  2. Vá em Menu > Gerenciar Rastreadores;\n  3. Escolha o rastreador que deseja ver ou modificar os dados;\n  4. Clique no ícone de lápis no canto direito de cada dado caso queira modificar algo;\n  5. Clique em Confirmar e seu rastreador estará com dados atualizados.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2160,
+        -128
+      ],
+      "id": "97c413ab-1b6b-4aa4-ab6a-d22528e0afc7",
+      "name": "Set fix IMEI response"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "00aaac6e-9701-41e1-b2bb-040a7b53a2ec",
+              "name": "nextState",
+              "value": "sms_test",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -2864,
+        -416
+      ],
+      "id": "c52ad754-b7c0-4e89-a17b-550949b688db",
+      "name": "Set next state to SMS test"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.smsmarket.com.br/webservice-rest/send-single",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "type",
+              "value": "0"
+            },
+            {
+              "name": "number",
+              "value": "={{ $json.PhoneNumber }}"
+            },
+            {
+              "name": "content",
+              "value": "PING!"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -2416,
+        -320
+      ],
+      "id": "2dec04b9-476d-4374-971b-3f1c465127bc",
+      "name": "Send SMS",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "25o54kG74LBJNe8x",
+          "name": "SMS Market"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT PhoneNumber FROM Mobiltracker.dbo.Trackers WHERE TrackerId = {{ $('Set TrackerId').item.json.trackerId }}"
+      },
+      "type": "n8n-nodes-base.microsoftSql",
+      "typeVersion": 1.1,
+      "position": [
+        -2640,
+        -320
+      ],
+      "id": "c5eac42a-a328-4382-90fa-4480bdc2eeeb",
+      "name": "Fetch phone number for SMS",
+      "credentials": {
+        "microsoftSql": {
+          "id": "q8QnAyDOfZ8HwqL2",
+          "name": "SQLServer account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 30
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -1968,
+        -320
+      ],
+      "id": "62ffbf0a-be64-4d88-8b2a-cb078a481673",
+      "name": "Wait",
+      "webhookId": "df9bbd95-ef75-4709-b418-03f29c2953d4"
+    },
+    {
+      "parameters": {
+        "url": "https://api.smsmarket.com.br/webservice-rest/mt_id",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "id",
+              "value": "={{ $('Send SMS').item.json.id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -1744,
+        -464
+      ],
+      "id": "72e6ee0c-0c75-4ead-9fe0-e3575700e98f",
+      "name": "Retrieve SMS status",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "25o54kG74LBJNe8x",
+          "name": "SMS Market"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "8124ecd0-40a2-4b5b-8769-2a8bd5874fd9",
+              "name": "before",
+              "value": "={{ new Date().getTime() }}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -2192,
+        -320
+      ],
+      "id": "1645d952-6b96-4dc8-b0a7-2148ed3eae09",
+      "name": "Set current time"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "7276acf2-7fb8-4c02-9ee3-b5200fe0b514",
+              "leftValue": "={{ new Date().getTime() - $('Set current time').item.json.before }}",
+              "rightValue": "={{ 5 * 60 * 1000 }}",
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -1296,
+        -480
+      ],
+      "id": "7bb4ac3e-d4a3-4c28-9cae-0584f1dbc7ef",
+      "name": "Has the operation timed out?"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.success }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "false",
+                      "singleValue": true
+                    },
+                    "id": "7a2becb5-7cf6-4748-9080-4001fdad6a0a"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Failed"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "716b6e40-2b8c-468a-8cf9-6eee5863ffff",
+                    "leftValue": "={{ $json.messages[0].status }}",
+                    "rightValue": "0",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Received to operator"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "b83d3b59-bcd2-4977-8ab4-8cafc8fc31de",
+                    "leftValue": "={{ $json.messages[0].status }}",
+                    "rightValue": "1",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "=Success"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "4a0a29bd-2329-4008-b488-0afc56862874",
+                    "leftValue": "={{ $json.messages[0].status }}",
+                    "rightValue": "3",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Preparing message"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "5fd5cf12-f547-4162-8011-baaf9c7db468",
+                    "leftValue": "={{ $json.messages[0].status }}",
+                    "rightValue": "-1",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Message queued"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": 0
+        }
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        -1520,
+        -512
+      ],
+      "id": "1f7ffc03-aa31-4518-8677-4d6e6ae4ebb7",
+      "name": "Route based on SMS result"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "86bcfdb8-4217-4fdc-be19-80f42157b901",
+              "name": "response",
+              "value": "=Realizei os testes de SMS, mas eles não foram entregues. O rastreador não está conectado na rede de telefonia do seu chip.\nHá alguns motivos para isso ocorrer:\n    1. A região pode estar sem sinal da operadora.\n    2. O rastreador pode estar desligado ou travado.\n    3. O chip pode estar desativado ou com defeito.\n    4. O que você pode fazer:\n        a. Retifique-se de que o rastreador encontra-se ligado.\n        b. Se puder, teste com outro chip que esteja funcionando.\n        c. Fale com o fornecedor do chip para confirmar se está tudo certo com ele.\n\nCaso queira, assista a este vídeo para tentar identificar por si o problema com o rastreador: https://youtu.be/O7ng8lKIyxw\n\nParece que não consigo fazer mais do que isso. Caso não tenha resolvido seu problema, entre em contato com o suporte humano: 👉 {{ \n'https://wa.me/555181860143?text=' + encodeURIComponent(\n'Olá, Preciso de ajuda com o meu rastreador: [' + $(' Set user e-mail for SMS fail').item.json.Email + '][' + $('Set TrackerId').item.json.trackerId + '][SMSNE]'\n)\n}}\n\nNão altere a mensagem, ela nos ajuda a resolver o seu problema.\nAté já! Agradecemos pelo contato e estamos sempre à disposição. 😉",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -848,
+        -416
+      ],
+      "id": "a63f9ad2-249c-4669-9447-bb1c40b1323e",
+      "name": "Set response to SMS failed"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "55e76078-3d6f-457a-95d3-e5c8c8d5f615",
+              "name": "response",
+              "value": "Por favor, aguarde, realizando testes...",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2160,
+        -1344
+      ],
+      "id": "2545ee70-f6bd-49be-994c-1d0bc9b135ad",
+      "name": "Tell user to wait until operation is finished"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT Text\nFROM Mobiltracker.dbo.OprOperationTemplateSteps\n         JOIN Mobiltracker.dbo.OprOperationTemplates\n              ON OprOperationTemplateSteps.OprOperationTemplateId = OprOperationTemplates.OprOperationTemplateId\n                  AND OperationType = '{{ $json.operationType }}'\n         JOIN Mobiltracker.dbo.TrackerClasses ON TrackerClasses.SmsProtocol = OprOperationTemplates.SmsProtocol\n         JOIN Mobiltracker.dbo.Trackers\n              ON TrackerClasses.TrackerClassId = Trackers.TrackerClassId AND TrackerId = {{ $('Set TrackerId').item.json.trackerId }}\n         JOIN Mobiltracker.dbo.SmsProtocolCommand ON Protocol = TrackerClasses.SmsProtocol AND\n                                                     SmsProtocolCommand.CommandType =\n                                                     OprOperationTemplateSteps.CommandType"
+      },
+      "type": "n8n-nodes-base.microsoftSql",
+      "typeVersion": 1.1,
+      "position": [
+        -272,
+        -752
+      ],
+      "id": "0aff04bc-b6e5-4462-8f46-499e77114705",
+      "name": "Retrieve operation commands",
+      "alwaysOutputData": true,
+      "credentials": {
+        "microsoftSql": {
+          "id": "q8QnAyDOfZ8HwqL2",
+          "name": "SQLServer account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT TrackerClasses.Name,\n       Password,\n       PhoneNumber,\n       APNUser,\n       APNPassword,\n       APNUrl,\n       TrackingInterval,\n       Timezone,\n       IMEI_11,\n       IMEI\nFROM Mobiltracker.dbo.Trackers\n         JOIN Mobiltracker.dbo.TrackerClasses\n              ON TrackerClasses.TrackerClassId = Trackers.TrackerClassId\nWHERE TrackerId = {{ $('Set TrackerId').item.json.trackerId }}"
+      },
+      "type": "n8n-nodes-base.microsoftSql",
+      "typeVersion": 1.1,
+      "position": [
+        -1296,
+        -752
+      ],
+      "id": "f638a3bc-58c8-49bb-84f6-d3ebe44ee504",
+      "name": "Fetch tracker data for replacing",
+      "credentials": {
+        "microsoftSql": {
+          "id": "q8QnAyDOfZ8HwqL2",
+          "name": "SQLServer account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "destinationFieldName": "texts",
+        "include": "specifiedFields",
+        "fieldsToInclude": "Text",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        592,
+        -720
+      ],
+      "id": "612833b6-80eb-4da1-9f92-53cb32a0069f",
+      "name": "Aggregate SMS texts"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "c357b045-9907-4c9c-90fa-4c12df3b7c86",
+              "name": "Text",
+              "value": "={{ $json.Text.replaceAll(\"{server.ip}\", \"54.232.86.64\").replaceAll(\"{server.port}\", 30001).replaceAll(\"{password}\", $('Fetch tracker data for replacing').item.json.Password).replaceAll(\"{apn.url}\", $('Fetch tracker data for replacing').item.json.APNUrl).replaceAll(\"{apn.user}\", $('Fetch tracker data for replacing').item.json.APNUser).replaceAll(\"{apn.pass}\", $('Fetch tracker data for replacing').item.json.APNPassword).replaceAll(\"{interval}\", $('Fetch tracker data for replacing').item.json.TrackingInterval).replaceAll(\"{serial_number}\", $('Fetch tracker data for replacing').item.json.IMEI).replaceAll(\"{imei_11}\", $('Fetch tracker data for replacing').item.json.IMEI_11).replaceAll(\"{imei}\", $('Fetch tracker data for replacing').item.json.IMEI).replaceAll(\"{timezone}\", $('Fetch tracker data for replacing').item.json.Timezone).replaceAll(\"{tz.absolute}\", $('Fetch tracker data for replacing').item.json.Timezone.toString().padStart(2, \"0\")).replaceAll(\"{tz.hemisphere}\", $('Fetch tracker data for replacing').item.json.Timezone > 0 ? \"W\" : \"E\") }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        240,
+        -720
+      ],
+      "id": "4000b9d5-09db-4148-8af2-0f25966c2b3b",
+      "name": "Replace tracker fields"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "42bf6984-148e-4422-85b9-3349800caa48",
+              "name": "response",
+              "value": "=Enviaremos os seguintes comandos de configuração para o rastreador {{ $json.Name }}:\n{{ $('Aggregate SMS texts').item.json.texts.map(({Text:text},index) => `${index+1}. ${text}`).join(\"\\n\") }}\n\n\nPodemos prosseguir com a configuração?\n1. Sim, desejo prosseguir\n2. Não, preciso de ajuda mais específica",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2160,
+        -656
+      ],
+      "id": "4f001360-d4b7-49df-935b-c0621bbff7a7",
+      "name": "Set operation confirmation response"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "0545ac90-912e-49a1-947b-ee098d72695a",
+              "leftValue": "={{ $('Define states').item.json.states[$('Fetch next state').item.json.nextState].output }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1872,
+        -2880
+      ],
+      "id": "e6d4dec6-6012-45b6-bc1d-4d28c5e5aafd",
+      "name": "Is there an output?"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "8697bf35-91c3-436e-b753-7ce53ba5aae2",
+              "name": "nextState",
+              "value": "confirm_sms_operation",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        944,
+        -816
+      ],
+      "id": "2c408c23-b222-4473-bed8-42ebd1e006b9",
+      "name": "Set next state to confirm SMS operation"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ ['1', 'sim'].includes($('Set conversation parameters').item.json.userMessage.toLowerCase()) }}",
+                    "rightValue": "1",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    },
+                    "id": "452797fb-bd4f-4528-b22b-762f3fffad64"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Yes"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "30365163-6bb0-4d3f-8914-e29c80a76032",
+                    "leftValue": "={{ ['2', 'nao', 'não'].includes($('Set conversation parameters').item.json.userMessage.toLowerCase()) }}",
+                    "rightValue": "2",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "No"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra"
+        }
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        -1520,
+        304
+      ],
+      "id": "940a5794-a7c2-4262-b9d8-7808d5982c1c",
+      "name": "Route based on SMS confirm option"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT OprOperationTemplates.Name AS OperationName,\n       OprOperationTemplateId     AS OperationTemplateId,\n       OperationType,\n       TrackerId,\n       Trackers.Name              AS TrackerName\nFROM Mobiltracker.dbo.Trackers\n         JOIN Mobiltracker.dbo.TrackerClasses ON Trackers.TrackerClassId = TrackerClasses.TrackerClassId\n         JOIN Mobiltracker.dbo.OprOperationTemplates\n              ON OperationType = '{{ $json.operationType }}' AND\n                 OprOperationTemplates.SmsProtocol = TrackerClasses.SmsProtocol\nWHERE TrackerId = {{ $('Set TrackerId').item.json.trackerId }}"
+      },
+      "type": "n8n-nodes-base.microsoftSql",
+      "typeVersion": 1.1,
+      "position": [
+        1520,
+        416
+      ],
+      "id": "f10fb83a-c317-4a57-ba22-2b1458ece0dc",
+      "name": "Fetch tracker data for operation",
+      "credentials": {
+        "microsoftSql": {
+          "id": "q8QnAyDOfZ8HwqL2",
+          "name": "SQLServer account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "table": "[Mobiltracker].[dbo].[OprOperationExecutions]",
+        "columns": "=OperationType, TrackerId, OperationTemplateId, OperationName"
+      },
+      "type": "n8n-nodes-base.microsoftSql",
+      "typeVersion": 1.1,
+      "position": [
+        1872,
+        416
+      ],
+      "id": "e871176c-1e40-4f5c-8888-71ca071db786",
+      "name": "Create operation",
+      "credentials": {
+        "microsoftSql": {
+          "id": "q8QnAyDOfZ8HwqL2",
+          "name": "SQLServer account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "ab9a37c5-d59c-47cb-8798-996a8620c627",
+              "name": "response",
+              "value": "=Realizaremos a configuração no rastreador {{ $('Fetch tracker data for operation').item.json.TrackerName }}. Aguarde até 15 minutos e, caso o seu rastreador não volte a funcionar, entre em contato com o suporte humano: 👉 wa.me/mobiltracker\nAgradecemos pelo contato! Estamos sempre a disposição. 😉",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2160,
+        416
+      ],
+      "id": "b85a3b77-6ff9-43f5-ad88-0b932208a196",
+      "name": "Set final message"
+    },
+    {
+      "parameters": {
+        "mode": "delete",
+        "deleteMode": "all"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryManager",
+      "typeVersion": 1.1,
+      "position": [
+        2384,
+        896
+      ],
+      "id": "8093f1a5-8ea5-47a4-b1d6-15a1ab0aabbf",
+      "name": "Clear chat after operation created"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "48c01ce5-5e34-4ce9-b321-3f8f5f659385",
+              "leftValue": "={{ $json.isEmpty() }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -48,
+        -752
+      ],
+      "id": "c423c70a-e8a6-45c6-9898-0ca8f0a6219b",
+      "name": "Command exists?"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d7e8bcab-d5d1-43fe-987e-6933f7b92824",
+              "name": "operationType",
+              "value": "FIRST_TIME_CFG",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -560,
+        -864
+      ],
+      "id": "1cc1a6d6-e023-4697-85ef-2e22ed74c545",
+      "name": "Set operation type to first config"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d7e8bcab-d5d1-43fe-987e-6933f7b92824",
+              "name": "operationType",
+              "value": "RECONFIG",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -560,
+        -656
+      ],
+      "id": "5dfaed27-0fb3-4b56-b61f-a96d18a12897",
+      "name": "Set operation type to reconfig"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "propertyName": "lastTrackerLocation",
+        "key": "=ltl:{{$('Set TrackerId')}}",
+        "keyType": "hash",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        -1072,
+        -752
+      ],
+      "id": "8d74730b-6f67-4e3f-a569-395c2742e188",
+      "name": "Fetch last tracker location",
+      "credentials": {
+        "redis": {
+          "id": "x8KuS83oyqKTv9IX",
+          "name": "Development Redis"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.lastTrackerLocation.isEmpty() }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    },
+                    "id": "b822b39d-857a-4729-a344-ec5d83ef9d9f"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Never communicated"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "b41e64e4-0ede-4755-af98-a19728f5ea2d",
+                    "leftValue": "={{new Date().getTime() - new Date( $json.lastTrackerLocation.lastCommunication).getTime() }}",
+                    "rightValue": "={{ 30 * 24 * 60 * 60 * 1000}}",
+                    "operator": {
+                      "type": "number",
+                      "operation": "gt"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "More than 30 days"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "2c4dd013-4b10-4d6b-a702-dfde5ebdba99",
+                    "leftValue": "={{new Date().getTime() - new Date( $json.lastTrackerLocation.lastCommunication).getTime() }}",
+                    "rightValue": "={{ 30 * 24 * 60 * 60 * 1000}}",
+                    "operator": {
+                      "type": "number",
+                      "operation": "lte"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Less than 30 days"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra"
+        }
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        -848,
+        -784
+      ],
+      "id": "710751eb-4fdf-42aa-b791-5ce6183ecfd9",
+      "name": "Route based on last tracker communication"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "propertyName": "lastTrackerLocation",
+        "key": "=ltl:{{$('Set TrackerId')}}",
+        "keyType": "hash",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        592,
+        416
+      ],
+      "id": "437d8a32-a3cb-46c9-9c22-f548fade16bd",
+      "name": "Fetch last tracker location for creating operation",
+      "credentials": {
+        "redis": {
+          "id": "x8KuS83oyqKTv9IX",
+          "name": "Development Redis"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.lastTrackerLocation.isEmpty() }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    },
+                    "id": "b822b39d-857a-4729-a344-ec5d83ef9d9f"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Never communicated"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "b41e64e4-0ede-4755-af98-a19728f5ea2d",
+                    "leftValue": "={{new Date().getTime() - new Date( $json.lastTrackerLocation.lastCommunication).getTime() }}",
+                    "rightValue": "={{ 30 * 24 * 60 * 60 * 1000}}",
+                    "operator": {
+                      "type": "number",
+                      "operation": "gt"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "More than 30 days"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "2c4dd013-4b10-4d6b-a702-dfde5ebdba99",
+                    "leftValue": "={{new Date().getTime() - new Date( $json.lastTrackerLocation.lastCommunication).getTime() }}",
+                    "rightValue": "={{ 30 * 24 * 60 * 60 * 1000}}",
+                    "operator": {
+                      "type": "number",
+                      "operation": "lte"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Less than 30 days"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra"
+        }
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        944,
+        384
+      ],
+      "id": "97ea6888-b3c6-4001-a869-92087d0c223c",
+      "name": "Route based on last tracker communication for creating operation"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d7e8bcab-d5d1-43fe-987e-6933f7b92824",
+              "name": "operationType",
+              "value": "FIRST_TIME_CFG",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1232,
+        272
+      ],
+      "id": "daea4a01-1d4d-4815-b721-3ec0d09bb7ff",
+      "name": "Set operation type to first config for creating operation"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d7e8bcab-d5d1-43fe-987e-6933f7b92824",
+              "name": "operationType",
+              "value": "RECONFIG",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1232,
+        528
+      ],
+      "id": "1fbe329e-cffd-4157-affd-47ed279402ac",
+      "name": "Set operation type to reconfig for creating operation"
+    },
+    {
+      "parameters": {
+        "mode": "delete",
+        "deleteMode": "all"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryManager",
+      "typeVersion": 1.1,
+      "position": [
+        -624,
+        -320
+      ],
+      "id": "28110c0a-1867-4870-8468-d4e1b861f8e5",
+      "name": "Clear chat after SMS fail"
+    },
+    {
+      "parameters": {
+        "mode": "delete",
+        "deleteMode": "all"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryManager",
+      "typeVersion": 1.1,
+      "position": [
+        1808,
+        -2592
+      ],
+      "id": "81d2aaac-7ada-4d20-880e-43b837c06124",
+      "name": "Clear chat for other account"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d2b1db48-9fcb-4146-863b-efa3ae37ba59",
+              "name": "response",
+              "value": "=Este é um atendimento automático. Para suporte para outras contas, entre em contato com o suporte humano: 👉 wa.me/mobiltracker",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2160,
+        -2592
+      ],
+      "id": "3860fc1b-46c0-47ac-a672-536c13360af9",
+      "name": "Set response for chat clearing after other account"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT Name FROM Mobiltracker.dbo.Trackers WHERE TrackerId = {{ $('Set TrackerId').item.json.trackerId }}"
+      },
+      "type": "n8n-nodes-base.microsoftSql",
+      "typeVersion": 1.1,
+      "position": [
+        240,
+        -1680
+      ],
+      "id": "160a28a6-4376-40c2-a837-266f3f6f00dc",
+      "name": "Fetch tracker name for device on",
+      "credentials": {
+        "microsoftSql": {
+          "id": "q8QnAyDOfZ8HwqL2",
+          "name": "SQLServer account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "messages": {
+          "messageValues": [
+            {
+              "message": "=is_device_on"
+            },
+            {
+              "type": "ai",
+              "message": "={{ $('Set response to device on').item.json.response }}"
+            },
+            {
+              "type": "user",
+              "message": "={{ $('Set conversation parameters').item.json.userMessage }}"
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryManager",
+      "typeVersion": 1.1,
+      "position": [
+        880,
+        -1680
+      ],
+      "id": "ce6ed73a-1377-4eb0-9c88-10127d1f645e",
+      "name": "Insert phone confirmation messages in history"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "e0bc54f9-bf9e-4a0d-8488-0b43e7590471",
+              "name": "response",
+              "value": "=O rastreador {{ $json.Name }} está ligado?\n1. Sim, o rastreador {{ $json.Name }} está ligado\n2. Não, o rastreador {{ $json.Name }} está desligado\n3. Voltar à etapa anterior\n4. Encerrar atendimento",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        592,
+        -1680
+      ],
+      "id": "d8e8f24c-e8a6-4d38-841e-aedccb372c40",
+      "name": "Set response to device on"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "6a38bb9c-1f41-4747-af6c-8305325fa14a",
+              "name": "response",
+              "value": "={{ $('Set response to device on').item.json.response }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1232,
+        -1680
+      ],
+      "id": "36e233c3-1082-450a-a61f-3fcda1ba1cc0",
+      "name": "Reset response for device on"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT IMEI, Name FROM Mobiltracker.dbo.Trackers WHERE TrackerId = {{ $('Set TrackerId').item.json.trackerId }}"
+      },
+      "type": "n8n-nodes-base.microsoftSql",
+      "typeVersion": 1.1,
+      "position": [
+        240,
+        32
+      ],
+      "id": "d5d2a504-cfdd-4ed7-99bd-4c3173fbb6f0",
+      "name": "Fetch IMEI and Name",
+      "credentials": {
+        "microsoftSql": {
+          "id": "q8QnAyDOfZ8HwqL2",
+          "name": "SQLServer account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT Email FROM Mobiltracker.dbo.Memberships WHERE UserId = '{{ $('Set UserId').item.json.userId }}'"
+      },
+      "type": "n8n-nodes-base.microsoftSql",
+      "typeVersion": 1.1,
+      "position": [
+        1872,
+        -1824
+      ],
+      "id": "18e569e8-0436-422a-8a60-0d61aabef745",
+      "name": "Fetch e-mail for phone",
+      "credentials": {
+        "microsoftSql": {
+          "id": "q8QnAyDOfZ8HwqL2",
+          "name": "SQLServer account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT Name FROM Mobiltracker.dbo.Trackers WHERE TrackerId = {{ $('Set TrackerId').item.json.trackerId }}"
+      },
+      "type": "n8n-nodes-base.microsoftSql",
+      "typeVersion": 1.1,
+      "position": [
+        1872,
+        896
+      ],
+      "id": "b88359aa-336c-4668-a4ee-846360073ec5",
+      "name": "Fetch tracker name for turn on device response",
+      "credentials": {
+        "microsoftSql": {
+          "id": "q8QnAyDOfZ8HwqL2",
+          "name": "SQLServer account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT Name FROM Mobiltracker.dbo.Trackers WHERE TrackerId = {{ $('Set TrackerId').item.json.trackerId }}"
+      },
+      "type": "n8n-nodes-base.microsoftSql",
+      "typeVersion": 1.1,
+      "position": [
+        1872,
+        -128
+      ],
+      "id": "338a8dac-8357-49d4-8f1f-52247a2ed97b",
+      "name": "Fetch tracker name for fix IMEI response",
+      "credentials": {
+        "microsoftSql": {
+          "id": "q8QnAyDOfZ8HwqL2",
+          "name": "SQLServer account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT Email FROM Mobiltracker.dbo.Memberships WHERE UserId = '{{ $('Set UserId').item.json.userId }}'"
+      },
+      "type": "n8n-nodes-base.microsoftSql",
+      "typeVersion": 1.1,
+      "position": [
+        -1072,
+        -416
+      ],
+      "id": "5cf43cc1-8bf8-40f0-9164-97b474ea3489",
+      "name": " Set user e-mail for SMS fail",
+      "credentials": {
+        "microsoftSql": {
+          "id": "q8QnAyDOfZ8HwqL2",
+          "name": "SQLServer account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT Name FROM Mobiltracker.dbo.Trackers WHERE TrackerId = {{ $('Set TrackerId').item.json.trackerId }}"
+      },
+      "type": "n8n-nodes-base.microsoftSql",
+      "typeVersion": 1.1,
+      "position": [
+        1872,
+        -656
+      ],
+      "id": "4e3112c7-c368-4cef-9e53-9f781268547c",
+      "name": "Fetch tracker name for operation commands response",
+      "credentials": {
+        "microsoftSql": {
+          "id": "q8QnAyDOfZ8HwqL2",
+          "name": "SQLServer account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "90e7c770-b891-44f8-aded-e2495d41ab9a",
+              "name": "PhoneNumber",
+              "value": "={{ $('Fetch tracker info based on response').item.json.PhoneNumber }}",
+              "type": "string"
+            },
+            {
+              "id": "81440783-b560-4c81-933c-fd82b55c2de2",
+              "name": "Name",
+              "value": "={{ $('Fetch tracker info based on response').item.json.Name }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        944,
+        1376
+      ],
+      "id": "10f9c3e1-3876-4d5f-8531-03d2f212d32f",
+      "name": "Set tracker data to freshly retrieved ones"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "cddcb515-6485-49d8-92ff-672689c3a205",
+              "leftValue": "={{ $json.isNotEmpty() }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        944,
+        -3520
+      ],
+      "id": "00474ddb-1cf7-4eda-b3da-89bd5ca49617",
+      "name": "Are there any trackers?"
+    },
+    {
+      "parameters": {
+        "mode": "delete",
+        "deleteMode": "all"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryManager",
+      "typeVersion": 1.1,
+      "position": [
+        1808,
+        -3376
+      ],
+      "id": "9cce9f89-106d-4383-b080-4793a39b8468",
+      "name": "Clear chat for no trackers"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "35f8e2a4-435d-48d7-8390-118e57065778",
+              "name": "response",
+              "value": "=Parece que não encontrei nenhum rastreador cadastrado em sua conta.\nPara cadastrar um rastreador, utilize os passos abaixo e depois retome o contato caso precise de ajuda.\nAssista ao vídeo: https://www.youtube.com/watch?v=_IJM9Yt4SaY&Caso não tenha sido suficiente, siga estes passos: \n  1. Faça login em http://portal.mobiltracker.com.br ou crie uma conta gratuita;\n  2. Vá em Menu > Cadastrar Rastreador;\n  3. Escolha seu modelo de rastreador;\n  4. Cadastre as informações de número e operadora do chip do rastreador;\n  5. Cadastre o número de IMEI do rastreador;\n  6. Escolha o nome do rastreador;\n  7. Selecione o propósito do rastreador (isso definirá qual será o ícone do rastreador no mapa);\n  8. Clique em Salvar;\n  9. Selecione qual configuração deseja fazer (a configuração automática só funcionará se o rastreador responder aos comandos SMS).\nAgradecemos pelo contato e estamos sempre à disposição. 😉",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2160,
+        -3376
+      ],
+      "id": "4c2526f3-d960-4ae7-98fc-7e287f2ef0f3",
+      "name": "Set response for no trackers"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "0cefe694-c64e-451d-a6e4-ff62566e5dea",
+              "leftValue": "={{ [\"connection.open\", \"connection.close\"].includes($json.body.event) }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        -6128,
+        -1344
+      ],
+      "id": "9f357bd9-ae73-4c0b-aceb-fc6c69764024",
+      "name": "Filter desired events"
+    },
+    {
+      "parameters": {
+        "public": true,
+        "initialMessages": "Olá, como posso ajudar?",
+        "options": {
+          "responseMode": "lastNode"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -5904,
+        -1152
+      ],
+      "id": "601b3d5c-7a9f-4cc0-bf97-f2b6ba8919cb",
+      "name": "When chat message received",
+      "webhookId": "8ac12266-378a-4b57-9115-9155f2bb474d"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d1983719-dddf-4841-8082-9327b95dc0d6",
+              "name": "output",
+              "value": "={{ $('Retrieve response').item.json.response }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2960,
+        -1664
+      ],
+      "id": "7fcfb032-3882-4569-98c2-6e2cf4c40f5e",
+      "name": "Set chat output"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://n8n.dev.mobiltk.com.br/webhook/1065f55f-8c4c-488c-be92-b5cf8e3e72c5",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $('Webhook').item.json.body }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -6352,
+        -1632
+      ],
+      "id": "8bd5f9be-bc71-4203-8ec2-cad40e4436b8",
+      "name": "Redirect to other webhook",
+      "onError": "continueRegularOutput"
+    }
+  ],
+  "owner": "daLuz109",
+  "path": "https://github.com/daLuz109/test",
+  "pinData": {},
+  "repo": "test",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-07-16T16:24:05.682Z",
+      "createdAt": "2025-07-16T16:24:05.682Z",
+      "role": "workflow:owner",
+      "workflowId": "RLtDXsJPciyugIfb",
+      "projectId": "ibRx4KzVa8okoVWI"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 2,
+  "updatedAt": "2025-10-09T14:02:16.122Z",
+  "versionId": "bd1c1e62-5772-4d05-918b-dbaad17184bd"
+}
