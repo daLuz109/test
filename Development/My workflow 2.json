@@ -1,0 +1,50 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {},
+  "createdAt": "2025-09-23T21:20:27.260Z",
+  "id": "wUDoSwkjRILAdejB",
+  "isArchived": true,
+  "isProd": false,
+  "meta": null,
+  "name": "My workflow 2",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "971e3283-aff3-4f0b-a377-bb75841bab4e",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "f4b723d0-f0af-4c11-9fc8-c6dcac4e7986",
+      "name": "Webhook",
+      "webhookId": "971e3283-aff3-4f0b-a377-bb75841bab4e"
+    }
+  ],
+  "owner": "daLuz109",
+  "path": "https://github.com/daLuz109/test",
+  "pinData": {},
+  "repo": "test",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-09-23T21:20:27.260Z",
+      "createdAt": "2025-09-23T21:20:27.260Z",
+      "role": "workflow:owner",
+      "workflowId": "wUDoSwkjRILAdejB",
+      "projectId": "ibRx4KzVa8okoVWI"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-09-24T13:36:30.930Z",
+  "versionId": "b83807a4-b047-46dc-a517-426cb68c61f8"
+}
