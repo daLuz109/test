@@ -1,0 +1,1449 @@
+{
+  "active": true,
+  "activeVersion": {
+    "updatedAt": "2026-04-29T20:26:53.866Z",
+    "createdAt": "2026-04-29T20:26:53.866Z",
+    "versionId": "0ef8c136-2ba6-47cb-ba44-1d4d540ed0a2",
+    "workflowId": "SDog3SFvinCx8EWQ",
+    "nodes": [
+      {
+        "parameters": {
+          "rule": {
+            "interval": [
+              {}
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.scheduleTrigger",
+        "typeVersion": 1.2,
+        "position": [
+          0,
+          -64
+        ],
+        "id": "54f166da-1aa9-4474-8439-c57a302c8ac4",
+        "name": "Schedule Trigger"
+      },
+      {
+        "parameters": {
+          "profileName": "marlon",
+          "saveProfileOnTermination": true,
+          "additionalFields": {}
+        },
+        "type": "n8n-nodes-base.airtop",
+        "typeVersion": 1,
+        "position": [
+          224,
+          -64
+        ],
+        "id": "602a6c82-5a9f-4582-b517-89c85686b1d4",
+        "name": "Create a session",
+        "credentials": {
+          "airtopApi": {
+            "id": "qcYzbrpQLeS2oRX8",
+            "name": "Airtop account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "window",
+          "url": "https://allmanager.com.br/management",
+          "getLiveView": true,
+          "includeNavigationBar": true,
+          "additionalFields": {}
+        },
+        "type": "n8n-nodes-base.airtop",
+        "typeVersion": 1,
+        "position": [
+          448,
+          -64
+        ],
+        "id": "45519df7-0ece-4e60-bfce-1c258075e899",
+        "name": "Create a window",
+        "credentials": {
+          "airtopApi": {
+            "id": "qcYzbrpQLeS2oRX8",
+            "name": "Airtop account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "interaction",
+          "operation": "type",
+          "text": "25052682000107",
+          "elementDescription": "email input box",
+          "additionalFields": {}
+        },
+        "type": "n8n-nodes-base.airtop",
+        "typeVersion": 1,
+        "position": [
+          672,
+          -64
+        ],
+        "id": "c5705432-3ce7-4a86-bb2a-24804948f6d5",
+        "name": "Type username",
+        "credentials": {
+          "airtopApi": {
+            "id": "qcYzbrpQLeS2oRX8",
+            "name": "Airtop account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "interaction",
+          "elementDescription": "click out of input box at any white space",
+          "additionalFields": {}
+        },
+        "type": "n8n-nodes-base.airtop",
+        "typeVersion": 1,
+        "position": [
+          896,
+          -64
+        ],
+        "id": "1681cebc-f8e0-4a64-a775-3481bf125022",
+        "name": "Click confirm username",
+        "credentials": {
+          "airtopApi": {
+            "id": "qcYzbrpQLeS2oRX8",
+            "name": "Airtop account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "interaction",
+          "operation": "type",
+          "text": "allc0m#@!",
+          "pressEnterKey": true,
+          "elementDescription": "password input box",
+          "additionalFields": {}
+        },
+        "type": "n8n-nodes-base.airtop",
+        "typeVersion": 1,
+        "position": [
+          1120,
+          -64
+        ],
+        "id": "b7d74e5d-e546-4799-90e7-75c826811b5e",
+        "name": "Type password and ENTER",
+        "credentials": {
+          "airtopApi": {
+            "id": "qcYzbrpQLeS2oRX8",
+            "name": "Airtop account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "interaction",
+          "elementDescription": "Dashboards tab at top left of page",
+          "additionalFields": {}
+        },
+        "type": "n8n-nodes-base.airtop",
+        "typeVersion": 1,
+        "position": [
+          1568,
+          -64
+        ],
+        "id": "7c57f2dc-a9d8-421d-907b-17239da99f3f",
+        "name": "Click Dashboards tab",
+        "credentials": {
+          "airtopApi": {
+            "id": "qcYzbrpQLeS2oRX8",
+            "name": "Airtop account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "interaction",
+          "elementDescription": "Ativos Button",
+          "additionalFields": {}
+        },
+        "type": "n8n-nodes-base.airtop",
+        "typeVersion": 1,
+        "position": [
+          2000,
+          -64
+        ],
+        "id": "b3215d46-1d98-4df5-ba19-031f4b2f24e7",
+        "name": "Click Ativos",
+        "credentials": {
+          "airtopApi": {
+            "id": "qcYzbrpQLeS2oRX8",
+            "name": "Airtop account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "interaction",
+          "elementDescription": "first of four buttons at middle-right side with double paper icon with \"Solicitar relatório\" button description",
+          "additionalFields": {}
+        },
+        "type": "n8n-nodes-base.airtop",
+        "typeVersion": 1,
+        "position": [
+          2432,
+          -64
+        ],
+        "id": "53f8c2da-4ead-471d-b27a-cd1850f8f1aa",
+        "name": "Click generate reports",
+        "credentials": {
+          "airtopApi": {
+            "id": "qcYzbrpQLeS2oRX8",
+            "name": "Airtop account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "interaction",
+          "elementDescription": "Confirmar button",
+          "additionalFields": {}
+        },
+        "type": "n8n-nodes-base.airtop",
+        "typeVersion": 1,
+        "position": [
+          2656,
+          -64
+        ],
+        "id": "80a75945-5c8a-4823-902f-6e48bf79865a",
+        "name": "Click confirm reports",
+        "credentials": {
+          "airtopApi": {
+            "id": "qcYzbrpQLeS2oRX8",
+            "name": "Airtop account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "interaction",
+          "elementDescription": "Relatorios tab",
+          "additionalFields": {}
+        },
+        "type": "n8n-nodes-base.airtop",
+        "typeVersion": 1,
+        "position": [
+          3088,
+          -64
+        ],
+        "id": "bfccb870-afa6-4f8f-88ee-84f4f37adeff",
+        "name": "Click Relatorios",
+        "credentials": {
+          "airtopApi": {
+            "id": "qcYzbrpQLeS2oRX8",
+            "name": "Airtop account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "extraction",
+          "operation": "query",
+          "prompt": "=get the download link from the first download icon",
+          "additionalFields": {}
+        },
+        "type": "n8n-nodes-base.airtop",
+        "typeVersion": 1,
+        "position": [
+          3536,
+          -64
+        ],
+        "id": "b29ee6e2-1b68-4bae-8765-d52c882debe2",
+        "name": "Query page",
+        "credentials": {
+          "airtopApi": {
+            "id": "qcYzbrpQLeS2oRX8",
+            "name": "Airtop account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "interaction",
+          "operation": "hover",
+          "elementDescription": "fisrt download icon below Arquivos",
+          "additionalFields": {}
+        },
+        "type": "n8n-nodes-base.airtop",
+        "typeVersion": 1,
+        "position": [
+          3312,
+          -64
+        ],
+        "id": "ceed40bf-7450-42a8-b2dc-a632179d01be",
+        "name": "Hover on an element",
+        "credentials": {
+          "airtopApi": {
+            "id": "qcYzbrpQLeS2oRX8",
+            "name": "Airtop account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "url": "={{ $json.data.modelResponse.replace(\"The download link from the first download icon is: \", \"https://allmanager.com.br\") }}",
+          "options": {
+            "allowUnauthorizedCerts": true,
+            "response": {
+              "response": {
+                "responseFormat": "file"
+              }
+            }
+          }
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          3760,
+          32
+        ],
+        "id": "c51d1d12-8c96-44dc-8ec5-9467b98613af",
+        "name": "Download report zip file"
+      },
+      {
+        "parameters": {},
+        "type": "n8n-nodes-base.compression",
+        "typeVersion": 1.1,
+        "position": [
+          3984,
+          32
+        ],
+        "id": "ecf53f09-4c7f-4e9a-91f9-d8441baa6ed5",
+        "name": "Compression"
+      },
+      {
+        "parameters": {
+          "operation": "xlsx",
+          "binaryPropertyName": "file_0",
+          "options": {
+            "includeEmptyCells": true,
+            "sheetName": "Inventário"
+          }
+        },
+        "type": "n8n-nodes-base.extractFromFile",
+        "typeVersion": 1,
+        "position": [
+          4208,
+          32
+        ],
+        "id": "8d38965f-a00a-4b34-a169-a98677065202",
+        "name": "Extract from File"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "97dbddba-6737-4454-a0fc-672416997e18",
+                "name": "phoneNumber",
+                "value": "={{ $json.MSISDN.replace(/^(00)?55/, \"\") }}",
+                "type": "string"
+              },
+              {
+                "id": "04b9aa7f-77b7-4388-848e-914a664311f7",
+                "name": "consumptionValidated",
+                "value": "={{ $json['Consumo validado (KB)'] }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          4432,
+          32
+        ],
+        "id": "348f3801-12df-437e-9d13-327f148d95a8",
+        "name": "Edit Fields"
+      },
+      {
+        "parameters": {
+          "operation": "executeQuery",
+          "query": "INSERT INTO [Mobiltracker].dbo.[SimCardConsumption]\n([PhoneNumber], [Timestamp], [ConsumptionBytes])\nVALUES({{ $json.phoneNumber }}, GETDATE(), {{ $json.consumptionValidated }})"
+        },
+        "type": "n8n-nodes-base.microsoftSql",
+        "typeVersion": 1.1,
+        "position": [
+          4656,
+          32
+        ],
+        "id": "5b633ac0-ef98-4799-87c7-13cb10294134",
+        "name": "Microsoft SQL",
+        "credentials": {
+          "microsoftSql": {
+            "id": "q8QnAyDOfZ8HwqL2",
+            "name": "SQLServer account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "terminate",
+          "sessionId": "={{ $json.sessionId }}"
+        },
+        "type": "n8n-nodes-base.airtop",
+        "typeVersion": 1,
+        "position": [
+          3760,
+          -160
+        ],
+        "id": "ce427d50-2a4a-48b7-8644-f0c4987e541e",
+        "name": "Terminate a session",
+        "credentials": {
+          "airtopApi": {
+            "id": "qcYzbrpQLeS2oRX8",
+            "name": "Airtop account"
+          }
+        }
+      },
+      {
+        "parameters": {},
+        "type": "n8n-nodes-base.wait",
+        "typeVersion": 1.1,
+        "position": [
+          1344,
+          -64
+        ],
+        "id": "889f36da-b667-4ad7-88bf-8810d84d8c3a",
+        "name": "Wait",
+        "webhookId": "af784e7e-8aaa-4517-988e-b01f4b93a425",
+        "disabled": true
+      },
+      {
+        "parameters": {},
+        "type": "n8n-nodes-base.wait",
+        "typeVersion": 1.1,
+        "position": [
+          1776,
+          -64
+        ],
+        "id": "2c7f7172-7a51-4b2f-a29c-52b3301a800b",
+        "name": "Wait1",
+        "webhookId": "8a8b0037-4ec4-4339-aa83-8a4dac3daa9e",
+        "disabled": true
+      },
+      {
+        "parameters": {},
+        "type": "n8n-nodes-base.wait",
+        "typeVersion": 1.1,
+        "position": [
+          2208,
+          -64
+        ],
+        "id": "f4f973e7-9343-4866-81c0-59381211e0a9",
+        "name": "Wait2",
+        "webhookId": "63c6ce20-ff94-4d9c-9706-63b6da730018",
+        "disabled": true
+      },
+      {
+        "parameters": {
+          "amount": 10
+        },
+        "type": "n8n-nodes-base.wait",
+        "typeVersion": 1.1,
+        "position": [
+          2864,
+          -64
+        ],
+        "id": "a7a5504a-fb16-45c5-8bb4-a9f87287db9b",
+        "name": "Wait3",
+        "webhookId": "6c2601ed-1fa8-4bf6-bbfd-ae1d809d6633",
+        "disabled": true
+      }
+    ],
+    "connections": {
+      "Schedule Trigger": {
+        "main": [
+          [
+            {
+              "node": "Create a session",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create a session": {
+        "main": [
+          [
+            {
+              "node": "Create a window",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create a window": {
+        "main": [
+          [
+            {
+              "node": "Type username",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Type username": {
+        "main": [
+          [
+            {
+              "node": "Click confirm username",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Click confirm username": {
+        "main": [
+          [
+            {
+              "node": "Type password and ENTER",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Type password and ENTER": {
+        "main": [
+          [
+            {
+              "node": "Wait",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Click Dashboards tab": {
+        "main": [
+          [
+            {
+              "node": "Wait1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Click Ativos": {
+        "main": [
+          [
+            {
+              "node": "Wait2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Click generate reports": {
+        "main": [
+          [
+            {
+              "node": "Click confirm reports",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Click confirm reports": {
+        "main": [
+          [
+            {
+              "node": "Wait3",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Click Relatorios": {
+        "main": [
+          [
+            {
+              "node": "Hover on an element",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Hover on an element": {
+        "main": [
+          [
+            {
+              "node": "Query page",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Query page": {
+        "main": [
+          [
+            {
+              "node": "Download report zip file",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Terminate a session",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Download report zip file": {
+        "main": [
+          [
+            {
+              "node": "Compression",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Compression": {
+        "main": [
+          [
+            {
+              "node": "Extract from File",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Extract from File": {
+        "main": [
+          [
+            {
+              "node": "Edit Fields",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Edit Fields": {
+        "main": [
+          [
+            {
+              "node": "Microsoft SQL",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Microsoft SQL": {
+        "main": [
+          []
+        ]
+      },
+      "Terminate a session": {
+        "main": [
+          []
+        ]
+      },
+      "Wait": {
+        "main": [
+          [
+            {
+              "node": "Click Dashboards tab",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Wait1": {
+        "main": [
+          [
+            {
+              "node": "Click Ativos",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Wait2": {
+        "main": [
+          [
+            {
+              "node": "Click generate reports",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Wait3": {
+        "main": [
+          [
+            {
+              "node": "Click Relatorios",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Contato Mobiltracker",
+    "name": null,
+    "description": null,
+    "autosaved": false
+  },
+  "activeVersionId": "0ef8c136-2ba6-47cb-ba44-1d4d540ed0a2",
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Create a session",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a session": {
+      "main": [
+        [
+          {
+            "node": "Create a window",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a window": {
+      "main": [
+        [
+          {
+            "node": "Type username",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Type username": {
+      "main": [
+        [
+          {
+            "node": "Click confirm username",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Click confirm username": {
+      "main": [
+        [
+          {
+            "node": "Type password and ENTER",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Type password and ENTER": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Click Dashboards tab": {
+      "main": [
+        [
+          {
+            "node": "Wait1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Click Ativos": {
+      "main": [
+        [
+          {
+            "node": "Wait2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Click generate reports": {
+      "main": [
+        [
+          {
+            "node": "Click confirm reports",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Click confirm reports": {
+      "main": [
+        [
+          {
+            "node": "Wait3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Click Relatorios": {
+      "main": [
+        [
+          {
+            "node": "Hover on an element",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Hover on an element": {
+      "main": [
+        [
+          {
+            "node": "Query page",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Query page": {
+      "main": [
+        [
+          {
+            "node": "Download report zip file",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Terminate a session",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download report zip file": {
+      "main": [
+        [
+          {
+            "node": "Compression",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Compression": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Microsoft SQL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Microsoft SQL": {
+      "main": [
+        []
+      ]
+    },
+    "Terminate a session": {
+      "main": [
+        []
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Click Dashboards tab",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait1": {
+      "main": [
+        [
+          {
+            "node": "Click Ativos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait2": {
+      "main": [
+        [
+          {
+            "node": "Click generate reports",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait3": {
+      "main": [
+        [
+          {
+            "node": "Click Relatorios",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-04-29T20:26:53.853Z",
+  "id": "SDog3SFvinCx8EWQ",
+  "isArchived": false,
+  "isProd": true,
+  "meta": null,
+  "name": "[PRODUCTION] AirTop Test - 5JUrPhPZg4xWgN2d",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {}
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        -64
+      ],
+      "id": "54f166da-1aa9-4474-8439-c57a302c8ac4",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "profileName": "marlon",
+        "saveProfileOnTermination": true,
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.airtop",
+      "typeVersion": 1,
+      "position": [
+        224,
+        -64
+      ],
+      "id": "602a6c82-5a9f-4582-b517-89c85686b1d4",
+      "name": "Create a session",
+      "credentials": {
+        "airtopApi": {
+          "id": "qcYzbrpQLeS2oRX8",
+          "name": "Airtop account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "window",
+        "url": "https://allmanager.com.br/management",
+        "getLiveView": true,
+        "includeNavigationBar": true,
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.airtop",
+      "typeVersion": 1,
+      "position": [
+        448,
+        -64
+      ],
+      "id": "45519df7-0ece-4e60-bfce-1c258075e899",
+      "name": "Create a window",
+      "credentials": {
+        "airtopApi": {
+          "id": "qcYzbrpQLeS2oRX8",
+          "name": "Airtop account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "interaction",
+        "operation": "type",
+        "text": "25052682000107",
+        "elementDescription": "email input box",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.airtop",
+      "typeVersion": 1,
+      "position": [
+        672,
+        -64
+      ],
+      "id": "c5705432-3ce7-4a86-bb2a-24804948f6d5",
+      "name": "Type username",
+      "credentials": {
+        "airtopApi": {
+          "id": "qcYzbrpQLeS2oRX8",
+          "name": "Airtop account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "interaction",
+        "elementDescription": "click out of input box at any white space",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.airtop",
+      "typeVersion": 1,
+      "position": [
+        896,
+        -64
+      ],
+      "id": "1681cebc-f8e0-4a64-a775-3481bf125022",
+      "name": "Click confirm username",
+      "credentials": {
+        "airtopApi": {
+          "id": "qcYzbrpQLeS2oRX8",
+          "name": "Airtop account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "interaction",
+        "operation": "type",
+        "text": "allc0m#@!",
+        "pressEnterKey": true,
+        "elementDescription": "password input box",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.airtop",
+      "typeVersion": 1,
+      "position": [
+        1120,
+        -64
+      ],
+      "id": "b7d74e5d-e546-4799-90e7-75c826811b5e",
+      "name": "Type password and ENTER",
+      "credentials": {
+        "airtopApi": {
+          "id": "qcYzbrpQLeS2oRX8",
+          "name": "Airtop account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "interaction",
+        "elementDescription": "Dashboards tab at top left of page",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.airtop",
+      "typeVersion": 1,
+      "position": [
+        1568,
+        -64
+      ],
+      "id": "7c57f2dc-a9d8-421d-907b-17239da99f3f",
+      "name": "Click Dashboards tab",
+      "credentials": {
+        "airtopApi": {
+          "id": "qcYzbrpQLeS2oRX8",
+          "name": "Airtop account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "interaction",
+        "elementDescription": "Ativos Button",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.airtop",
+      "typeVersion": 1,
+      "position": [
+        2000,
+        -64
+      ],
+      "id": "b3215d46-1d98-4df5-ba19-031f4b2f24e7",
+      "name": "Click Ativos",
+      "credentials": {
+        "airtopApi": {
+          "id": "qcYzbrpQLeS2oRX8",
+          "name": "Airtop account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "interaction",
+        "elementDescription": "first of four buttons at middle-right side with double paper icon with \"Solicitar relatório\" button description",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.airtop",
+      "typeVersion": 1,
+      "position": [
+        2432,
+        -64
+      ],
+      "id": "53f8c2da-4ead-471d-b27a-cd1850f8f1aa",
+      "name": "Click generate reports",
+      "credentials": {
+        "airtopApi": {
+          "id": "qcYzbrpQLeS2oRX8",
+          "name": "Airtop account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "interaction",
+        "elementDescription": "Confirmar button",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.airtop",
+      "typeVersion": 1,
+      "position": [
+        2656,
+        -64
+      ],
+      "id": "80a75945-5c8a-4823-902f-6e48bf79865a",
+      "name": "Click confirm reports",
+      "credentials": {
+        "airtopApi": {
+          "id": "qcYzbrpQLeS2oRX8",
+          "name": "Airtop account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "interaction",
+        "elementDescription": "Relatorios tab",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.airtop",
+      "typeVersion": 1,
+      "position": [
+        3088,
+        -64
+      ],
+      "id": "bfccb870-afa6-4f8f-88ee-84f4f37adeff",
+      "name": "Click Relatorios",
+      "credentials": {
+        "airtopApi": {
+          "id": "qcYzbrpQLeS2oRX8",
+          "name": "Airtop account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "extraction",
+        "operation": "query",
+        "prompt": "=get the download link from the first download icon",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.airtop",
+      "typeVersion": 1,
+      "position": [
+        3536,
+        -64
+      ],
+      "id": "b29ee6e2-1b68-4bae-8765-d52c882debe2",
+      "name": "Query page",
+      "credentials": {
+        "airtopApi": {
+          "id": "qcYzbrpQLeS2oRX8",
+          "name": "Airtop account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "interaction",
+        "operation": "hover",
+        "elementDescription": "fisrt download icon below Arquivos",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.airtop",
+      "typeVersion": 1,
+      "position": [
+        3312,
+        -64
+      ],
+      "id": "ceed40bf-7450-42a8-b2dc-a632179d01be",
+      "name": "Hover on an element",
+      "credentials": {
+        "airtopApi": {
+          "id": "qcYzbrpQLeS2oRX8",
+          "name": "Airtop account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.data.modelResponse.replace(\"The download link from the first download icon is: \", \"https://allmanager.com.br\") }}",
+        "options": {
+          "allowUnauthorizedCerts": true,
+          "response": {
+            "response": {
+              "responseFormat": "file"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3760,
+        32
+      ],
+      "id": "c51d1d12-8c96-44dc-8ec5-9467b98613af",
+      "name": "Download report zip file"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.compression",
+      "typeVersion": 1.1,
+      "position": [
+        3984,
+        32
+      ],
+      "id": "ecf53f09-4c7f-4e9a-91f9-d8441baa6ed5",
+      "name": "Compression"
+    },
+    {
+      "parameters": {
+        "operation": "xlsx",
+        "binaryPropertyName": "file_0",
+        "options": {
+          "includeEmptyCells": true,
+          "sheetName": "Inventário"
+        }
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        4208,
+        32
+      ],
+      "id": "8d38965f-a00a-4b34-a169-a98677065202",
+      "name": "Extract from File"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "97dbddba-6737-4454-a0fc-672416997e18",
+              "name": "phoneNumber",
+              "value": "={{ $json.MSISDN.replace(/^(00)?55/, \"\") }}",
+              "type": "string"
+            },
+            {
+              "id": "04b9aa7f-77b7-4388-848e-914a664311f7",
+              "name": "consumptionValidated",
+              "value": "={{ $json['Consumo validado (KB)'] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        4432,
+        32
+      ],
+      "id": "348f3801-12df-437e-9d13-327f148d95a8",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "INSERT INTO [Mobiltracker].dbo.[SimCardConsumption]\n([PhoneNumber], [Timestamp], [ConsumptionBytes])\nVALUES({{ $json.phoneNumber }}, GETDATE(), {{ $json.consumptionValidated }})"
+      },
+      "type": "n8n-nodes-base.microsoftSql",
+      "typeVersion": 1.1,
+      "position": [
+        4656,
+        32
+      ],
+      "id": "5b633ac0-ef98-4799-87c7-13cb10294134",
+      "name": "Microsoft SQL",
+      "credentials": {
+        "microsoftSql": {
+          "id": "q8QnAyDOfZ8HwqL2",
+          "name": "SQLServer account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "terminate",
+        "sessionId": "={{ $json.sessionId }}"
+      },
+      "type": "n8n-nodes-base.airtop",
+      "typeVersion": 1,
+      "position": [
+        3760,
+        -160
+      ],
+      "id": "ce427d50-2a4a-48b7-8644-f0c4987e541e",
+      "name": "Terminate a session",
+      "credentials": {
+        "airtopApi": {
+          "id": "qcYzbrpQLeS2oRX8",
+          "name": "Airtop account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1344,
+        -64
+      ],
+      "id": "889f36da-b667-4ad7-88bf-8810d84d8c3a",
+      "name": "Wait",
+      "webhookId": "af784e7e-8aaa-4517-988e-b01f4b93a425",
+      "disabled": true
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1776,
+        -64
+      ],
+      "id": "2c7f7172-7a51-4b2f-a29c-52b3301a800b",
+      "name": "Wait1",
+      "webhookId": "8a8b0037-4ec4-4339-aa83-8a4dac3daa9e",
+      "disabled": true
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        2208,
+        -64
+      ],
+      "id": "f4f973e7-9343-4866-81c0-59381211e0a9",
+      "name": "Wait2",
+      "webhookId": "63c6ce20-ff94-4d9c-9706-63b6da730018",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "amount": 10
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        2864,
+        -64
+      ],
+      "id": "a7a5504a-fb16-45c5-8bb4-a9f87287db9b",
+      "name": "Wait3",
+      "webhookId": "6c2601ed-1fa8-4bf6-bbfd-ae1d809d6633",
+      "disabled": true
+    }
+  ],
+  "owner": "daLuz109",
+  "path": "https://github.com/daLuz109/test",
+  "pinData": null,
+  "repo": "test",
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-04-29T20:26:53.853Z",
+      "createdAt": "2026-04-29T20:26:53.853Z",
+      "role": "workflow:owner",
+      "workflowId": "SDog3SFvinCx8EWQ",
+      "projectId": "ibRx4KzVa8okoVWI"
+    }
+  ],
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrenceRules": []
+    }
+  },
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2026-04-29T20:26:53.853Z",
+  "versionId": "0ef8c136-2ba6-47cb-ba44-1d4d540ed0a2"
+}
