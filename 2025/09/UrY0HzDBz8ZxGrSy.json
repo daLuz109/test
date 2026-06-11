@@ -1,0 +1,426 @@
+{
+  "active": true,
+  "activeVersion": {
+    "updatedAt": "2025-11-27T16:50:56.963Z",
+    "createdAt": "2025-11-27T16:50:56.963Z",
+    "versionId": "2231fa5d-c9e0-4f15-86ce-156c999ca0f3",
+    "workflowId": "UrY0HzDBz8ZxGrSy",
+    "nodes": [
+      {
+        "parameters": {
+          "workflowInputs": {
+            "values": [
+              {
+                "name": "phoneNumber"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.executeWorkflowTrigger",
+        "typeVersion": 1.1,
+        "position": [
+          0,
+          184
+        ],
+        "id": "045be931-6467-4ce2-8d58-194781c75a19",
+        "name": "When Executed by Another Workflow"
+      },
+      {
+        "parameters": {
+          "operation": "executeQuery",
+          "query": "SELECT Users.UserId, Memberships.Email FROM Mobiltracker.dbo.Users\n  JOIN Mobiltracker.dbo.Memberships\n    ON Memberships.UserId = Users.UserId\n  WHERE Users.Phone = '{{ $json.phoneNumber }}'\n    OR Users.Phone2 = '{{ $json.phoneNumber }}'"
+        },
+        "type": "n8n-nodes-base.microsoftSql",
+        "typeVersion": 1.1,
+        "position": [
+          224,
+          184
+        ],
+        "id": "8114dc96-e627-4f36-aaad-097d0b817876",
+        "name": "Select users with phone number",
+        "alwaysOutputData": true,
+        "credentials": {
+          "microsoftSql": {
+            "id": "q8QnAyDOfZ8HwqL2",
+            "name": "SQLServer account"
+          }
+        },
+        "onError": "continueErrorOutput"
+      },
+      {
+        "parameters": {
+          "aggregate": "aggregateAllItemData",
+          "destinationFieldName": "users",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.aggregate",
+        "typeVersion": 1,
+        "position": [
+          672,
+          -80
+        ],
+        "id": "a7bcabcf-08e7-4016-ae1a-3c6319352709",
+        "name": "Aggregate"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "a19c1c92-ed0b-4af2-a545-311fc9a40816",
+                "name": "error",
+                "value": "Failed to retrieve users. Please make sure you provided a valid 11-digit phone number.",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          448,
+          352
+        ],
+        "id": "a0b1a4f0-9e21-4bfd-bd74-d14391181f4a",
+        "name": "Set error message"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "b155d674-bd08-4323-baee-73224e485f43",
+                "leftValue": "={{ $json.isNotEmpty() }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "boolean",
+                  "operation": "true",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          448,
+          -32
+        ],
+        "id": "c43860ee-cb62-4c5b-9db1-d55dff04a0a4",
+        "name": "Was response valid?"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "2b97d2ac-e19e-4792-bf4b-afffc9ed3e6a",
+                "name": "error",
+                "value": "The customer does not have this phone number registered. Instruct them to do it and then come back to have their tracker configured.",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          672,
+          112
+        ],
+        "id": "6e705412-3a57-4b76-94b5-e1bc1ff21969",
+        "name": "Set unregistered response"
+      }
+    ],
+    "connections": {
+      "When Executed by Another Workflow": {
+        "main": [
+          [
+            {
+              "node": "Select users with phone number",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Select users with phone number": {
+        "main": [
+          [
+            {
+              "node": "Aggregate",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Was response valid?",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Set error message",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Was response valid?": {
+        "main": [
+          [
+            {
+              "node": "Aggregate",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Set unregistered response",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "system migration",
+    "name": null,
+    "description": null,
+    "autosaved": false
+  },
+  "activeVersionId": "2231fa5d-c9e0-4f15-86ce-156c999ca0f3",
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Select users with phone number",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Select users with phone number": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Was response valid?",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Set error message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Was response valid?": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Set unregistered response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-09-18T19:45:33.719Z",
+  "id": "UrY0HzDBz8ZxGrSy",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Users for phone fetcher",
+  "nodes": [
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "phoneNumber"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        184
+      ],
+      "id": "045be931-6467-4ce2-8d58-194781c75a19",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT Users.UserId, Memberships.Email FROM Mobiltracker.dbo.Users\n  JOIN Mobiltracker.dbo.Memberships\n    ON Memberships.UserId = Users.UserId\n  WHERE Users.Phone = '{{ $json.phoneNumber }}'\n    OR Users.Phone2 = '{{ $json.phoneNumber }}'"
+      },
+      "type": "n8n-nodes-base.microsoftSql",
+      "typeVersion": 1.1,
+      "position": [
+        224,
+        184
+      ],
+      "id": "8114dc96-e627-4f36-aaad-097d0b817876",
+      "name": "Select users with phone number",
+      "alwaysOutputData": true,
+      "credentials": {
+        "microsoftSql": {
+          "id": "q8QnAyDOfZ8HwqL2",
+          "name": "SQLServer account"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "destinationFieldName": "users",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        672,
+        -80
+      ],
+      "id": "a7bcabcf-08e7-4016-ae1a-3c6319352709",
+      "name": "Aggregate"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a19c1c92-ed0b-4af2-a545-311fc9a40816",
+              "name": "error",
+              "value": "Failed to retrieve users. Please make sure you provided a valid 11-digit phone number.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        448,
+        352
+      ],
+      "id": "a0b1a4f0-9e21-4bfd-bd74-d14391181f4a",
+      "name": "Set error message"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "b155d674-bd08-4323-baee-73224e485f43",
+              "leftValue": "={{ $json.isNotEmpty() }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        448,
+        -32
+      ],
+      "id": "c43860ee-cb62-4c5b-9db1-d55dff04a0a4",
+      "name": "Was response valid?"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "2b97d2ac-e19e-4792-bf4b-afffc9ed3e6a",
+              "name": "error",
+              "value": "The customer does not have this phone number registered. Instruct them to do it and then come back to have their tracker configured.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        672,
+        112
+      ],
+      "id": "6e705412-3a57-4b76-94b5-e1bc1ff21969",
+      "name": "Set unregistered response"
+    }
+  ],
+  "owner": "daLuz109",
+  "path": "https://github.com/daLuz109/test",
+  "pinData": {},
+  "repo": "test",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-09-18T19:45:33.719Z",
+      "createdAt": "2025-09-18T19:45:33.719Z",
+      "role": "workflow:owner",
+      "workflowId": "UrY0HzDBz8ZxGrSy",
+      "projectId": "ibRx4KzVa8okoVWI"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-10-09T19:06:33.239Z",
+  "versionId": "2231fa5d-c9e0-4f15-86ce-156c999ca0f3"
+}
