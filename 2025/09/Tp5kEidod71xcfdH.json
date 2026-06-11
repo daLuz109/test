@@ -1,0 +1,152 @@
+{
+  "active": true,
+  "activeVersion": {
+    "updatedAt": "2025-11-27T16:50:56.963Z",
+    "createdAt": "2025-11-27T16:50:56.963Z",
+    "versionId": "83b50c30-7bb0-4173-bb78-c3eb3c70b955",
+    "workflowId": "Tp5kEidod71xcfdH",
+    "nodes": [
+      {
+        "parameters": {
+          "workflowInputs": {
+            "values": [
+              {
+                "name": "email"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.executeWorkflowTrigger",
+        "typeVersion": 1.1,
+        "position": [
+          0,
+          0
+        ],
+        "id": "ef915a09-37f2-48b5-afc2-f0c309ea0867",
+        "name": "When Executed by Another Workflow"
+      },
+      {
+        "parameters": {
+          "operation": "executeQuery",
+          "query": "SELECT UserId FROM Mobiltracker.dbo.Memberships\n  WHERE Email = '{{ $json.email }}'"
+        },
+        "type": "n8n-nodes-base.microsoftSql",
+        "typeVersion": 1.1,
+        "position": [
+          224,
+          0
+        ],
+        "id": "c5da2260-8956-45e3-a42e-f6bbe17f27b0",
+        "name": "Select user ID for e-mail",
+        "alwaysOutputData": true,
+        "credentials": {
+          "microsoftSql": {
+            "id": "q8QnAyDOfZ8HwqL2",
+            "name": "SQLServer account"
+          }
+        }
+      }
+    ],
+    "connections": {
+      "When Executed by Another Workflow": {
+        "main": [
+          [
+            {
+              "node": "Select user ID for e-mail",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "system migration",
+    "name": null,
+    "description": null,
+    "autosaved": false
+  },
+  "activeVersionId": "83b50c30-7bb0-4173-bb78-c3eb3c70b955",
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Select user ID for e-mail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-09-19T12:42:21.095Z",
+  "id": "Tp5kEidod71xcfdH",
+  "isArchived": true,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "User ID for e-mail fetcher",
+  "nodes": [
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "email"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "ef915a09-37f2-48b5-afc2-f0c309ea0867",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT UserId FROM Mobiltracker.dbo.Memberships\n  WHERE Email = '{{ $json.email }}'"
+      },
+      "type": "n8n-nodes-base.microsoftSql",
+      "typeVersion": 1.1,
+      "position": [
+        224,
+        0
+      ],
+      "id": "c5da2260-8956-45e3-a42e-f6bbe17f27b0",
+      "name": "Select user ID for e-mail",
+      "alwaysOutputData": true,
+      "credentials": {
+        "microsoftSql": {
+          "id": "q8QnAyDOfZ8HwqL2",
+          "name": "SQLServer account"
+        }
+      }
+    }
+  ],
+  "owner": "daLuz109",
+  "path": "https://github.com/daLuz109/test",
+  "pinData": {},
+  "repo": "test",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-09-19T12:42:21.095Z",
+      "createdAt": "2025-09-19T12:42:21.095Z",
+      "role": "workflow:owner",
+      "workflowId": "Tp5kEidod71xcfdH",
+      "projectId": "ibRx4KzVa8okoVWI"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-09-23T17:34:22.069Z",
+  "versionId": "83b50c30-7bb0-4173-bb78-c3eb3c70b955"
+}
