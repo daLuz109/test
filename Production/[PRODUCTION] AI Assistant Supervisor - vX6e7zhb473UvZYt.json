@@ -1,10 +1,10 @@
 {
   "active": true,
   "activeVersion": {
-    "updatedAt": "2025-12-03T17:23:20.939Z",
-    "createdAt": "2025-12-03T17:23:20.939Z",
-    "versionId": "63c18ec9-b913-49d3-bef5-9a8039ac1be7",
-    "workflowId": "dyG4QAuk52hHkUZP",
+    "updatedAt": "2025-12-04T21:25:16.831Z",
+    "createdAt": "2025-12-04T21:25:16.831Z",
+    "versionId": "af44939c-f627-4794-9b30-f2bda4ead0ff",
+    "workflowId": "0keLOJuFSIfIRczz",
     "nodes": [
       {
         "parameters": {
@@ -18,7 +18,7 @@
         "type": "@n8n/n8n-nodes-langchain.agent",
         "typeVersion": 2.2,
         "position": [
-          3568,
+          3360,
           -896
         ],
         "id": "f6b27c43-2969-4495-873f-8ede1edd633f",
@@ -33,7 +33,7 @@
         "type": "n8n-nodes-base.webhook",
         "typeVersion": 2.1,
         "position": [
-          -1184,
+          -1104,
           -784
         ],
         "id": "125aae70-850c-46d6-9cee-4b80470a549c",
@@ -68,7 +68,7 @@
         "type": "n8n-nodes-base.filter",
         "typeVersion": 2.2,
         "position": [
-          -752,
+          -960,
           -784
         ],
         "id": "666c0957-8fa4-4e15-a7d5-1fc46a845178",
@@ -135,7 +135,7 @@
         "type": "n8n-nodes-base.switch",
         "typeVersion": 3.2,
         "position": [
-          -592,
+          -800,
           -784
         ],
         "id": "01d8a743-f82b-4fa0-8f24-de97478440b7",
@@ -170,54 +170,11 @@
         "type": "n8n-nodes-base.set",
         "typeVersion": 3.4,
         "position": [
-          3040,
+          2832,
           -896
         ],
         "id": "d54a6d44-e819-4729-a3e6-7f5744a9aee2",
         "name": "Set conversation parameters"
-      },
-      {
-        "parameters": {
-          "description": "Call this tool to fetch all the users associated with a certain phone number.",
-          "workflowId": {
-            "__rl": true,
-            "value": "UrY0HzDBz8ZxGrSy",
-            "mode": "list",
-            "cachedResultUrl": "/workflow/UrY0HzDBz8ZxGrSy",
-            "cachedResultName": "Users for phone fetcher"
-          },
-          "workflowInputs": {
-            "mappingMode": "defineBelow",
-            "value": {
-              "phoneNumber": "={{ $json.phoneNumber }}"
-            },
-            "matchingColumns": [
-              "phoneNumber"
-            ],
-            "schema": [
-              {
-                "id": "phoneNumber",
-                "displayName": "phoneNumber",
-                "required": false,
-                "defaultMatch": false,
-                "display": true,
-                "canBeUsedToMatch": true,
-                "type": "string",
-                "removed": false
-              }
-            ],
-            "attemptToConvertTypes": false,
-            "convertFieldsToString": false
-          }
-        },
-        "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
-        "typeVersion": 2.2,
-        "position": [
-          3536,
-          -464
-        ],
-        "id": "c47744ca-5834-4a47-ab4e-9f1ec1e7b708",
-        "name": "Users by phone fetcher"
       },
       {
         "parameters": {
@@ -256,8 +213,8 @@
         "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
         "typeVersion": 2.2,
         "position": [
-          3744,
-          -464
+          3520,
+          -480
         ],
         "id": "b468d20b-4014-4a8e-ac22-7c559655b8af",
         "name": "User ID for e-mail fetcher"
@@ -273,7 +230,7 @@
         "type": "@n8n/n8n-nodes-langchain.agentTool",
         "typeVersion": 2.2,
         "position": [
-          3392,
+          3184,
           -672
         ],
         "id": "83cafb51-497a-458b-9528-38f3874a7ead",
@@ -316,8 +273,8 @@
         "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
         "typeVersion": 2.2,
         "position": [
-          3872,
-          -464
+          3664,
+          -496
         ],
         "id": "f292d642-29a5-4478-86dc-a278d0c853ae",
         "name": "SMS texts retriever"
@@ -376,7 +333,7 @@
         "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
         "typeVersion": 2.2,
         "position": [
-          3680,
+          3472,
           -672
         ],
         "id": "4637fda8-5714-49c6-b910-cd418834f86b",
@@ -436,7 +393,7 @@
         "type": "n8n-nodes-base.executeWorkflow",
         "typeVersion": 1.2,
         "position": [
-          5136,
+          4928,
           -752
         ],
         "id": "5ff349fb-960b-4589-b3c3-c58a613c439b",
@@ -529,7 +486,7 @@
         "type": "n8n-nodes-base.switch",
         "typeVersion": 3.2,
         "position": [
-          1920,
+          1712,
           -832
         ],
         "id": "f13d6455-8679-4dcc-8a64-db4b782cfa28",
@@ -555,7 +512,7 @@
         "type": "n8n-nodes-base.httpRequest",
         "typeVersion": 4.2,
         "position": [
-          2144,
+          1936,
           -1088
         ],
         "id": "a3122d94-7aff-41bd-97a6-103ff1f693a0",
@@ -583,7 +540,7 @@
         "type": "n8n-nodes-base.convertToFile",
         "typeVersion": 1.1,
         "position": [
-          2368,
+          2160,
           -1088
         ],
         "id": "2b91f060-873a-4ece-b440-1e2ecf52c4a6",
@@ -600,7 +557,7 @@
         "type": "@n8n/n8n-nodes-langchain.openAi",
         "typeVersion": 1.8,
         "position": [
-          2592,
+          2384,
           -1088
         ],
         "id": "38cc249f-3ca5-4539-847a-a4f25ab11ccd",
@@ -629,7 +586,7 @@
         "type": "n8n-nodes-base.set",
         "typeVersion": 3.4,
         "position": [
-          2816,
+          2608,
           -1088
         ],
         "id": "bc41308d-c3ac-46b1-8b21-40827abe5fea",
@@ -652,7 +609,7 @@
         "type": "n8n-nodes-base.set",
         "typeVersion": 3.4,
         "position": [
-          2816,
+          2608,
           -896
         ],
         "id": "c5fc26f1-fb60-4d11-bbdb-4aa907b3929d",
@@ -678,7 +635,7 @@
         "type": "n8n-nodes-base.httpRequest",
         "typeVersion": 4.2,
         "position": [
-          2144,
+          1936,
           -704
         ],
         "id": "878499c0-9b12-498e-acb6-afbd120723f5",
@@ -706,7 +663,7 @@
         "type": "n8n-nodes-base.convertToFile",
         "typeVersion": 1.1,
         "position": [
-          2368,
+          2160,
           -704
         ],
         "id": "1bad0720-6edb-4abe-8e75-9f77cb1e32fd",
@@ -729,7 +686,7 @@
         "type": "@n8n/n8n-nodes-langchain.openAi",
         "typeVersion": 1.8,
         "position": [
-          2592,
+          2384,
           -704
         ],
         "id": "b7cb761e-6ada-48b6-b264-b2bac097db3c",
@@ -758,7 +715,7 @@
         "type": "n8n-nodes-base.set",
         "typeVersion": 3.4,
         "position": [
-          2816,
+          2608,
           -704
         ],
         "id": "a7e7db27-76a7-4016-85d4-83d9c9189faa",
@@ -818,7 +775,7 @@
         "type": "n8n-nodes-base.executeWorkflow",
         "typeVersion": 1.2,
         "position": [
-          2112,
+          1904,
           -528
         ],
         "id": "3c580a35-4649-4f22-a025-55a6782ff78e",
@@ -835,7 +792,7 @@
         "type": "@n8n/n8n-nodes-langchain.agentTool",
         "typeVersion": 2.2,
         "position": [
-          3808,
+          3600,
           -672
         ],
         "id": "ceb5cf80-e5fd-4ddb-b462-8fc7db8f61dd",
@@ -852,7 +809,7 @@
         "type": "@n8n/n8n-nodes-langchain.agentTool",
         "typeVersion": 2.2,
         "position": [
-          4288,
+          4080,
           -672
         ],
         "id": "c7560a7d-ae81-465f-9870-df8a6a2c40a6",
@@ -950,7 +907,7 @@
         "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
         "typeVersion": 2.2,
         "position": [
-          4256,
+          4048,
           -464
         ],
         "id": "a0b95466-a42b-4333-a952-8c928100437d",
@@ -973,7 +930,7 @@
         "type": "n8n-nodes-base.set",
         "typeVersion": 3.4,
         "position": [
-          560,
+          352,
           -720
         ],
         "id": "47fd5133-a68d-4759-895c-610a4fed664c",
@@ -989,7 +946,7 @@
         "type": "n8n-nodes-base.redis",
         "typeVersion": 1,
         "position": [
-          816,
+          608,
           -720
         ],
         "id": "e8999a71-fcb1-41c7-9793-7cc7aea11910",
@@ -1028,7 +985,7 @@
         "type": "n8n-nodes-base.if",
         "typeVersion": 2.2,
         "position": [
-          1376,
+          1168,
           -752
         ],
         "id": "b23529a2-679f-42de-b1ed-51037c853393",
@@ -1073,7 +1030,7 @@
         "type": "n8n-nodes-base.redis",
         "typeVersion": 1,
         "position": [
-          5424,
+          5216,
           -752
         ],
         "id": "e4bbbcb7-b627-40fe-9cae-03da9a66e3bc",
@@ -1142,7 +1099,7 @@
         "type": "n8n-nodes-base.executeWorkflow",
         "typeVersion": 1.3,
         "position": [
-          1792,
+          1584,
           -544
         ],
         "id": "97eda703-9e1d-4bc2-9fc6-4548ab75bdee",
@@ -1185,8 +1142,8 @@
         "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
         "typeVersion": 2.2,
         "position": [
-          4384,
-          -464
+          4176,
+          -480
         ],
         "id": "df91f605-2cae-4201-a05a-3999edd74618",
         "name": "Fetch tracker by ID"
@@ -1228,7 +1185,7 @@
         "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
         "typeVersion": 2.2,
         "position": [
-          4512,
+          4304,
           -464
         ],
         "id": "29c54a75-525e-4266-aeb4-1d838c32f01f",
@@ -1372,7 +1329,7 @@
         "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
         "typeVersion": 1.2,
         "position": [
-          4656,
+          4448,
           -464
         ],
         "id": "a200b161-dccf-468c-b00d-cf5c1b49e26b",
@@ -1497,7 +1454,7 @@
         "type": "n8n-nodes-base.microsoftSql",
         "typeVersion": 1.1,
         "position": [
-          112,
+          -96,
           -784
         ],
         "id": "ffc6295b-6dbe-469b-9442-47f9bf0d1419",
@@ -1507,8 +1464,7 @@
             "id": "q8QnAyDOfZ8HwqL2",
             "name": "SQLServer account"
           }
-        },
-        "disabled": true
+        }
       },
       {
         "parameters": {
@@ -1537,12 +1493,11 @@
         "type": "n8n-nodes-base.filter",
         "typeVersion": 2.2,
         "position": [
-          288,
+          80,
           -768
         ],
         "id": "f856a6ef-6a37-45e9-9442-add6673091be",
-        "name": "Keep users that have an account",
-        "disabled": true
+        "name": "Keep users that have an account"
       },
       {
         "parameters": {
@@ -1553,7 +1508,7 @@
         "type": "@n8n/n8n-nodes-langchain.vectorStorePGVector",
         "typeVersion": 1.3,
         "position": [
-          4576,
+          4368,
           -672
         ],
         "id": "ea321527-7f63-4bf8-999b-2fd56458deaa",
@@ -1569,13 +1524,13 @@
         "parameters": {
           "sessionIdType": "customKey",
           "sessionKey": "={{ $json.sessionId }}-memory",
-          "sessionTTL": "={{ 5 * 60 }}",
+          "sessionTTL": "={{ 1 * 60 }}",
           "contextWindowLength": 6
         },
         "type": "@n8n/n8n-nodes-langchain.memoryRedisChat",
         "typeVersion": 1.5,
         "position": [
-          5152,
+          4944,
           -928
         ],
         "id": "1aae163b-861c-4494-ac17-a8d1997d915d",
@@ -1594,7 +1549,7 @@
         "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
         "typeVersion": 1.3,
         "position": [
-          4864,
+          4656,
           -672
         ],
         "id": "bcc6671c-eecf-4ea1-9fbd-40d3237f0df7",
@@ -1615,7 +1570,7 @@
         "type": "@n8n/n8n-nodes-langchain.memoryManager",
         "typeVersion": 1.1,
         "position": [
-          5072,
+          4864,
           -1152
         ],
         "id": "9baa4444-b6f3-465e-b4dd-d41ab54daccf",
@@ -1634,8 +1589,8 @@
         "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
         "typeVersion": 1.2,
         "position": [
-          3408,
-          -464
+          3168,
+          -480
         ],
         "id": "2804dad4-20bb-455b-93e7-fde0a5d3a3b3",
         "name": "Subagents model",
@@ -1659,7 +1614,7 @@
         "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
         "typeVersion": 1.2,
         "position": [
-          3264,
+          3056,
           -672
         ],
         "id": "7cba3c0f-7b15-4035-928b-71a2e2fd01bb",
@@ -1708,7 +1663,7 @@
         "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
         "typeVersion": 2.2,
         "position": [
-          4000,
+          3776,
           -464
         ],
         "id": "489cd566-1f2a-4b47-9ad5-d5ec383cdda1",
@@ -1751,8 +1706,8 @@
         "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
         "typeVersion": 2.2,
         "position": [
-          4128,
-          -464
+          3888,
+          -480
         ],
         "id": "259fefe0-db85-43a5-b615-1b416683dcad",
         "name": "SMS responsitivity tester"
@@ -1794,59 +1749,11 @@
         "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
         "typeVersion": 2.2,
         "position": [
-          3072,
+          3024,
           -480
         ],
         "id": "b0ffdfd8-c27a-4170-b70b-3cff0575ce6f",
         "name": "Check if sender is partner"
-      },
-      {
-        "parameters": {
-          "workflowId": {
-            "__rl": true,
-            "value": "obrxjKZdsOr7yOMR",
-            "mode": "list",
-            "cachedResultUrl": "/workflow/obrxjKZdsOr7yOMR",
-            "cachedResultName": "Fetch partner's clients or tracker"
-          },
-          "workflowInputs": {
-            "mappingMode": "defineBelow",
-            "value": {},
-            "matchingColumns": [],
-            "schema": [
-              {
-                "id": "organizationId",
-                "displayName": "organizationId",
-                "required": false,
-                "defaultMatch": false,
-                "display": true,
-                "canBeUsedToMatch": true,
-                "type": "string",
-                "removed": false
-              },
-              {
-                "id": "trackerName",
-                "displayName": "trackerName",
-                "required": false,
-                "defaultMatch": false,
-                "display": true,
-                "canBeUsedToMatch": true,
-                "type": "string",
-                "removed": false
-              }
-            ],
-            "attemptToConvertTypes": false,
-            "convertFieldsToString": false
-          }
-        },
-        "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
-        "typeVersion": 2.2,
-        "position": [
-          3248,
-          -480
-        ],
-        "id": "a3fcbd51-0c57-4a23-ba5d-a73f9c2ea9ba",
-        "name": "Fetch partner's clients"
       },
       {
         "parameters": {
@@ -1876,7 +1783,7 @@
         "type": "n8n-nodes-base.if",
         "typeVersion": 2.2,
         "position": [
-          -400,
+          -608,
           -800
         ],
         "id": "27cb7ac9-795d-4348-950f-f9bfbf354a9e",
@@ -1899,7 +1806,7 @@
         "type": "n8n-nodes-base.set",
         "typeVersion": 3.4,
         "position": [
-          -48,
+          -256,
           -784
         ],
         "id": "4e6d2aa9-3fe5-4f3c-bdbe-07fa860a2aa5",
@@ -1922,7 +1829,7 @@
         "type": "n8n-nodes-base.set",
         "typeVersion": 3.4,
         "position": [
-          -192,
+          -400,
           -848
         ],
         "id": "c0c4dd9e-c5ac-402d-9d1d-aaf20fa532c0",
@@ -1946,74 +1853,99 @@
       },
       {
         "parameters": {
-          "conditions": {
-            "options": {
-              "caseSensitive": true,
-              "leftValue": "",
-              "typeValidation": "strict",
-              "version": 2
+          "description": "Call this tool to fetch all the users associated with a certain phone number.",
+          "workflowId": {
+            "__rl": true,
+            "value": "UrY0HzDBz8ZxGrSy",
+            "mode": "list",
+            "cachedResultUrl": "/workflow/UrY0HzDBz8ZxGrSy",
+            "cachedResultName": "Users for phone fetcher"
+          },
+          "workflowInputs": {
+            "mappingMode": "defineBelow",
+            "value": {
+              "phoneNumber": "={{ $json.phoneNumber }}"
             },
-            "conditions": [
+            "matchingColumns": [
+              "phoneNumber"
+            ],
+            "schema": [
               {
-                "id": "2c277178-6a51-45a8-bea7-b17a8158ee66",
-                "leftValue": "={{ $json.body.data.key.remoteJid }}",
-                "rightValue": "=555199742239@s.whatsapp.net",
-                "operator": {
-                  "type": "string",
-                  "operation": "equals",
-                  "name": "filter.operator.equals"
-                }
-              },
-              {
-                "id": "5bf0bd37-99e2-4d7c-bcfc-bf51e697e18b",
-                "leftValue": "={{ $json.body.data.key.remoteJidAlt }}",
-                "rightValue": "555193747487@s.whatsapp.net",
-                "operator": {
-                  "type": "string",
-                  "operation": "equals",
-                  "name": "filter.operator.equals"
-                }
+                "id": "phoneNumber",
+                "displayName": "phoneNumber",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true,
+                "type": "string",
+                "removed": false
               }
             ],
-            "combinator": "or"
-          },
-          "options": {}
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": false
+          }
         },
-        "type": "n8n-nodes-base.if",
+        "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
         "typeVersion": 2.2,
         "position": [
-          -976,
-          -784
+          3296,
+          -528
         ],
-        "id": "e4e3c27a-1320-4485-ab4c-f507050e6361",
-        "name": "If"
+        "id": "c47744ca-5834-4a47-ab4e-9f1ec1e7b708",
+        "name": "Users for phone fetcher"
       },
       {
         "parameters": {
-          "method": "POST",
-          "url": "https://n8n.dev.mobiltk.com.br/webhook-test/1065f55f-8c4c-488c-be92-b5cf8e3e72c5",
-          "sendHeaders": true,
-          "headerParameters": {
-            "parameters": [
-              {
-                "name": "Content-Type",
-                "value": "application/json"
-              }
-            ]
+          "workflowId": {
+            "__rl": true,
+            "value": "fjygL6mpabZheiwz",
+            "mode": "list",
+            "cachedResultUrl": "/workflow/fjygL6mpabZheiwz",
+            "cachedResultName": "Fetch userId by email"
           },
-          "sendBody": true,
-          "specifyBody": "json",
-          "jsonBody": "={{ $('Webhook').item.json.body }}",
-          "options": {}
+          "workflowInputs": {
+            "mappingMode": "defineBelow",
+            "value": {
+              "customerEmail": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('customerEmail', ``, 'string') }}",
+              "organizationId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('organizationId', ``, 'string') }}"
+            },
+            "matchingColumns": [
+              "organizationId"
+            ],
+            "schema": [
+              {
+                "id": "organizationId",
+                "displayName": "organizationId",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true,
+                "type": "string",
+                "removed": false
+              },
+              {
+                "id": "customerEmail",
+                "displayName": "customerEmail",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true,
+                "type": "string",
+                "removed": false
+              }
+            ],
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": false
+          }
         },
-        "type": "n8n-nodes-base.httpRequest",
-        "typeVersion": 4.3,
+        "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+        "typeVersion": 2.2,
         "position": [
-          -704,
-          -992
+          3408,
+          -448
         ],
-        "id": "26338507-ac33-4ad4-9527-f4690c5a494e",
-        "name": "HTTP Request"
+        "id": "f9ff20d3-f4b9-4bee-a112-d92f434a977d",
+        "name": "Fetch userId by email"
       }
     ],
     "connections": {
@@ -2037,7 +1969,7 @@
         "main": [
           [
             {
-              "node": "If",
+              "node": "Eliminate messages sent by me",
               "type": "main",
               "index": 0
             }
@@ -2073,17 +2005,6 @@
             {
               "node": "AI Agent",
               "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Users by phone fetcher": {
-        "ai_tool": [
-          [
-            {
-              "node": "User agent",
-              "type": "ai_tool",
               "index": 0
             }
           ]
@@ -2630,17 +2551,6 @@
           ]
         ]
       },
-      "Fetch partner's clients": {
-        "ai_tool": [
-          [
-            {
-              "node": "User agent",
-              "type": "ai_tool",
-              "index": 0
-            }
-          ]
-        ]
-      },
       "IOS or Android": {
         "main": [
           [
@@ -2681,19 +2591,23 @@
           ]
         ]
       },
-      "If": {
-        "main": [
+      "Users for phone fetcher": {
+        "ai_tool": [
           [
             {
-              "node": "HTTP Request",
-              "type": "main",
+              "node": "User agent",
+              "type": "ai_tool",
               "index": 0
             }
-          ],
+          ]
+        ]
+      },
+      "Fetch userId by email": {
+        "ai_tool": [
           [
             {
-              "node": "Route based on event received",
-              "type": "main",
+              "node": "User agent",
+              "type": "ai_tool",
               "index": 0
             }
           ]
@@ -2705,7 +2619,7 @@
     "description": null,
     "autosaved": false
   },
-  "activeVersionId": "63c18ec9-b913-49d3-bef5-9a8039ac1be7",
+  "activeVersionId": "af44939c-f627-4794-9b30-f2bda4ead0ff",
   "connections": {
     "AI Agent": {
       "main": [
@@ -2727,7 +2641,7 @@
       "main": [
         [
           {
-            "node": "If",
+            "node": "Eliminate messages sent by me",
             "type": "main",
             "index": 0
           }
@@ -2763,17 +2677,6 @@
           {
             "node": "AI Agent",
             "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Users by phone fetcher": {
-      "ai_tool": [
-        [
-          {
-            "node": "User agent",
-            "type": "ai_tool",
             "index": 0
           }
         ]
@@ -3320,17 +3223,6 @@
         ]
       ]
     },
-    "Fetch partner's clients": {
-      "ai_tool": [
-        [
-          {
-            "node": "User agent",
-            "type": "ai_tool",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "IOS or Android": {
       "main": [
         [
@@ -3371,27 +3263,31 @@
         ]
       ]
     },
-    "If": {
-      "main": [
+    "Users for phone fetcher": {
+      "ai_tool": [
         [
           {
-            "node": "HTTP Request",
-            "type": "main",
+            "node": "User agent",
+            "type": "ai_tool",
             "index": 0
           }
-        ],
+        ]
+      ]
+    },
+    "Fetch userId by email": {
+      "ai_tool": [
         [
           {
-            "node": "Route based on event received",
-            "type": "main",
+            "node": "User agent",
+            "type": "ai_tool",
             "index": 0
           }
         ]
       ]
     }
   },
-  "createdAt": "2025-10-09T14:01:56.594Z",
-  "id": "dyG4QAuk52hHkUZP",
+  "createdAt": "2025-11-28T17:47:40.993Z",
+  "id": "0keLOJuFSIfIRczz",
   "isArchived": false,
   "isProd": true,
   "meta": null,
@@ -3409,7 +3305,7 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2.2,
       "position": [
-        3568,
+        3360,
         -896
       ],
       "id": "f6b27c43-2969-4495-873f-8ede1edd633f",
@@ -3424,7 +3320,7 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2.1,
       "position": [
-        -1184,
+        -1104,
         -784
       ],
       "id": "125aae70-850c-46d6-9cee-4b80470a549c",
@@ -3459,7 +3355,7 @@
       "type": "n8n-nodes-base.filter",
       "typeVersion": 2.2,
       "position": [
-        -752,
+        -960,
         -784
       ],
       "id": "666c0957-8fa4-4e15-a7d5-1fc46a845178",
@@ -3526,7 +3422,7 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.2,
       "position": [
-        -592,
+        -800,
         -784
       ],
       "id": "01d8a743-f82b-4fa0-8f24-de97478440b7",
@@ -3561,54 +3457,11 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        3040,
+        2832,
         -896
       ],
       "id": "d54a6d44-e819-4729-a3e6-7f5744a9aee2",
       "name": "Set conversation parameters"
-    },
-    {
-      "parameters": {
-        "description": "Call this tool to fetch all the users associated with a certain phone number.",
-        "workflowId": {
-          "__rl": true,
-          "value": "UrY0HzDBz8ZxGrSy",
-          "mode": "list",
-          "cachedResultUrl": "/workflow/UrY0HzDBz8ZxGrSy",
-          "cachedResultName": "Users for phone fetcher"
-        },
-        "workflowInputs": {
-          "mappingMode": "defineBelow",
-          "value": {
-            "phoneNumber": "={{ $json.phoneNumber }}"
-          },
-          "matchingColumns": [
-            "phoneNumber"
-          ],
-          "schema": [
-            {
-              "id": "phoneNumber",
-              "displayName": "phoneNumber",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "canBeUsedToMatch": true,
-              "type": "string",
-              "removed": false
-            }
-          ],
-          "attemptToConvertTypes": false,
-          "convertFieldsToString": false
-        }
-      },
-      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
-      "typeVersion": 2.2,
-      "position": [
-        3536,
-        -464
-      ],
-      "id": "c47744ca-5834-4a47-ab4e-9f1ec1e7b708",
-      "name": "Users by phone fetcher"
     },
     {
       "parameters": {
@@ -3647,8 +3500,8 @@
       "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
       "typeVersion": 2.2,
       "position": [
-        3744,
-        -464
+        3520,
+        -480
       ],
       "id": "b468d20b-4014-4a8e-ac22-7c559655b8af",
       "name": "User ID for e-mail fetcher"
@@ -3664,7 +3517,7 @@
       "type": "@n8n/n8n-nodes-langchain.agentTool",
       "typeVersion": 2.2,
       "position": [
-        3392,
+        3184,
         -672
       ],
       "id": "83cafb51-497a-458b-9528-38f3874a7ead",
@@ -3707,8 +3560,8 @@
       "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
       "typeVersion": 2.2,
       "position": [
-        3872,
-        -464
+        3664,
+        -496
       ],
       "id": "f292d642-29a5-4478-86dc-a278d0c853ae",
       "name": "SMS texts retriever"
@@ -3767,7 +3620,7 @@
       "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
       "typeVersion": 2.2,
       "position": [
-        3680,
+        3472,
         -672
       ],
       "id": "4637fda8-5714-49c6-b910-cd418834f86b",
@@ -3827,7 +3680,7 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.2,
       "position": [
-        5136,
+        4928,
         -752
       ],
       "id": "5ff349fb-960b-4589-b3c3-c58a613c439b",
@@ -3920,7 +3773,7 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.2,
       "position": [
-        1920,
+        1712,
         -832
       ],
       "id": "f13d6455-8679-4dcc-8a64-db4b782cfa28",
@@ -3946,7 +3799,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        2144,
+        1936,
         -1088
       ],
       "id": "a3122d94-7aff-41bd-97a6-103ff1f693a0",
@@ -3974,7 +3827,7 @@
       "type": "n8n-nodes-base.convertToFile",
       "typeVersion": 1.1,
       "position": [
-        2368,
+        2160,
         -1088
       ],
       "id": "2b91f060-873a-4ece-b440-1e2ecf52c4a6",
@@ -3991,7 +3844,7 @@
       "type": "@n8n/n8n-nodes-langchain.openAi",
       "typeVersion": 1.8,
       "position": [
-        2592,
+        2384,
         -1088
       ],
       "id": "38cc249f-3ca5-4539-847a-a4f25ab11ccd",
@@ -4020,7 +3873,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        2816,
+        2608,
         -1088
       ],
       "id": "bc41308d-c3ac-46b1-8b21-40827abe5fea",
@@ -4043,7 +3896,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        2816,
+        2608,
         -896
       ],
       "id": "c5fc26f1-fb60-4d11-bbdb-4aa907b3929d",
@@ -4069,7 +3922,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        2144,
+        1936,
         -704
       ],
       "id": "878499c0-9b12-498e-acb6-afbd120723f5",
@@ -4097,7 +3950,7 @@
       "type": "n8n-nodes-base.convertToFile",
       "typeVersion": 1.1,
       "position": [
-        2368,
+        2160,
         -704
       ],
       "id": "1bad0720-6edb-4abe-8e75-9f77cb1e32fd",
@@ -4120,7 +3973,7 @@
       "type": "@n8n/n8n-nodes-langchain.openAi",
       "typeVersion": 1.8,
       "position": [
-        2592,
+        2384,
         -704
       ],
       "id": "b7cb761e-6ada-48b6-b264-b2bac097db3c",
@@ -4149,7 +4002,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        2816,
+        2608,
         -704
       ],
       "id": "a7e7db27-76a7-4016-85d4-83d9c9189faa",
@@ -4209,7 +4062,7 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.2,
       "position": [
-        2112,
+        1904,
         -528
       ],
       "id": "3c580a35-4649-4f22-a025-55a6782ff78e",
@@ -4226,7 +4079,7 @@
       "type": "@n8n/n8n-nodes-langchain.agentTool",
       "typeVersion": 2.2,
       "position": [
-        3808,
+        3600,
         -672
       ],
       "id": "ceb5cf80-e5fd-4ddb-b462-8fc7db8f61dd",
@@ -4243,7 +4096,7 @@
       "type": "@n8n/n8n-nodes-langchain.agentTool",
       "typeVersion": 2.2,
       "position": [
-        4288,
+        4080,
         -672
       ],
       "id": "c7560a7d-ae81-465f-9870-df8a6a2c40a6",
@@ -4341,7 +4194,7 @@
       "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
       "typeVersion": 2.2,
       "position": [
-        4256,
+        4048,
         -464
       ],
       "id": "a0b95466-a42b-4333-a952-8c928100437d",
@@ -4364,7 +4217,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        560,
+        352,
         -720
       ],
       "id": "47fd5133-a68d-4759-895c-610a4fed664c",
@@ -4380,7 +4233,7 @@
       "type": "n8n-nodes-base.redis",
       "typeVersion": 1,
       "position": [
-        816,
+        608,
         -720
       ],
       "id": "e8999a71-fcb1-41c7-9793-7cc7aea11910",
@@ -4419,7 +4272,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        1376,
+        1168,
         -752
       ],
       "id": "b23529a2-679f-42de-b1ed-51037c853393",
@@ -4464,7 +4317,7 @@
       "type": "n8n-nodes-base.redis",
       "typeVersion": 1,
       "position": [
-        5424,
+        5216,
         -752
       ],
       "id": "e4bbbcb7-b627-40fe-9cae-03da9a66e3bc",
@@ -4533,7 +4386,7 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.3,
       "position": [
-        1792,
+        1584,
         -544
       ],
       "id": "97eda703-9e1d-4bc2-9fc6-4548ab75bdee",
@@ -4576,8 +4429,8 @@
       "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
       "typeVersion": 2.2,
       "position": [
-        4384,
-        -464
+        4176,
+        -480
       ],
       "id": "df91f605-2cae-4201-a05a-3999edd74618",
       "name": "Fetch tracker by ID"
@@ -4619,7 +4472,7 @@
       "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
       "typeVersion": 2.2,
       "position": [
-        4512,
+        4304,
         -464
       ],
       "id": "29c54a75-525e-4266-aeb4-1d838c32f01f",
@@ -4763,7 +4616,7 @@
       "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
       "typeVersion": 1.2,
       "position": [
-        4656,
+        4448,
         -464
       ],
       "id": "a200b161-dccf-468c-b00d-cf5c1b49e26b",
@@ -4888,7 +4741,7 @@
       "type": "n8n-nodes-base.microsoftSql",
       "typeVersion": 1.1,
       "position": [
-        112,
+        -96,
         -784
       ],
       "id": "ffc6295b-6dbe-469b-9442-47f9bf0d1419",
@@ -4898,8 +4751,7 @@
           "id": "q8QnAyDOfZ8HwqL2",
           "name": "SQLServer account"
         }
-      },
-      "disabled": true
+      }
     },
     {
       "parameters": {
@@ -4928,12 +4780,11 @@
       "type": "n8n-nodes-base.filter",
       "typeVersion": 2.2,
       "position": [
-        288,
+        80,
         -768
       ],
       "id": "f856a6ef-6a37-45e9-9442-add6673091be",
-      "name": "Keep users that have an account",
-      "disabled": true
+      "name": "Keep users that have an account"
     },
     {
       "parameters": {
@@ -4944,7 +4795,7 @@
       "type": "@n8n/n8n-nodes-langchain.vectorStorePGVector",
       "typeVersion": 1.3,
       "position": [
-        4576,
+        4368,
         -672
       ],
       "id": "ea321527-7f63-4bf8-999b-2fd56458deaa",
@@ -4960,13 +4811,13 @@
       "parameters": {
         "sessionIdType": "customKey",
         "sessionKey": "={{ $json.sessionId }}-memory",
-        "sessionTTL": "={{ 5 * 60 }}",
+        "sessionTTL": "={{ 1 * 60 }}",
         "contextWindowLength": 6
       },
       "type": "@n8n/n8n-nodes-langchain.memoryRedisChat",
       "typeVersion": 1.5,
       "position": [
-        5152,
+        4944,
         -928
       ],
       "id": "1aae163b-861c-4494-ac17-a8d1997d915d",
@@ -4985,7 +4836,7 @@
       "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
       "typeVersion": 1.3,
       "position": [
-        4864,
+        4656,
         -672
       ],
       "id": "bcc6671c-eecf-4ea1-9fbd-40d3237f0df7",
@@ -5006,7 +4857,7 @@
       "type": "@n8n/n8n-nodes-langchain.memoryManager",
       "typeVersion": 1.1,
       "position": [
-        5072,
+        4864,
         -1152
       ],
       "id": "9baa4444-b6f3-465e-b4dd-d41ab54daccf",
@@ -5025,8 +4876,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        3408,
-        -464
+        3168,
+        -480
       ],
       "id": "2804dad4-20bb-455b-93e7-fde0a5d3a3b3",
       "name": "Subagents model",
@@ -5050,7 +4901,7 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        3264,
+        3056,
         -672
       ],
       "id": "7cba3c0f-7b15-4035-928b-71a2e2fd01bb",
@@ -5099,7 +4950,7 @@
       "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
       "typeVersion": 2.2,
       "position": [
-        4000,
+        3776,
         -464
       ],
       "id": "489cd566-1f2a-4b47-9ad5-d5ec383cdda1",
@@ -5142,8 +4993,8 @@
       "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
       "typeVersion": 2.2,
       "position": [
-        4128,
-        -464
+        3888,
+        -480
       ],
       "id": "259fefe0-db85-43a5-b615-1b416683dcad",
       "name": "SMS responsitivity tester"
@@ -5185,59 +5036,11 @@
       "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
       "typeVersion": 2.2,
       "position": [
-        3072,
+        3024,
         -480
       ],
       "id": "b0ffdfd8-c27a-4170-b70b-3cff0575ce6f",
       "name": "Check if sender is partner"
-    },
-    {
-      "parameters": {
-        "workflowId": {
-          "__rl": true,
-          "value": "obrxjKZdsOr7yOMR",
-          "mode": "list",
-          "cachedResultUrl": "/workflow/obrxjKZdsOr7yOMR",
-          "cachedResultName": "Fetch partner's clients or tracker"
-        },
-        "workflowInputs": {
-          "mappingMode": "defineBelow",
-          "value": {},
-          "matchingColumns": [],
-          "schema": [
-            {
-              "id": "organizationId",
-              "displayName": "organizationId",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "canBeUsedToMatch": true,
-              "type": "string",
-              "removed": false
-            },
-            {
-              "id": "trackerName",
-              "displayName": "trackerName",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "canBeUsedToMatch": true,
-              "type": "string",
-              "removed": false
-            }
-          ],
-          "attemptToConvertTypes": false,
-          "convertFieldsToString": false
-        }
-      },
-      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
-      "typeVersion": 2.2,
-      "position": [
-        3248,
-        -480
-      ],
-      "id": "a3fcbd51-0c57-4a23-ba5d-a73f9c2ea9ba",
-      "name": "Fetch partner's clients"
     },
     {
       "parameters": {
@@ -5267,7 +5070,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        -400,
+        -608,
         -800
       ],
       "id": "27cb7ac9-795d-4348-950f-f9bfbf354a9e",
@@ -5290,7 +5093,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -48,
+        -256,
         -784
       ],
       "id": "4e6d2aa9-3fe5-4f3c-bdbe-07fa860a2aa5",
@@ -5313,7 +5116,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -192,
+        -400,
         -848
       ],
       "id": "c0c4dd9e-c5ac-402d-9d1d-aaf20fa532c0",
@@ -5337,74 +5140,99 @@
     },
     {
       "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 2
+        "description": "Call this tool to fetch all the users associated with a certain phone number.",
+        "workflowId": {
+          "__rl": true,
+          "value": "UrY0HzDBz8ZxGrSy",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/UrY0HzDBz8ZxGrSy",
+          "cachedResultName": "Users for phone fetcher"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "phoneNumber": "={{ $json.phoneNumber }}"
           },
-          "conditions": [
+          "matchingColumns": [
+            "phoneNumber"
+          ],
+          "schema": [
             {
-              "id": "2c277178-6a51-45a8-bea7-b17a8158ee66",
-              "leftValue": "={{ $json.body.data.key.remoteJid }}",
-              "rightValue": "=555199742239@s.whatsapp.net",
-              "operator": {
-                "type": "string",
-                "operation": "equals",
-                "name": "filter.operator.equals"
-              }
-            },
-            {
-              "id": "5bf0bd37-99e2-4d7c-bcfc-bf51e697e18b",
-              "leftValue": "={{ $json.body.data.key.remoteJidAlt }}",
-              "rightValue": "555193747487@s.whatsapp.net",
-              "operator": {
-                "type": "string",
-                "operation": "equals",
-                "name": "filter.operator.equals"
-              }
+              "id": "phoneNumber",
+              "displayName": "phoneNumber",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
             }
           ],
-          "combinator": "or"
-        },
-        "options": {}
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
       },
-      "type": "n8n-nodes-base.if",
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
       "typeVersion": 2.2,
       "position": [
-        -976,
-        -784
+        3296,
+        -528
       ],
-      "id": "e4e3c27a-1320-4485-ab4c-f507050e6361",
-      "name": "If"
+      "id": "c47744ca-5834-4a47-ab4e-9f1ec1e7b708",
+      "name": "Users for phone fetcher"
     },
     {
       "parameters": {
-        "method": "POST",
-        "url": "https://n8n.dev.mobiltk.com.br/webhook-test/1065f55f-8c4c-488c-be92-b5cf8e3e72c5",
-        "sendHeaders": true,
-        "headerParameters": {
-          "parameters": [
-            {
-              "name": "Content-Type",
-              "value": "application/json"
-            }
-          ]
+        "workflowId": {
+          "__rl": true,
+          "value": "fjygL6mpabZheiwz",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/fjygL6mpabZheiwz",
+          "cachedResultName": "Fetch userId by email"
         },
-        "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "={{ $('Webhook').item.json.body }}",
-        "options": {}
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "customerEmail": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('customerEmail', ``, 'string') }}",
+            "organizationId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('organizationId', ``, 'string') }}"
+          },
+          "matchingColumns": [
+            "organizationId"
+          ],
+          "schema": [
+            {
+              "id": "organizationId",
+              "displayName": "organizationId",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "customerEmail",
+              "displayName": "customerEmail",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
       },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.3,
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
       "position": [
-        -704,
-        -992
+        3408,
+        -448
       ],
-      "id": "26338507-ac33-4ad4-9527-f4690c5a494e",
-      "name": "HTTP Request"
+      "id": "f9ff20d3-f4b9-4bee-a112-d92f434a977d",
+      "name": "Fetch userId by email"
     }
   ],
   "owner": "daLuz109",
@@ -5418,10 +5246,10 @@
   },
   "shared": [
     {
-      "updatedAt": "2025-10-09T14:01:56.594Z",
-      "createdAt": "2025-10-09T14:01:56.594Z",
+      "updatedAt": "2025-11-28T17:47:40.993Z",
+      "createdAt": "2025-11-28T17:47:40.993Z",
       "role": "workflow:owner",
-      "workflowId": "dyG4QAuk52hHkUZP",
+      "workflowId": "0keLOJuFSIfIRczz",
       "projectId": "ibRx4KzVa8okoVWI"
     }
   ],
@@ -5432,6 +5260,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-12-03T17:23:20.928Z",
-  "versionId": "63c18ec9-b913-49d3-bef5-9a8039ac1be7"
+  "updatedAt": "2025-12-04T21:25:16.797Z",
+  "versionId": "af44939c-f627-4794-9b30-f2bda4ead0ff"
 }
