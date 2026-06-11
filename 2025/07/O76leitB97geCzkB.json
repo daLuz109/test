@@ -1,0 +1,750 @@
+{
+  "active": true,
+  "activeVersion": {
+    "updatedAt": "2025-11-27T16:50:56.963Z",
+    "createdAt": "2025-11-27T16:50:56.963Z",
+    "versionId": "22f7442f-229d-4b4e-be0b-e47a0cc92ed5",
+    "workflowId": "O76leitB97geCzkB",
+    "nodes": [
+      {
+        "parameters": {
+          "operation": "executeQuery",
+          "query": "SELECT Users.UserId\nFROM VanEscola.dbo.Users\n         JOIN VanEscola.dbo.UsersVanOwner ON Users.UserId = UsersVanOwner.UserId\nWHERE EXISTS(SELECT SchoolId\n             FROM VanEscola.dbo.Schools\n             WHERE VanOwnerUserId = UsersVanOwner.UserId\n               AND Lat IS NOT NULL\n               AND Lon IS NOT NULL\n               AND Lat <> 0\n               AND Lon <> 0)\n  AND (City IS NULL\n    OR State IS NULL)"
+        },
+        "type": "n8n-nodes-base.microsoftSql",
+        "typeVersion": 1.1,
+        "position": [
+          240,
+          -416
+        ],
+        "id": "a0cd6ccb-176d-412d-aa51-f19a5e63b771",
+        "name": "Select van owners without city/state",
+        "credentials": {
+          "microsoftSql": {
+            "id": "q8QnAyDOfZ8HwqL2",
+            "name": "SQLServer account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "executeQuery",
+          "query": "SELECT TOP 1 *\nFROM VanEscola.dbo.Schools\nWHERE VanOwnerUserId = '{{ $json.UserId }}'\n  AND (Lat IS NOT NULL AND Lon IS NOT NULL)"
+        },
+        "type": "n8n-nodes-base.microsoftSql",
+        "typeVersion": 1.1,
+        "position": [
+          464,
+          -416
+        ],
+        "id": "e604c651-01f0-4d6a-80ea-c971c0f606cf",
+        "name": "Fetch first school from owner",
+        "credentials": {
+          "microsoftSql": {
+            "id": "q8QnAyDOfZ8HwqL2",
+            "name": "SQLServer account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "update",
+          "table": "[VanEscola].[dbo].[Users]",
+          "updateKey": "UserId",
+          "columns": "City, State"
+        },
+        "type": "n8n-nodes-base.microsoftSql",
+        "typeVersion": 1.1,
+        "position": [
+          1808,
+          -416
+        ],
+        "id": "b99cd036-c509-4a6c-9b14-d314c24e39c2",
+        "name": "Update user with city and state",
+        "credentials": {
+          "microsoftSql": {
+            "id": "q8QnAyDOfZ8HwqL2",
+            "name": "SQLServer account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "url": "https://maps.googleapis.com/maps/api/geocode/json",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpQueryAuth",
+          "sendQuery": true,
+          "queryParameters": {
+            "parameters": [
+              {
+                "name": "latlng",
+                "value": "={{ $json.Lat }}, {{ $json.Lon }}"
+              },
+              {
+                "name": "language",
+                "value": "pt-BR"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          688,
+          -416
+        ],
+        "id": "c2a16284-0d8d-4220-ab7b-8f277a030b45",
+        "name": "Geocoding reverse request",
+        "credentials": {
+          "httpQueryAuth": {
+            "id": "aU0jZzLnR6A5g81t",
+            "name": "Google Geocoding API"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "c6ed1a05-36f3-413c-a2c6-882c8d0a7cf5",
+                "leftValue": "={{ $json.City === null || $json.State === null }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "boolean",
+                  "operation": "true",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          1136,
+          -416
+        ],
+        "id": "dbe3bab8-c684-497f-93dc-fec8052293d2",
+        "name": "Is one of the values invalid?"
+      },
+      {
+        "parameters": {
+          "url": "https://maps.googleapis.com/maps/api/geocode/json",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpQueryAuth",
+          "sendQuery": true,
+          "queryParameters": {
+            "parameters": [
+              {
+                "name": "address",
+                "value": "={{ $('Fetch first school from owner').item.json.Address }}"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          1360,
+          -480
+        ],
+        "id": "227fe01a-3edb-4e9f-8952-49e672da7333",
+        "name": "Geocoding address request",
+        "credentials": {
+          "httpQueryAuth": {
+            "id": "aU0jZzLnR6A5g81t",
+            "name": "Google Geocoding API"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "0c0f8730-8a8d-4b5d-8e88-18c74f3e1656",
+                "name": "UserId",
+                "value": "={{ $('Select van owners without city/state').item.json.UserId }}",
+                "type": "string"
+              },
+              {
+                "id": "fb62929d-1db3-4919-8105-c8f557931d53",
+                "name": "City",
+                "value": "={{ $json.results[0].address_components.find(address => address.types.includes(\"administrative_area_level_2\")).short_name }}",
+                "type": "string"
+              },
+              {
+                "id": "2153cab0-b163-47a1-8bb2-0e5a672b92bc",
+                "name": "State",
+                "value": "={{ $json.results[0].address_components.find(address => address.types.includes(\"administrative_area_level_1\")).long_name }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          912,
+          -416
+        ],
+        "id": "70faae8d-b02d-46a7-8b3c-1bcf14911ca2",
+        "name": "Set user fields to be updated based on reverse geocoding"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "0c0f8730-8a8d-4b5d-8e88-18c74f3e1656",
+                "name": "UserId",
+                "value": "={{ $('Select van owners without city/state').item.json.UserId }}",
+                "type": "string"
+              },
+              {
+                "id": "fb62929d-1db3-4919-8105-c8f557931d53",
+                "name": "City",
+                "value": "={{ $json.results[0].address_components.find(address => address.types.includes(\"administrative_area_level_2\")).short_name }}",
+                "type": "string"
+              },
+              {
+                "id": "2153cab0-b163-47a1-8bb2-0e5a672b92bc",
+                "name": "State",
+                "value": "={{ $json.results[0].address_components.find(address => address.types.includes(\"administrative_area_level_1\")).long_name }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          1584,
+          -480
+        ],
+        "id": "b482293e-6aed-420a-9326-3b299c360abc",
+        "name": "Set user fields to be updated based on address geocoding"
+      },
+      {
+        "parameters": {
+          "rule": {
+            "interval": [
+              {
+                "triggerAtHour": 7,
+                "triggerAtMinute": 30
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.scheduleTrigger",
+        "typeVersion": 1.2,
+        "position": [
+          16,
+          -416
+        ],
+        "id": "fc5c2893-74fe-409e-9a6c-4f95cd93f1ac",
+        "name": "Trigger daily at 7:30am"
+      }
+    ],
+    "connections": {
+      "Select van owners without city/state": {
+        "main": [
+          [
+            {
+              "node": "Fetch first school from owner",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Fetch first school from owner": {
+        "main": [
+          [
+            {
+              "node": "Geocoding reverse request",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Geocoding reverse request": {
+        "main": [
+          [
+            {
+              "node": "Set user fields to be updated based on reverse geocoding",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Is one of the values invalid?": {
+        "main": [
+          [
+            {
+              "node": "Geocoding address request",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Update user with city and state",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Geocoding address request": {
+        "main": [
+          [
+            {
+              "node": "Set user fields to be updated based on address geocoding",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Set user fields to be updated based on reverse geocoding": {
+        "main": [
+          [
+            {
+              "node": "Is one of the values invalid?",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Set user fields to be updated based on address geocoding": {
+        "main": [
+          [
+            {
+              "node": "Update user with city and state",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Trigger daily at 7:30am": {
+        "main": [
+          [
+            {
+              "node": "Select van owners without city/state",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "system migration",
+    "name": null,
+    "description": null,
+    "autosaved": false
+  },
+  "activeVersionId": "22f7442f-229d-4b4e-be0b-e47a0cc92ed5",
+  "connections": {
+    "Select van owners without city/state": {
+      "main": [
+        [
+          {
+            "node": "Fetch first school from owner",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch first school from owner": {
+      "main": [
+        [
+          {
+            "node": "Geocoding reverse request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Geocoding reverse request": {
+      "main": [
+        [
+          {
+            "node": "Set user fields to be updated based on reverse geocoding",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is one of the values invalid?": {
+      "main": [
+        [
+          {
+            "node": "Geocoding address request",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Update user with city and state",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Geocoding address request": {
+      "main": [
+        [
+          {
+            "node": "Set user fields to be updated based on address geocoding",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set user fields to be updated based on reverse geocoding": {
+      "main": [
+        [
+          {
+            "node": "Is one of the values invalid?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set user fields to be updated based on address geocoding": {
+      "main": [
+        [
+          {
+            "node": "Update user with city and state",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Trigger daily at 7:30am": {
+      "main": [
+        [
+          {
+            "node": "Select van owners without city/state",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-07-18T17:26:03.981Z",
+  "id": "O76leitB97geCzkB",
+  "isArchived": false,
+  "meta": null,
+  "name": "[PRODUCTION] Address updater - L6I6IGtPFIRAEepn",
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT Users.UserId\nFROM VanEscola.dbo.Users\n         JOIN VanEscola.dbo.UsersVanOwner ON Users.UserId = UsersVanOwner.UserId\nWHERE EXISTS(SELECT SchoolId\n             FROM VanEscola.dbo.Schools\n             WHERE VanOwnerUserId = UsersVanOwner.UserId\n               AND Lat IS NOT NULL\n               AND Lon IS NOT NULL\n               AND Lat <> 0\n               AND Lon <> 0)\n  AND (City IS NULL\n    OR State IS NULL)"
+      },
+      "type": "n8n-nodes-base.microsoftSql",
+      "typeVersion": 1.1,
+      "position": [
+        240,
+        -416
+      ],
+      "id": "a0cd6ccb-176d-412d-aa51-f19a5e63b771",
+      "name": "Select van owners without city/state",
+      "credentials": {
+        "microsoftSql": {
+          "id": "q8QnAyDOfZ8HwqL2",
+          "name": "SQLServer account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT TOP 1 *\nFROM VanEscola.dbo.Schools\nWHERE VanOwnerUserId = '{{ $json.UserId }}'\n  AND (Lat IS NOT NULL AND Lon IS NOT NULL)"
+      },
+      "type": "n8n-nodes-base.microsoftSql",
+      "typeVersion": 1.1,
+      "position": [
+        464,
+        -416
+      ],
+      "id": "e604c651-01f0-4d6a-80ea-c971c0f606cf",
+      "name": "Fetch first school from owner",
+      "credentials": {
+        "microsoftSql": {
+          "id": "q8QnAyDOfZ8HwqL2",
+          "name": "SQLServer account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "table": "[VanEscola].[dbo].[Users]",
+        "updateKey": "UserId",
+        "columns": "City, State"
+      },
+      "type": "n8n-nodes-base.microsoftSql",
+      "typeVersion": 1.1,
+      "position": [
+        1808,
+        -416
+      ],
+      "id": "b99cd036-c509-4a6c-9b14-d314c24e39c2",
+      "name": "Update user with city and state",
+      "credentials": {
+        "microsoftSql": {
+          "id": "q8QnAyDOfZ8HwqL2",
+          "name": "SQLServer account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://maps.googleapis.com/maps/api/geocode/json",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpQueryAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "latlng",
+              "value": "={{ $json.Lat }}, {{ $json.Lon }}"
+            },
+            {
+              "name": "language",
+              "value": "pt-BR"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        688,
+        -416
+      ],
+      "id": "c2a16284-0d8d-4220-ab7b-8f277a030b45",
+      "name": "Geocoding reverse request",
+      "credentials": {
+        "httpQueryAuth": {
+          "id": "aU0jZzLnR6A5g81t",
+          "name": "Google Geocoding API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "c6ed1a05-36f3-413c-a2c6-882c8d0a7cf5",
+              "leftValue": "={{ $json.City === null || $json.State === null }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1136,
+        -416
+      ],
+      "id": "dbe3bab8-c684-497f-93dc-fec8052293d2",
+      "name": "Is one of the values invalid?"
+    },
+    {
+      "parameters": {
+        "url": "https://maps.googleapis.com/maps/api/geocode/json",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpQueryAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "address",
+              "value": "={{ $('Fetch first school from owner').item.json.Address }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1360,
+        -480
+      ],
+      "id": "227fe01a-3edb-4e9f-8952-49e672da7333",
+      "name": "Geocoding address request",
+      "credentials": {
+        "httpQueryAuth": {
+          "id": "aU0jZzLnR6A5g81t",
+          "name": "Google Geocoding API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0c0f8730-8a8d-4b5d-8e88-18c74f3e1656",
+              "name": "UserId",
+              "value": "={{ $('Select van owners without city/state').item.json.UserId }}",
+              "type": "string"
+            },
+            {
+              "id": "fb62929d-1db3-4919-8105-c8f557931d53",
+              "name": "City",
+              "value": "={{ $json.results[0].address_components.find(address => address.types.includes(\"administrative_area_level_2\")).short_name }}",
+              "type": "string"
+            },
+            {
+              "id": "2153cab0-b163-47a1-8bb2-0e5a672b92bc",
+              "name": "State",
+              "value": "={{ $json.results[0].address_components.find(address => address.types.includes(\"administrative_area_level_1\")).long_name }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        912,
+        -416
+      ],
+      "id": "70faae8d-b02d-46a7-8b3c-1bcf14911ca2",
+      "name": "Set user fields to be updated based on reverse geocoding"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0c0f8730-8a8d-4b5d-8e88-18c74f3e1656",
+              "name": "UserId",
+              "value": "={{ $('Select van owners without city/state').item.json.UserId }}",
+              "type": "string"
+            },
+            {
+              "id": "fb62929d-1db3-4919-8105-c8f557931d53",
+              "name": "City",
+              "value": "={{ $json.results[0].address_components.find(address => address.types.includes(\"administrative_area_level_2\")).short_name }}",
+              "type": "string"
+            },
+            {
+              "id": "2153cab0-b163-47a1-8bb2-0e5a672b92bc",
+              "name": "State",
+              "value": "={{ $json.results[0].address_components.find(address => address.types.includes(\"administrative_area_level_1\")).long_name }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1584,
+        -480
+      ],
+      "id": "b482293e-6aed-420a-9326-3b299c360abc",
+      "name": "Set user fields to be updated based on address geocoding"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 7,
+              "triggerAtMinute": 30
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        16,
+        -416
+      ],
+      "id": "fc5c2893-74fe-409e-9a6c-4f95cd93f1ac",
+      "name": "Trigger daily at 7:30am"
+    }
+  ],
+  "owner": "daLuz109",
+  "path": "https://github.com/daLuz109/test",
+  "pinData": {},
+  "repo": "test",
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "America/Sao_Paulo"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-07-18T17:26:03.981Z",
+      "createdAt": "2025-07-18T17:26:03.981Z",
+      "role": "workflow:owner",
+      "workflowId": "O76leitB97geCzkB",
+      "projectId": "ibRx4KzVa8okoVWI"
+    }
+  ],
+  "staticData": {
+    "node:Trigger everyday at 7:30am": {
+      "recurrenceRules": []
+    },
+    "node:Trigger daily at 7:30am": {
+      "recurrenceRules": []
+    }
+  },
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2025-07-29T13:05:20.380Z",
+  "versionId": "22f7442f-229d-4b4e-be0b-e47a0cc92ed5"
+}
