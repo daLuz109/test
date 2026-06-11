@@ -1,0 +1,947 @@
+{
+  "active": true,
+  "activeVersion": {
+    "updatedAt": "2025-11-27T16:50:56.963Z",
+    "createdAt": "2025-11-27T16:50:56.963Z",
+    "versionId": "52ff4fae-6340-427d-99e0-867f917233f4",
+    "workflowId": "HJq0tE7cpT4B0buy",
+    "nodes": [
+      {
+        "parameters": {
+          "url": "https://api.stripe.com/v1/subscriptions",
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "stripeApi",
+          "sendBody": true,
+          "contentType": "form-urlencoded",
+          "bodyParameters": {
+            "parameters": [
+              {
+                "name": "limit",
+                "value": "100"
+              },
+              {
+                "name": "status",
+                "value": "active"
+              }
+            ]
+          },
+          "options": {
+            "pagination": {
+              "pagination": {
+                "parameters": {
+                  "parameters": [
+                    {
+                      "type": "body",
+                      "name": "starting_after",
+                      "value": "={{ $response.body.data.last().id }}"
+                    }
+                  ]
+                },
+                "paginationCompleteWhen": "other",
+                "completeExpression": "={{ $response.body.data.length < 100 }}"
+              }
+            }
+          }
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          224,
+          0
+        ],
+        "id": "cd4a86ab-3e84-48f2-8605-2bd7d5fd72ec",
+        "name": "Fetch subscriptions",
+        "credentials": {
+          "stripeApi": {
+            "id": "jiWINJh4psKsBV0A",
+            "name": "MTK Stripe"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "fieldToSplitOut": "data",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.splitOut",
+        "typeVersion": 1,
+        "position": [
+          448,
+          0
+        ],
+        "id": "039b40c6-400a-4e79-bbe3-43dd5daca60b",
+        "name": "Split out subscriptions"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "42c080b9-7a11-4e8e-9843-7309ccef8fe8",
+                "leftValue": "={{ !$json.default_payment_method }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "boolean",
+                  "operation": "true",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.filter",
+        "typeVersion": 2.2,
+        "position": [
+          672,
+          0
+        ],
+        "id": "593dfb0c-8efd-47bd-b071-034f5f1c2aab",
+        "name": "Filter out subscriptions with default payment method"
+      },
+      {
+        "parameters": {
+          "url": "https://api.stripe.com/v1/subscriptions",
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "stripeApi",
+          "sendBody": true,
+          "contentType": "form-urlencoded",
+          "bodyParameters": {
+            "parameters": [
+              {
+                "name": "customer",
+                "value": "={{ $json.customer }}"
+              },
+              {
+                "name": "price",
+                "value": "={{ $json.items.data[0].plan.metadata.viavan_price_id }}"
+              },
+              {
+                "name": "status",
+                "value": "all"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          896,
+          0
+        ],
+        "id": "c680d6e9-783c-45c9-b789-ef8702e52731",
+        "name": "Fetch ViaVan Stripe subscription",
+        "credentials": {
+          "stripeApi": {
+            "id": "yw2prZ456LC91VwT",
+            "name": "ViaVan Stripe"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "b73d451e-6aaf-445f-bd1f-f2d17b3c815d",
+                "leftValue": "={{ !!$json.data[0].default_payment_method }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "boolean",
+                  "operation": "true",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.filter",
+        "typeVersion": 2.2,
+        "position": [
+          1120,
+          0
+        ],
+        "id": "226fe346-f9ed-404d-811a-16018389be40",
+        "name": "Keep ViaVan subscriptions with default payment method"
+      },
+      {
+        "parameters": {
+          "url": "=https://api.stripe.com/v1/payment_methods",
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "stripeApi",
+          "sendBody": true,
+          "contentType": "form-urlencoded",
+          "bodyParameters": {
+            "parameters": [
+              {
+                "name": "customer",
+                "value": "={{ $('Split out subscriptions').item.json.customer }}"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          1568,
+          0
+        ],
+        "id": "46f5d328-0d69-4da0-9a93-f0f466a78c8d",
+        "name": "Get customer payment methods",
+        "credentials": {
+          "stripeApi": {
+            "id": "jiWINJh4psKsBV0A",
+            "name": "MTK Stripe"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "url": "=https://api.stripe.com/v1/payment_methods/{{ $json.data[0].default_payment_method }}",
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "stripeApi",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          1344,
+          0
+        ],
+        "id": "93c130ab-6be6-4af7-b612-39f38df2e783",
+        "name": "Get default payment method",
+        "credentials": {
+          "stripeApi": {
+            "id": "yw2prZ456LC91VwT",
+            "name": "ViaVan Stripe"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "5efe1651-727d-40be-b4ee-65db22f1d7e0",
+                "name": "paymentMethodId",
+                "value": "={{ $json.data.find(pm => pm.card.last4 === $('Get default payment method').item.json.card.last4).id }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          1792,
+          0
+        ],
+        "id": "08259219-777b-4641-968d-18aba63ae078",
+        "name": "Set default payment method ID"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "ea0f239e-de08-49d0-88ca-73bbfdbdda1a",
+                "leftValue": "={{ !!$json.paymentMethodId }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "boolean",
+                  "operation": "true",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.filter",
+        "typeVersion": 2.2,
+        "position": [
+          2016,
+          0
+        ],
+        "id": "98aec8c7-f09a-4046-a12f-8aa92033c4a5",
+        "name": "Keep valid payment methods"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "=https://api.stripe.com/v1/subscriptions/{{ $('Filter out subscriptions with default payment method').item.json.id }}",
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "stripeApi",
+          "sendBody": true,
+          "contentType": "form-urlencoded",
+          "bodyParameters": {
+            "parameters": [
+              {
+                "name": "default_payment_method",
+                "value": "={{ $json.paymentMethodId }}"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          2240,
+          0
+        ],
+        "id": "c135cb04-b23b-4853-a49c-81699ac863a0",
+        "name": "Set default payment method",
+        "credentials": {
+          "stripeApi": {
+            "id": "jiWINJh4psKsBV0A",
+            "name": "MTK Stripe"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "rule": {
+            "interval": [
+              {
+                "field": "hours"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.scheduleTrigger",
+        "typeVersion": 1.2,
+        "position": [
+          0,
+          0
+        ],
+        "id": "92d1b71b-bd2b-4ed4-b465-f0c91a2840cc",
+        "name": "Schedule Trigger"
+      }
+    ],
+    "connections": {
+      "Fetch subscriptions": {
+        "main": [
+          [
+            {
+              "node": "Split out subscriptions",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Split out subscriptions": {
+        "main": [
+          [
+            {
+              "node": "Filter out subscriptions with default payment method",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Filter out subscriptions with default payment method": {
+        "main": [
+          [
+            {
+              "node": "Fetch ViaVan Stripe subscription",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Fetch ViaVan Stripe subscription": {
+        "main": [
+          [
+            {
+              "node": "Keep ViaVan subscriptions with default payment method",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Keep ViaVan subscriptions with default payment method": {
+        "main": [
+          [
+            {
+              "node": "Get default payment method",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get default payment method": {
+        "main": [
+          [
+            {
+              "node": "Get customer payment methods",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get customer payment methods": {
+        "main": [
+          [
+            {
+              "node": "Set default payment method ID",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Set default payment method ID": {
+        "main": [
+          [
+            {
+              "node": "Keep valid payment methods",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Keep valid payment methods": {
+        "main": [
+          [
+            {
+              "node": "Set default payment method",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Schedule Trigger": {
+        "main": [
+          [
+            {
+              "node": "Fetch subscriptions",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "system migration",
+    "name": null,
+    "description": null,
+    "autosaved": false
+  },
+  "activeVersionId": "52ff4fae-6340-427d-99e0-867f917233f4",
+  "connections": {
+    "Fetch subscriptions": {
+      "main": [
+        [
+          {
+            "node": "Split out subscriptions",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split out subscriptions": {
+      "main": [
+        [
+          {
+            "node": "Filter out subscriptions with default payment method",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter out subscriptions with default payment method": {
+      "main": [
+        [
+          {
+            "node": "Fetch ViaVan Stripe subscription",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch ViaVan Stripe subscription": {
+      "main": [
+        [
+          {
+            "node": "Keep ViaVan subscriptions with default payment method",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Keep ViaVan subscriptions with default payment method": {
+      "main": [
+        [
+          {
+            "node": "Get default payment method",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get default payment method": {
+      "main": [
+        [
+          {
+            "node": "Get customer payment methods",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get customer payment methods": {
+      "main": [
+        [
+          {
+            "node": "Set default payment method ID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set default payment method ID": {
+      "main": [
+        [
+          {
+            "node": "Keep valid payment methods",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Keep valid payment methods": {
+      "main": [
+        [
+          {
+            "node": "Set default payment method",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Fetch subscriptions",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-10-03T19:56:29.159Z",
+  "id": "HJq0tE7cpT4B0buy",
+  "isArchived": false,
+  "isProd": true,
+  "meta": null,
+  "name": "[PRODUCTION] Update MTK Stripe payment methods - wzzVCK27pu839b2S",
+  "nodes": [
+    {
+      "parameters": {
+        "url": "https://api.stripe.com/v1/subscriptions",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "stripeApi",
+        "sendBody": true,
+        "contentType": "form-urlencoded",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "limit",
+              "value": "100"
+            },
+            {
+              "name": "status",
+              "value": "active"
+            }
+          ]
+        },
+        "options": {
+          "pagination": {
+            "pagination": {
+              "parameters": {
+                "parameters": [
+                  {
+                    "type": "body",
+                    "name": "starting_after",
+                    "value": "={{ $response.body.data.last().id }}"
+                  }
+                ]
+              },
+              "paginationCompleteWhen": "other",
+              "completeExpression": "={{ $response.body.data.length < 100 }}"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        224,
+        0
+      ],
+      "id": "cd4a86ab-3e84-48f2-8605-2bd7d5fd72ec",
+      "name": "Fetch subscriptions",
+      "credentials": {
+        "stripeApi": {
+          "id": "jiWINJh4psKsBV0A",
+          "name": "MTK Stripe"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "data",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        448,
+        0
+      ],
+      "id": "039b40c6-400a-4e79-bbe3-43dd5daca60b",
+      "name": "Split out subscriptions"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "42c080b9-7a11-4e8e-9843-7309ccef8fe8",
+              "leftValue": "={{ !$json.default_payment_method }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        672,
+        0
+      ],
+      "id": "593dfb0c-8efd-47bd-b071-034f5f1c2aab",
+      "name": "Filter out subscriptions with default payment method"
+    },
+    {
+      "parameters": {
+        "url": "https://api.stripe.com/v1/subscriptions",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "stripeApi",
+        "sendBody": true,
+        "contentType": "form-urlencoded",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "customer",
+              "value": "={{ $json.customer }}"
+            },
+            {
+              "name": "price",
+              "value": "={{ $json.items.data[0].plan.metadata.viavan_price_id }}"
+            },
+            {
+              "name": "status",
+              "value": "all"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        896,
+        0
+      ],
+      "id": "c680d6e9-783c-45c9-b789-ef8702e52731",
+      "name": "Fetch ViaVan Stripe subscription",
+      "credentials": {
+        "stripeApi": {
+          "id": "yw2prZ456LC91VwT",
+          "name": "ViaVan Stripe"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "b73d451e-6aaf-445f-bd1f-f2d17b3c815d",
+              "leftValue": "={{ !!$json.data[0].default_payment_method }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        1120,
+        0
+      ],
+      "id": "226fe346-f9ed-404d-811a-16018389be40",
+      "name": "Keep ViaVan subscriptions with default payment method"
+    },
+    {
+      "parameters": {
+        "url": "=https://api.stripe.com/v1/payment_methods",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "stripeApi",
+        "sendBody": true,
+        "contentType": "form-urlencoded",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "customer",
+              "value": "={{ $('Split out subscriptions').item.json.customer }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1568,
+        0
+      ],
+      "id": "46f5d328-0d69-4da0-9a93-f0f466a78c8d",
+      "name": "Get customer payment methods",
+      "credentials": {
+        "stripeApi": {
+          "id": "jiWINJh4psKsBV0A",
+          "name": "MTK Stripe"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "=https://api.stripe.com/v1/payment_methods/{{ $json.data[0].default_payment_method }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "stripeApi",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1344,
+        0
+      ],
+      "id": "93c130ab-6be6-4af7-b612-39f38df2e783",
+      "name": "Get default payment method",
+      "credentials": {
+        "stripeApi": {
+          "id": "yw2prZ456LC91VwT",
+          "name": "ViaVan Stripe"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "5efe1651-727d-40be-b4ee-65db22f1d7e0",
+              "name": "paymentMethodId",
+              "value": "={{ $json.data.find(pm => pm.card.last4 === $('Get default payment method').item.json.card.last4).id }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1792,
+        0
+      ],
+      "id": "08259219-777b-4641-968d-18aba63ae078",
+      "name": "Set default payment method ID"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "ea0f239e-de08-49d0-88ca-73bbfdbdda1a",
+              "leftValue": "={{ !!$json.paymentMethodId }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        2016,
+        0
+      ],
+      "id": "98aec8c7-f09a-4046-a12f-8aa92033c4a5",
+      "name": "Keep valid payment methods"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.stripe.com/v1/subscriptions/{{ $('Filter out subscriptions with default payment method').item.json.id }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "stripeApi",
+        "sendBody": true,
+        "contentType": "form-urlencoded",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "default_payment_method",
+              "value": "={{ $json.paymentMethodId }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2240,
+        0
+      ],
+      "id": "c135cb04-b23b-4853-a49c-81699ac863a0",
+      "name": "Set default payment method",
+      "credentials": {
+        "stripeApi": {
+          "id": "jiWINJh4psKsBV0A",
+          "name": "MTK Stripe"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "92d1b71b-bd2b-4ed4-b465-f0c91a2840cc",
+      "name": "Schedule Trigger"
+    }
+  ],
+  "owner": "daLuz109",
+  "path": "https://github.com/daLuz109/test",
+  "pinData": null,
+  "repo": "test",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-10-03T19:56:29.159Z",
+      "createdAt": "2025-10-03T19:56:29.159Z",
+      "role": "workflow:owner",
+      "workflowId": "HJq0tE7cpT4B0buy",
+      "projectId": "ibRx4KzVa8okoVWI"
+    }
+  ],
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrenceRules": []
+    }
+  },
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2025-10-03T19:56:29.248Z",
+  "versionId": "52ff4fae-6340-427d-99e0-867f917233f4"
+}
