@@ -1,0 +1,482 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "Fetch MTK Stripe subscriptions": {
+      "main": [
+        [
+          {
+            "node": "Split subscriptions out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split subscriptions out": {
+      "main": [
+        [
+          {
+            "node": "Loop over subscriptions",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch SAAS subscriptions": {
+      "main": [
+        [
+          {
+            "node": "Is there a SAAS subscription?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate SAAS subscriptions": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Resplit SAAS subscriptions",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Loop over subscriptions",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Resplit SAAS subscriptions": {
+      "main": [
+        [
+          {
+            "node": "Remove duplicated SAAS subscriptions",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is there a SAAS subscription?": {
+      "main": [
+        [
+          {
+            "node": "Aggregate SAAS subscriptions",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Loop over subscriptions",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split out SAAS subscriptions to be deleted": {
+      "main": [
+        [
+          {
+            "node": "Delete duplicate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set SAAS subscriptions to be deleted": {
+      "main": [
+        [
+          {
+            "node": "Split out SAAS subscriptions to be deleted",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop over subscriptions": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Fetch SAAS subscriptions",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete duplicate": {
+      "main": [
+        [
+          {
+            "node": "Loop over subscriptions",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Remove duplicated SAAS subscriptions": {
+      "main": [
+        [
+          {
+            "node": "Set SAAS subscriptions to be deleted",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Fetch MTK Stripe subscriptions",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-10-07T17:16:49.953Z",
+  "id": "qvgKHe5M45EqPhU2",
+  "isArchived": true,
+  "meta": null,
+  "name": "[PRODUCTION] Duplicated subscription deleter - XM9tLWYPO4aze3qQ",
+  "nodes": [
+    {
+      "parameters": {
+        "url": "https://api.stripe.com/v1/subscriptions",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "stripeApi",
+        "sendBody": true,
+        "contentType": "form-urlencoded",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "status",
+              "value": "active"
+            },
+            {
+              "name": "limit",
+              "value": "10"
+            }
+          ]
+        },
+        "options": {
+          "pagination": {
+            "pagination": {
+              "parameters": {
+                "parameters": [
+                  {
+                    "type": "body",
+                    "name": "starting_after",
+                    "value": "={{ $response.body.data.last().id }}"
+                  }
+                ]
+              },
+              "paginationCompleteWhen": "other",
+              "completeExpression": "={{ !$response.body.has_more }}"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -368,
+        -64
+      ],
+      "id": "f6bbb05d-0195-4a2f-a97f-5dce0784ec7d",
+      "name": "Fetch MTK Stripe subscriptions",
+      "credentials": {
+        "stripeApi": {
+          "id": "jiWINJh4psKsBV0A",
+          "name": "MTK Stripe"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "data",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        -144,
+        -64
+      ],
+      "id": "650e9545-e3f6-41ec-8bfd-e3bbc88ab11b",
+      "name": "Split subscriptions out"
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "operation": "query",
+        "projectId": "parents-poc-app-jc45n7",
+        "query": "={\n  \"structuredQuery\": {\n    \"select\": {\n      \"fields\": [\n        {\n          \"fieldPath\": \"due_at\"\n        },\n        {\n          \"fieldPath\": \"item\"\n        }\n      ]\n    },\n    \"from\": [\n      {\n        \"collectionId\": \"saas_subscriptions\"\n      }\n    ],\n    \"where\": {\n      \"compositeFilter\": {\n        \"op\": \"AND\",\n        \"filters\": [\n          {\n            \"fieldFilter\": {\n              \"field\": {\n                \"fieldPath\": \"status\"\n              },\n              \"op\": \"EQUAL\",\n              \"value\": {\n                \"stringValue\": \"active\"\n              }\n            }\n          },\n          {\n            \"fieldFilter\": {\n              \"field\": {\n                \"fieldPath\": \"external_id\"\n              },\n              \"op\": \"EQUAL\",\n              \"value\": {\n                \"stringValue\": {{ $json.id.toJsonString() }}\n              }\n            }\n          }\n        ]\n      }\n    }\n  }\n}"
+      },
+      "type": "n8n-nodes-base.googleFirebaseCloudFirestore",
+      "typeVersion": 1.1,
+      "position": [
+        304,
+        -256
+      ],
+      "id": "b7dc3737-53d3-4eab-a0e5-fc0dbdadec5d",
+      "name": "Fetch SAAS subscriptions",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleApi": {
+          "id": "Z0IQAyI3uZ3a8hmL",
+          "name": "ViaVan Firestore"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "destinationFieldName": "saas_subscriptions",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        752,
+        -256
+      ],
+      "id": "12e2312f-5b4e-44b6-a2f5-df2d4a84cbdf",
+      "name": "Aggregate SAAS subscriptions"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "862a93ce-ff49-4bac-9075-12a40dfb146d",
+              "leftValue": "={{ $json.saas_subscriptions }}",
+              "rightValue": 1,
+              "operator": {
+                "type": "array",
+                "operation": "lengthGt",
+                "rightType": "number"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        976,
+        -256
+      ],
+      "id": "f731c398-e0c1-4f24-8577-b8d437db0d04",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "saas_subscriptions",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        1200,
+        -256
+      ],
+      "id": "90cd7eb6-6b0e-42a3-8a13-2d41eb6c6f34",
+      "name": "Resplit SAAS subscriptions"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "cf6ba4a5-2cb5-4ab7-b7bc-3877288abd2f",
+              "leftValue": "={{ $json.isNotEmpty() }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        528,
+        -256
+      ],
+      "id": "7ed7ebad-21ad-4287-a49c-99d4124dd200",
+      "name": "Is there a SAAS subscription?"
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "operation": "delete",
+        "projectId": "parents-poc-app-jc45n7",
+        "collection": "saas_subscriptions",
+        "documentId": "={{ $json._id }}"
+      },
+      "type": "n8n-nodes-base.googleFirebaseCloudFirestore",
+      "typeVersion": 1.1,
+      "position": [
+        2096,
+        -184
+      ],
+      "id": "74d7b9c3-2be8-4aed-9f03-3ab8a0d742ad",
+      "name": "Delete duplicate",
+      "credentials": {
+        "googleApi": {
+          "id": "Z0IQAyI3uZ3a8hmL",
+          "name": "ViaVan Firestore"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "saas_subscriptions_to_delete",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        1872,
+        -256
+      ],
+      "id": "afbdfaa7-c3af-4bf3-9908-dafa5bbb55c5",
+      "name": "Split out SAAS subscriptions to be deleted"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={\n  \"saas_subscriptions_to_delete\": {{ $('Aggregate SAAS subscriptions').item.json.saas_subscriptions.filter(s => s._id !== $json._id) }}\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1648,
+        -256
+      ],
+      "id": "cc2bbc8f-5d6c-4a8f-81bc-92e832d3267e",
+      "name": "Set SAAS subscriptions to be deleted"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        80,
+        -64
+      ],
+      "id": "ddce82f7-6068-4a4a-9939-302a5af6668c",
+      "name": "Loop over subscriptions"
+    },
+    {
+      "parameters": {
+        "compare": "selectedFields",
+        "fieldsToCompare": "item.id, item.seats, item.plan.id, due_at",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.removeDuplicates",
+      "typeVersion": 2,
+      "position": [
+        1424,
+        -256
+      ],
+      "id": "9c66b5d5-e7fb-4b74-9014-6bda6f414bba",
+      "name": "Remove duplicated SAAS subscriptions"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -592,
+        -64
+      ],
+      "id": "acd08dad-c7fe-4bf2-81e3-2e47adee2408",
+      "name": "Schedule Trigger"
+    }
+  ],
+  "owner": "daLuz109",
+  "path": "https://github.com/daLuz109/test",
+  "pinData": null,
+  "repo": "test",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-10-07T17:16:49.953Z",
+      "createdAt": "2025-10-07T17:16:49.953Z",
+      "role": "workflow:owner",
+      "workflowId": "qvgKHe5M45EqPhU2",
+      "projectId": "ibRx4KzVa8okoVWI"
+    }
+  ],
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrenceRules": []
+    }
+  },
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2025-10-15T16:45:27.413Z",
+  "versionId": "e7357afb-91e7-452b-9fdd-54afbf0b7e08"
+}
