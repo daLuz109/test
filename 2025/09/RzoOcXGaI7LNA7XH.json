@@ -1,0 +1,276 @@
+{
+  "active": true,
+  "activeVersion": {
+    "updatedAt": "2025-12-03T19:14:39.436Z",
+    "createdAt": "2025-12-03T19:14:39.436Z",
+    "versionId": "0639fccc-6a3f-422d-bfde-f715288b19c4",
+    "workflowId": "RzoOcXGaI7LNA7XH",
+    "nodes": [
+      {
+        "parameters": {
+          "workflowInputs": {
+            "values": [
+              {
+                "name": "userId"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.executeWorkflowTrigger",
+        "typeVersion": 1.1,
+        "position": [
+          0,
+          80
+        ],
+        "id": "3c24434f-5e18-4853-b667-8c640ea4acf0",
+        "name": "When Executed by Another Workflow"
+      },
+      {
+        "parameters": {
+          "operation": "executeQuery",
+          "query": "SELECT * FROM Mobiltracker.dbo.Trackers\nWHERE Trackers.UserId = '{{ $json.userId }}'"
+        },
+        "type": "n8n-nodes-base.microsoftSql",
+        "typeVersion": 1.1,
+        "position": [
+          224,
+          80
+        ],
+        "id": "4f7a4331-45d6-41df-860f-55bdd265408d",
+        "name": "Fetch trackers based on User ID",
+        "alwaysOutputData": true,
+        "credentials": {
+          "microsoftSql": {
+            "id": "q8QnAyDOfZ8HwqL2",
+            "name": "SQLServer account"
+          }
+        },
+        "onError": "continueErrorOutput"
+      },
+      {
+        "parameters": {
+          "aggregate": "aggregateAllItemData",
+          "destinationFieldName": "trackers",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.aggregate",
+        "typeVersion": 1,
+        "position": [
+          448,
+          -16
+        ],
+        "id": "33baec69-9886-4f7d-906a-b8d852e9f3ac",
+        "name": "Aggregate"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "0522e276-9a4a-4ffb-be12-3431ba4b67e4",
+                "name": "error",
+                "value": "Failed to fetch tracker data. Please make sure you provided a valid user ID (GUID).",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          448,
+          176
+        ],
+        "id": "ccd95dda-9ee9-436b-8126-33d93cd7aaa1",
+        "name": "Set error message"
+      }
+    ],
+    "connections": {
+      "When Executed by Another Workflow": {
+        "main": [
+          [
+            {
+              "node": "Fetch trackers based on User ID",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Fetch trackers based on User ID": {
+        "main": [
+          [
+            {
+              "node": "Aggregate",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Set error message",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Aggregate": {
+        "main": [
+          []
+        ]
+      }
+    },
+    "authors": "Contato Mobiltracker",
+    "name": null,
+    "description": null,
+    "autosaved": false
+  },
+  "activeVersionId": "0639fccc-6a3f-422d-bfde-f715288b19c4",
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Fetch trackers based on User ID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch trackers based on User ID": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Set error message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "createdAt": "2025-09-16T17:52:52.571Z",
+  "id": "RzoOcXGaI7LNA7XH",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Tracker fetcher by user ID",
+  "nodes": [
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "userId"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        80
+      ],
+      "id": "3c24434f-5e18-4853-b667-8c640ea4acf0",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT * FROM Mobiltracker.dbo.Trackers\nWHERE Trackers.UserId = '{{ $json.userId }}'"
+      },
+      "type": "n8n-nodes-base.microsoftSql",
+      "typeVersion": 1.1,
+      "position": [
+        224,
+        80
+      ],
+      "id": "4f7a4331-45d6-41df-860f-55bdd265408d",
+      "name": "Fetch trackers based on User ID",
+      "alwaysOutputData": true,
+      "credentials": {
+        "microsoftSql": {
+          "id": "q8QnAyDOfZ8HwqL2",
+          "name": "SQLServer account"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "destinationFieldName": "trackers",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        448,
+        -16
+      ],
+      "id": "33baec69-9886-4f7d-906a-b8d852e9f3ac",
+      "name": "Aggregate"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0522e276-9a4a-4ffb-be12-3431ba4b67e4",
+              "name": "error",
+              "value": "Failed to fetch tracker data. Please make sure you provided a valid user ID (GUID).",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        448,
+        176
+      ],
+      "id": "ccd95dda-9ee9-436b-8126-33d93cd7aaa1",
+      "name": "Set error message"
+    }
+  ],
+  "owner": "daLuz109",
+  "path": "https://github.com/daLuz109/test",
+  "pinData": {},
+  "repo": "test",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-09-16T17:52:52.571Z",
+      "createdAt": "2025-09-16T17:52:52.571Z",
+      "role": "workflow:owner",
+      "workflowId": "RzoOcXGaI7LNA7XH",
+      "projectId": "ibRx4KzVa8okoVWI"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-12-03T19:14:39.428Z",
+  "versionId": "0639fccc-6a3f-422d-bfde-f715288b19c4"
+}
