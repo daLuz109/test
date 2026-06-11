@@ -1,0 +1,2389 @@
+{
+  "active": true,
+  "activeVersion": {
+    "updatedAt": "2025-11-27T16:50:56.963Z",
+    "createdAt": "2025-11-27T16:50:56.963Z",
+    "versionId": "cb58d64a-25ae-4f82-8233-1f5f3b40cd59",
+    "workflowId": "STndCoLXieq7VnIY",
+    "nodes": [
+      {
+        "parameters": {
+          "operation": "getAll",
+          "returnAll": true,
+          "simple": false,
+          "filters": {
+            "labelIds": "={{ [\"Label_244298310841452940\"].concat($('Set label IDs').item.json.labelIds) }}",
+            "q": "!from:me",
+            "readStatus": "read",
+            "receivedAfter": "={{ $json.initialDate }}"
+          },
+          "options": {
+            "downloadAttachments": true
+          }
+        },
+        "type": "n8n-nodes-base.gmail",
+        "typeVersion": 2.1,
+        "position": [
+          -2800,
+          -208
+        ],
+        "id": "88fa438c-0001-44dc-9b37-81a00f7a71f7",
+        "name": "Retrieve recent e-mails",
+        "webhookId": "2a828d60-151a-484a-abd9-fc60559668ef",
+        "credentials": {
+          "gmailOAuth2": {
+            "id": "y1cHHwSTNlBKO2KQ",
+            "name": "Gmail: contato@mobiltracker.com.br"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "fieldToSplitOut": "$binary",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.splitOut",
+        "typeVersion": 1,
+        "position": [
+          -1232,
+          -648
+        ],
+        "id": "88bee8ca-593a-487f-a316-1c2edfe5fea7",
+        "name": "Split into individual attachments",
+        "alwaysOutputData": true
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "81555266-a761-433e-9370-bb3f30e894e4",
+                "name": "response",
+                "value": "=Olá {{ $json.givenName.trim() }},\n\nInfelizmente seu currículo não foi selecionado para as entrevistas dessa vez. Ficaremos com seu currículo, e, se for o caso, retomaremos o contato.\nAgradecemos pelo interesse.\n--\n{{ $('On form submission').item.json['Seu nome'] }} ",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          464,
+          -552
+        ],
+        "id": "1ddd895f-35e2-4d00-a885-d990947766c1",
+        "name": "Set e-mail response"
+      },
+      {
+        "parameters": {
+          "operation": "reply",
+          "messageId": "={{ $('Loop over e-mails').item.json.id }}",
+          "emailType": "text",
+          "message": "={{ $json.response }}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.gmail",
+        "typeVersion": 2.1,
+        "position": [
+          1584,
+          -472
+        ],
+        "id": "27feb39f-1b09-441f-9e62-31ccc85d2bc0",
+        "name": "Reply to a message",
+        "webhookId": "c35692dc-8246-4ace-93d0-617551711f4d",
+        "credentials": {
+          "gmailOAuth2": {
+            "id": "y1cHHwSTNlBKO2KQ",
+            "name": "Gmail: contato@mobiltracker.com.br"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "770c9cab-93b8-4290-b01b-fa5bf221fb39",
+                "name": "response",
+                "value": "={{ $('Request e-mail response').item.json['E-mail a ser enviado'].trim().length > 0 ? $json['E-mail a ser enviado'] : $('Set e-mail response').item.json.response }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          1360,
+          -552
+        ],
+        "id": "dc1a0497-2dac-4911-b50c-5783b89b3e2e",
+        "name": "Set definitive response"
+      },
+      {
+        "parameters": {
+          "options": {}
+        },
+        "type": "n8n-nodes-base.splitInBatches",
+        "typeVersion": 3,
+        "position": [
+          -1456,
+          -208
+        ],
+        "id": "a0ea8878-b9d4-4e9e-98a7-78ee2bdc30e3",
+        "name": "Loop over e-mails"
+      },
+      {
+        "parameters": {
+          "rules": {
+            "values": [
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 2
+                  },
+                  "conditions": [
+                    {
+                      "leftValue": "={{ $json['Enviar e-mail (padrão: sim)'] }}",
+                      "rightValue": "Sim",
+                      "operator": {
+                        "type": "string",
+                        "operation": "equals"
+                      },
+                      "id": "4a817276-4f4f-4660-b3c8-f6cf71b15449"
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "Yes"
+              },
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 2
+                  },
+                  "conditions": [
+                    {
+                      "id": "402aad7f-e32a-488a-8f29-9667d3619e74",
+                      "leftValue": "={{ $json['Enviar e-mail (padrão: sim)'] }}",
+                      "rightValue": "Não",
+                      "operator": {
+                        "type": "string",
+                        "operation": "equals",
+                        "name": "filter.operator.equals"
+                      }
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "No"
+              }
+            ]
+          },
+          "options": {
+            "fallbackOutput": "extra"
+          }
+        },
+        "type": "n8n-nodes-base.switch",
+        "typeVersion": 3.2,
+        "position": [
+          1136,
+          -568
+        ],
+        "id": "9b08932f-86f5-4e20-9974-6dfffdb06cc3",
+        "name": "Route based on e-mail sending method"
+      },
+      {
+        "parameters": {
+          "aggregate": "aggregateAllItemData",
+          "destinationFieldName": "texts",
+          "include": "specifiedFields",
+          "fieldsToInclude": "text",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.aggregate",
+        "typeVersion": 1,
+        "position": [
+          -336,
+          -336
+        ],
+        "id": "73573374-eee7-49f5-9458-c98c5b26207c",
+        "name": "Aggregate PDFs"
+      },
+      {
+        "parameters": {
+          "modelId": {
+            "__rl": true,
+            "value": "gpt-4o-mini",
+            "mode": "list",
+            "cachedResultName": "GPT-4O-MINI"
+          },
+          "messages": {
+            "values": [
+              {
+                "content": "Você é um agente especializado em determinar o nome apropriado para referenciar uma pessoa, utilizando duas versões: a versão completa e a versão amigável (apenas o primeiro nome). Você receberá as seguintes entradas:\n\n    Nome extraído do e-mail: Pode ser impreciso, dependendo de como o remetente configurou sua conta de e-mail.\n\n    Conteúdos de PDFs (um ou vários): Normalmente contêm informações mais completas e precisas, como o nome completo da pessoa.\n\n    E-mail da pessoa: Utilizado como último recurso caso as entradas anteriores não forneçam um nome adequado.\n\nInstruções:\n\n    Priorize as informações dos PDFs: Analise todos os conteúdos fornecidos e identifique o nome completo da pessoa, garantindo que siga a grafia usual: a primeira letra de cada palavra deve ser maiúscula e o restante minúsculo (ex: \"João Silva\").\n\n    Extraia o primeiro nome: Quando o nome completo for identificado, extraia o primeiro nome para criar a versão amigável, também seguindo a mesma regra de grafia correta (ex: \"João\").\n\n    Fallback para o nome do e-mail: Se os PDFs não fornecerem um nome claro, utilize o nome extraído do e-mail, ajustando a grafia conforme necessário para garantir que a primeira letra seja maiúscula e o restante minúsculo. Se necessário, extraia o primeiro nome para a versão amigável, mantendo a mesma regra.\n\n    Fallback final para o e-mail: Se nenhuma das fontes fornecer um nome adequado, utilize o e-mail da pessoa para ambas as versões, ajustando a grafia de acordo com a regra estabelecida.\n\n    Formato de saída: A saída deve ser composta por duas linhas, sem comentários ou explicações adicionais:\n\n        Primeira linha: Nome completo da pessoa, com a grafia correta.\n\n        Segunda linha: Nome amigável (apenas o primeiro nome), com a grafia correta.\n\nForneça como saída, estritamente, essas duas linhas.",
+                "role": "system"
+              },
+              {
+                "content": "=Nome advindo do e-mail: {{ $('Loop over e-mails').item.json.from.value[0].name.trim() }}\nEndereço de e-mail: {{ $('Loop over e-mails').item.json.from.value[0].address }}\nConteúdo dos PDFs:\n{{ $json.texts.map((pdf) => `<pdf>\\n${pdf.text}\\n</pdf>`).join(\"\\n\") }}"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.openAi",
+        "typeVersion": 1.8,
+        "position": [
+          -112,
+          -336
+        ],
+        "id": "33c37e87-ee21-4859-afe9-8182d73af77a",
+        "name": "Determine proper person name",
+        "credentials": {
+          "openAiApi": {
+            "id": "FUKiKElzoP4Yvxlo",
+            "name": "OpenAi account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "pdf",
+          "binaryPropertyName": "={{ Object.keys($binary)[0] }}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.extractFromFile",
+        "typeVersion": 1,
+        "position": [
+          -560,
+          -336
+        ],
+        "id": "ae393360-7eb6-485c-baa4-6ab9b24279c0",
+        "name": "Analyze PDF"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "2d7919ac-c05c-4c99-918c-25707ad0f40a",
+                "name": "fullName",
+                "value": "={{ $json.message.content.split(\"\\n\")[0] }}",
+                "type": "string"
+              },
+              {
+                "id": "c9f88a90-3cf1-4ed6-a716-9f4b902f08df",
+                "name": "givenName",
+                "value": "={{ $json.message.content.split(\"\\n\")[1] }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          240,
+          -424
+        ],
+        "id": "c4431f8d-cb20-4481-9a9f-d2ca387ae355",
+        "name": "Set person's names"
+      },
+      {
+        "parameters": {
+          "formFields": {
+            "values": [
+              {
+                "fieldType": "html",
+                "html": "<div>\n  {{ $json.index }}/{{ $('Filter out undesired e-mails').all().length }}\n  <br><br>\n  Responda se deseja se o e-mail seja\n  enviado automática ou manualmente.<br>\n  Caso opte pelo envio automático, você pode editar\n  a resposta no campo abaixo, assim como pode, também, deixá-lo\n  em branco para utilizar o e-mail padrão gerado.\n  <br>\n  <b>Título</b>:\n  {{ $('Loop over e-mails').item.json.subject }}\n</div>\n<br>\n\n<b>E-mail automático a ser enviado (pode ser editado abaixo)</b>:\n<div>\n  {{ $('Set e-mail response').item.json.response.replaceAll(\"\\n\", \"<br>\") }}\n</div>\n<br>\n<br>"
+              },
+              {
+                "fieldLabel": "Enviar e-mail (padrão: sim)",
+                "fieldType": "dropdown",
+                "fieldOptions": {
+                  "values": [
+                    {
+                      "option": "Sim"
+                    },
+                    {
+                      "option": "Não"
+                    }
+                  ]
+                }
+              },
+              {
+                "fieldLabel": "E-mail a ser enviado",
+                "fieldType": "textarea",
+                "placeholder": "=Insira a resposta aqui ou deixe em branco para utilizar a padrão"
+              }
+            ]
+          },
+          "limitWaitTime": true,
+          "resumeAmount": 15,
+          "resumeUnit": "minutes",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.form",
+        "typeVersion": 1,
+        "position": [
+          912,
+          -552
+        ],
+        "id": "7774994d-ab6f-4326-8e0c-7c00c410d90e",
+        "name": "Request e-mail response",
+        "webhookId": "5fbe52ee-a729-4d92-bc29-8f239a5f93c5"
+      },
+      {
+        "parameters": {
+          "compare": "selectedFields",
+          "fieldsToCompare": "=from.value[0].address",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.removeDuplicates",
+        "typeVersion": 2,
+        "position": [
+          -2576,
+          -208
+        ],
+        "id": "565355f6-3cf8-4f08-9ef5-a8b649741e44",
+        "name": "Remove Duplicates"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "847a4a08-7529-4a82-bb7b-03e01fc62602",
+                "name": "index",
+                "value": "={{ $runIndex + 1 }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          688,
+          -552
+        ],
+        "id": "bbadc3b0-2617-4fa2-aba4-13f7e3552a20",
+        "name": "Set current index"
+      },
+      {
+        "parameters": {
+          "aggregate": "aggregateAllItemData",
+          "include": "specifiedFields",
+          "options": {
+            "includeBinaries": true
+          }
+        },
+        "type": "n8n-nodes-base.aggregate",
+        "typeVersion": 1,
+        "position": [
+          -2352,
+          -280
+        ],
+        "id": "857611fe-409a-40cc-8e6b-d0963fd0a97b",
+        "name": "Aggregate e-mails"
+      },
+      {
+        "parameters": {
+          "defineForm": "json",
+          "jsonOutput": "=[{\n  \"fieldLabel\": \"Candidatos a serem respondidos\",\n  \"fieldType\": \"dropdown\",\n  \"fieldOptions\": {\n    \"values\": {{ JSON.stringify($json.data.map(email => ({ option: `${email.from.value[0].address}${email.from.value[0].name.trim().length > 0 ? \" - \" + email.from.value[0].name.trim() : \"\"}` }))) }}\n  },\n  \"multiselect\": true,\n  \"requiredField\": true\n}]",
+          "limitWaitTime": true,
+          "resumeAmount": 15,
+          "resumeUnit": "minutes",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.form",
+        "typeVersion": 1,
+        "position": [
+          -2128,
+          -280
+        ],
+        "id": "206a4f5d-e414-4a0f-b60f-e82d61af532b",
+        "name": "Request users to be replied to",
+        "webhookId": "2a543912-4521-4d5f-8e9d-c85640b5bc0a"
+      },
+      {
+        "parameters": {
+          "resource": "label",
+          "returnAll": true
+        },
+        "type": "n8n-nodes-base.gmail",
+        "typeVersion": 2.1,
+        "position": [
+          -4368,
+          -208
+        ],
+        "id": "e1fe21a9-4a04-417a-827d-9c0f0cee330d",
+        "name": "Fetch all labels",
+        "webhookId": "933caf4a-7eba-41bb-86f0-f53b307f7140",
+        "credentials": {
+          "gmailOAuth2": {
+            "id": "y1cHHwSTNlBKO2KQ",
+            "name": "Gmail: contato@mobiltracker.com.br"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "aggregate": "aggregateAllItemData",
+          "destinationFieldName": "labels",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.aggregate",
+        "typeVersion": 1,
+        "position": [
+          -3920,
+          -208
+        ],
+        "id": "cf70d249-6147-4af7-bae5-2adc11586fd0",
+        "name": "Aggregate labels"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "8ff98c36-8564-434e-b8a4-3996d7bc2b11",
+                "leftValue": "={{ $json.name }}",
+                "rightValue": "estagio-",
+                "operator": {
+                  "type": "string",
+                  "operation": "startsWith"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.filter",
+        "typeVersion": 2.2,
+        "position": [
+          -4144,
+          -208
+        ],
+        "id": "6a304a81-c056-4098-955f-af7a0446039e",
+        "name": "Filter internship labels"
+      },
+      {
+        "parameters": {
+          "defineForm": "json",
+          "jsonOutput": "=[{\n  \"fieldLabel\": \"Rótulos a serem utilizados na busca\",\n  \"fieldType\": \"dropdown\",\n  \"fieldOptions\": {\n    \"values\": {{ JSON.stringify($json.labels.map(label => ({ option: label.name }))) }}\n  },\n  \"multiselect\": true,\n  \"requiredField\": true\n}]",
+          "limitWaitTime": true,
+          "resumeAmount": 15,
+          "resumeUnit": "minutes",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.form",
+        "typeVersion": 1,
+        "position": [
+          -3696,
+          -208
+        ],
+        "id": "b83e48e6-689c-4909-85ab-a6d7ffc7927b",
+        "name": "Request desired labels",
+        "webhookId": "7d63169d-69a6-4141-bbe4-563c8e998a17"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "ac50f98f-d2d9-4a5e-bdee-2a39e510f348",
+                "name": "labelIds",
+                "value": "={{ $('Aggregate labels').item.json.labels.filter(label => $json['Rótulos a serem utilizados na busca'].includes(label.name)).map(label => label.id) }}",
+                "type": "array"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          -3472,
+          -208
+        ],
+        "id": "59f1b275-c6be-4fcb-b729-223f6f3efdbf",
+        "name": "Set label IDs"
+      },
+      {
+        "parameters": {
+          "formFields": {
+            "values": [
+              {
+                "fieldLabel": "Data de início de recebimento dos currículos",
+                "fieldType": "date",
+                "requiredField": true
+              }
+            ]
+          },
+          "limitWaitTime": true,
+          "resumeAmount": 15,
+          "resumeUnit": "minutes",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.form",
+        "typeVersion": 1,
+        "position": [
+          -3248,
+          -208
+        ],
+        "id": "1419d07e-4c11-4e72-88a8-70160b06637f",
+        "name": "Request initial date",
+        "webhookId": "478916bc-2618-4de5-ae5c-562ab6f45755"
+      },
+      {
+        "parameters": {
+          "operation": "subtractFromDate",
+          "magnitude": "={{ $json['Data de início de recebimento dos currículos'] }}",
+          "duration": 1,
+          "outputFieldName": "initialDate",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.dateTime",
+        "typeVersion": 2,
+        "position": [
+          -3024,
+          -208
+        ],
+        "id": "70385800-5656-41ed-9f01-033e29b51392",
+        "name": "Subtract a day from date"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "1dbae2d4-5ec5-497b-a49b-4cb2c4283451",
+                "leftValue": "={{ $json['Candidatos a serem respondidos'].map(title => title.split(\" - \")[0]).includes($json.from.value[0].address) }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "boolean",
+                  "operation": "true",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.filter",
+        "typeVersion": 2.2,
+        "position": [
+          -1680,
+          -208
+        ],
+        "id": "e5ec904e-949d-40bc-9075-679c60aaa4eb",
+        "name": "Filter out undesired e-mails"
+      },
+      {
+        "parameters": {
+          "mode": "combine",
+          "combineBy": "combineAll",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.merge",
+        "typeVersion": 3.2,
+        "position": [
+          -1904,
+          -208
+        ],
+        "id": "55c30a43-c0c0-4a8c-8c44-f77e30b7b52c",
+        "name": "Merge e-mail data and selected users"
+      },
+      {
+        "parameters": {
+          "formTitle": "Enviador de resposta automática",
+          "formFields": {
+            "values": [
+              {
+                "fieldLabel": "Seu nome",
+                "placeholder": "João da Silva",
+                "requiredField": true
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.formTrigger",
+        "typeVersion": 2.2,
+        "position": [
+          -4592,
+          -208
+        ],
+        "id": "fdf1aab8-466b-4d83-b3c4-1659f8ec8c15",
+        "name": "On form submission",
+        "webhookId": "dad970e1-42eb-44a1-95c5-e08683e2cba4"
+      },
+      {
+        "parameters": {
+          "rules": {
+            "values": [
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 2
+                  },
+                  "conditions": [
+                    {
+                      "leftValue": "={{ $binary[Object.keys($binary)[0]].mimeType }}",
+                      "rightValue": "application/pdf",
+                      "operator": {
+                        "type": "string",
+                        "operation": "equals"
+                      },
+                      "id": "a68834d9-8d54-46f6-8234-4b9c0b099abd"
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "PDF"
+              },
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 2
+                  },
+                  "conditions": [
+                    {
+                      "id": "d32bfc94-a02a-44d9-a38a-f572234f9e7f",
+                      "leftValue": "={{ $binary[Object.keys($binary)[0]].mimeType }}",
+                      "rightValue": "image/",
+                      "operator": {
+                        "type": "string",
+                        "operation": "startsWith"
+                      }
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "Image"
+              }
+            ]
+          },
+          "options": {
+            "fallbackOutput": "extra"
+          }
+        },
+        "type": "n8n-nodes-base.switch",
+        "typeVersion": 3.2,
+        "position": [
+          -784,
+          -568
+        ],
+        "id": "38580b7a-3fd5-4b36-bb83-64b0789a21c3",
+        "name": "Route based on mimetype"
+      },
+      {
+        "parameters": {
+          "resource": "image",
+          "operation": "analyze",
+          "modelId": {
+            "__rl": true,
+            "value": "gpt-4o-mini",
+            "mode": "list",
+            "cachedResultName": "GPT-4O-MINI"
+          },
+          "text": "Você é uma IA especializada na análise de imagens de currículos. A partir da imagem fornecida (PNG, JPEG, etc) do currículo de um candidato, execute os seguintes passos:\n\n    Extração e Formatação do Nome Completo:\n\n        Analise a imagem e extraia o nome completo do candidato.\n\n        Converta o nome para que cada palavra tenha a primeira letra em maiúscula e o restante em minúsculo.\n\n    Determinação do Nome de Tratamento:\n\n        Identifique o primeiro nome (o primeiro termo do nome completo) do candidato.\n\n        Assegure-se de que esse nome também esteja com a primeira letra maiúscula e o restante em minúsculo.\n\nSaída:\n\n    Linha 1: Nome completo do candidato.\n\n    Linha 2: Nome de tratamento (primeiro nome).\n\nNão inclua nenhuma informação ou texto adicional na resposta.",
+          "inputType": "base64",
+          "binaryPropertyName": "={{ Object.keys($binary)[0] }}",
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.openAi",
+        "typeVersion": 1.8,
+        "position": [
+          -48,
+          -528
+        ],
+        "id": "b3ae0726-3257-4695-808f-f482752dca60",
+        "name": "Analyze image",
+        "credentials": {
+          "openAiApi": {
+            "id": "FUKiKElzoP4Yvxlo",
+            "name": "OpenAi account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "a4066280-aa1d-4482-93bd-c8eecf9fe8d1",
+                "name": "givenName",
+                "value": "={{ $('Loop over e-mails').item.json.from.value[0].name.trim() }}",
+                "type": "string"
+              },
+              {
+                "id": "6b3fd183-fb4d-419e-855c-59bf4c5bcdec",
+                "name": "fullName",
+                "value": "={{ $('Loop over e-mails').item.json.from.value[0].name.trim() }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          -560,
+          -720
+        ],
+        "id": "39cb1575-5f23-4998-af77-6e94a1ad7cd1",
+        "name": "Set person's names for unknown mimetype"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "2bb79e76-3b09-4dc5-a803-0e934fe75922",
+                "leftValue": "={{ $binary.isEmpty() }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "boolean",
+                  "operation": "true",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          -1008,
+          -648
+        ],
+        "id": "5531ecb7-04ae-4f10-a422-19a5d7faf1f2",
+        "name": "Are there no files?"
+      }
+    ],
+    "connections": {
+      "Retrieve recent e-mails": {
+        "main": [
+          [
+            {
+              "node": "Remove Duplicates",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Split into individual attachments": {
+        "main": [
+          [
+            {
+              "node": "Are there no files?",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Set e-mail response": {
+        "main": [
+          [
+            {
+              "node": "Set current index",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Reply to a message": {
+        "main": [
+          [
+            {
+              "node": "Loop over e-mails",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Set definitive response": {
+        "main": [
+          [
+            {
+              "node": "Reply to a message",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Loop over e-mails": {
+        "main": [
+          [],
+          [
+            {
+              "node": "Split into individual attachments",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Route based on e-mail sending method": {
+        "main": [
+          [
+            {
+              "node": "Set definitive response",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Loop over e-mails",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Set definitive response",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Aggregate PDFs": {
+        "main": [
+          [
+            {
+              "node": "Determine proper person name",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Determine proper person name": {
+        "main": [
+          [
+            {
+              "node": "Set person's names",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Analyze PDF": {
+        "main": [
+          [
+            {
+              "node": "Aggregate PDFs",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Set person's names": {
+        "main": [
+          [
+            {
+              "node": "Set e-mail response",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Request e-mail response": {
+        "main": [
+          [
+            {
+              "node": "Route based on e-mail sending method",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Remove Duplicates": {
+        "main": [
+          [
+            {
+              "node": "Aggregate e-mails",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Merge e-mail data and selected users",
+              "type": "main",
+              "index": 1
+            }
+          ]
+        ]
+      },
+      "Set current index": {
+        "main": [
+          [
+            {
+              "node": "Request e-mail response",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Aggregate e-mails": {
+        "main": [
+          [
+            {
+              "node": "Request users to be replied to",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Request users to be replied to": {
+        "main": [
+          [
+            {
+              "node": "Merge e-mail data and selected users",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Fetch all labels": {
+        "main": [
+          [
+            {
+              "node": "Filter internship labels",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Aggregate labels": {
+        "main": [
+          [
+            {
+              "node": "Request desired labels",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Filter internship labels": {
+        "main": [
+          [
+            {
+              "node": "Aggregate labels",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Request desired labels": {
+        "main": [
+          [
+            {
+              "node": "Set label IDs",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Set label IDs": {
+        "main": [
+          [
+            {
+              "node": "Request initial date",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Request initial date": {
+        "main": [
+          [
+            {
+              "node": "Subtract a day from date",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Subtract a day from date": {
+        "main": [
+          [
+            {
+              "node": "Retrieve recent e-mails",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Filter out undesired e-mails": {
+        "main": [
+          [
+            {
+              "node": "Loop over e-mails",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Merge e-mail data and selected users": {
+        "main": [
+          [
+            {
+              "node": "Filter out undesired e-mails",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "On form submission": {
+        "main": [
+          [
+            {
+              "node": "Fetch all labels",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Route based on mimetype": {
+        "main": [
+          [
+            {
+              "node": "Analyze PDF",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Analyze image",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Set person's names for unknown mimetype",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Analyze image": {
+        "main": [
+          [
+            {
+              "node": "Set person's names",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Set person's names for unknown mimetype": {
+        "main": [
+          [
+            {
+              "node": "Set e-mail response",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Are there no files?": {
+        "main": [
+          [
+            {
+              "node": "Set person's names for unknown mimetype",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Route based on mimetype",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "system migration",
+    "name": null,
+    "description": null,
+    "autosaved": false
+  },
+  "activeVersionId": "cb58d64a-25ae-4f82-8233-1f5f3b40cd59",
+  "connections": {
+    "Retrieve recent e-mails": {
+      "main": [
+        [
+          {
+            "node": "Remove Duplicates",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split into individual attachments": {
+      "main": [
+        [
+          {
+            "node": "Are there no files?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set e-mail response": {
+      "main": [
+        [
+          {
+            "node": "Set current index",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reply to a message": {
+      "main": [
+        [
+          {
+            "node": "Loop over e-mails",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set definitive response": {
+      "main": [
+        [
+          {
+            "node": "Reply to a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop over e-mails": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Split into individual attachments",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Route based on e-mail sending method": {
+      "main": [
+        [
+          {
+            "node": "Set definitive response",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Loop over e-mails",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Set definitive response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate PDFs": {
+      "main": [
+        [
+          {
+            "node": "Determine proper person name",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Determine proper person name": {
+      "main": [
+        [
+          {
+            "node": "Set person's names",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Analyze PDF": {
+      "main": [
+        [
+          {
+            "node": "Aggregate PDFs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set person's names": {
+      "main": [
+        [
+          {
+            "node": "Set e-mail response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Request e-mail response": {
+      "main": [
+        [
+          {
+            "node": "Route based on e-mail sending method",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Remove Duplicates": {
+      "main": [
+        [
+          {
+            "node": "Aggregate e-mails",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge e-mail data and selected users",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Set current index": {
+      "main": [
+        [
+          {
+            "node": "Request e-mail response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate e-mails": {
+      "main": [
+        [
+          {
+            "node": "Request users to be replied to",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Request users to be replied to": {
+      "main": [
+        [
+          {
+            "node": "Merge e-mail data and selected users",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch all labels": {
+      "main": [
+        [
+          {
+            "node": "Filter internship labels",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate labels": {
+      "main": [
+        [
+          {
+            "node": "Request desired labels",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter internship labels": {
+      "main": [
+        [
+          {
+            "node": "Aggregate labels",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Request desired labels": {
+      "main": [
+        [
+          {
+            "node": "Set label IDs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set label IDs": {
+      "main": [
+        [
+          {
+            "node": "Request initial date",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Request initial date": {
+      "main": [
+        [
+          {
+            "node": "Subtract a day from date",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Subtract a day from date": {
+      "main": [
+        [
+          {
+            "node": "Retrieve recent e-mails",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter out undesired e-mails": {
+      "main": [
+        [
+          {
+            "node": "Loop over e-mails",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge e-mail data and selected users": {
+      "main": [
+        [
+          {
+            "node": "Filter out undesired e-mails",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Fetch all labels",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Route based on mimetype": {
+      "main": [
+        [
+          {
+            "node": "Analyze PDF",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Analyze image",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Set person's names for unknown mimetype",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Analyze image": {
+      "main": [
+        [
+          {
+            "node": "Set person's names",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set person's names for unknown mimetype": {
+      "main": [
+        [
+          {
+            "node": "Set e-mail response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Are there no files?": {
+      "main": [
+        [
+          {
+            "node": "Set person's names for unknown mimetype",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Route based on mimetype",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-07-30T15:15:59.229Z",
+  "id": "STndCoLXieq7VnIY",
+  "isArchived": false,
+  "isProd": true,
+  "meta": null,
+  "name": "[PRODUCTION] Resumee replier - tEi85s4U5iZ1w4DC",
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "getAll",
+        "returnAll": true,
+        "simple": false,
+        "filters": {
+          "labelIds": "={{ [\"Label_244298310841452940\"].concat($('Set label IDs').item.json.labelIds) }}",
+          "q": "!from:me",
+          "readStatus": "read",
+          "receivedAfter": "={{ $json.initialDate }}"
+        },
+        "options": {
+          "downloadAttachments": true
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        -2800,
+        -208
+      ],
+      "id": "88fa438c-0001-44dc-9b37-81a00f7a71f7",
+      "name": "Retrieve recent e-mails",
+      "webhookId": "2a828d60-151a-484a-abd9-fc60559668ef",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "y1cHHwSTNlBKO2KQ",
+          "name": "Gmail: contato@mobiltracker.com.br"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "$binary",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        -1232,
+        -648
+      ],
+      "id": "88bee8ca-593a-487f-a316-1c2edfe5fea7",
+      "name": "Split into individual attachments",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "81555266-a761-433e-9370-bb3f30e894e4",
+              "name": "response",
+              "value": "=Olá {{ $json.givenName.trim() }},\n\nInfelizmente seu currículo não foi selecionado para as entrevistas dessa vez. Ficaremos com seu currículo, e, se for o caso, retomaremos o contato.\nAgradecemos pelo interesse.\n--\n{{ $('On form submission').item.json['Seu nome'] }} ",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        464,
+        -552
+      ],
+      "id": "1ddd895f-35e2-4d00-a885-d990947766c1",
+      "name": "Set e-mail response"
+    },
+    {
+      "parameters": {
+        "operation": "reply",
+        "messageId": "={{ $('Loop over e-mails').item.json.id }}",
+        "emailType": "text",
+        "message": "={{ $json.response }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1584,
+        -472
+      ],
+      "id": "27feb39f-1b09-441f-9e62-31ccc85d2bc0",
+      "name": "Reply to a message",
+      "webhookId": "c35692dc-8246-4ace-93d0-617551711f4d",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "y1cHHwSTNlBKO2KQ",
+          "name": "Gmail: contato@mobiltracker.com.br"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "770c9cab-93b8-4290-b01b-fa5bf221fb39",
+              "name": "response",
+              "value": "={{ $('Request e-mail response').item.json['E-mail a ser enviado'].trim().length > 0 ? $json['E-mail a ser enviado'] : $('Set e-mail response').item.json.response }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1360,
+        -552
+      ],
+      "id": "dc1a0497-2dac-4911-b50c-5783b89b3e2e",
+      "name": "Set definitive response"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -1456,
+        -208
+      ],
+      "id": "a0ea8878-b9d4-4e9e-98a7-78ee2bdc30e3",
+      "name": "Loop over e-mails"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json['Enviar e-mail (padrão: sim)'] }}",
+                    "rightValue": "Sim",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "4a817276-4f4f-4660-b3c8-f6cf71b15449"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Yes"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "402aad7f-e32a-488a-8f29-9667d3619e74",
+                    "leftValue": "={{ $json['Enviar e-mail (padrão: sim)'] }}",
+                    "rightValue": "Não",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "No"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra"
+        }
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        1136,
+        -568
+      ],
+      "id": "9b08932f-86f5-4e20-9974-6dfffdb06cc3",
+      "name": "Route based on e-mail sending method"
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "destinationFieldName": "texts",
+        "include": "specifiedFields",
+        "fieldsToInclude": "text",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        -336,
+        -336
+      ],
+      "id": "73573374-eee7-49f5-9458-c98c5b26207c",
+      "name": "Aggregate PDFs"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "Você é um agente especializado em determinar o nome apropriado para referenciar uma pessoa, utilizando duas versões: a versão completa e a versão amigável (apenas o primeiro nome). Você receberá as seguintes entradas:\n\n    Nome extraído do e-mail: Pode ser impreciso, dependendo de como o remetente configurou sua conta de e-mail.\n\n    Conteúdos de PDFs (um ou vários): Normalmente contêm informações mais completas e precisas, como o nome completo da pessoa.\n\n    E-mail da pessoa: Utilizado como último recurso caso as entradas anteriores não forneçam um nome adequado.\n\nInstruções:\n\n    Priorize as informações dos PDFs: Analise todos os conteúdos fornecidos e identifique o nome completo da pessoa, garantindo que siga a grafia usual: a primeira letra de cada palavra deve ser maiúscula e o restante minúsculo (ex: \"João Silva\").\n\n    Extraia o primeiro nome: Quando o nome completo for identificado, extraia o primeiro nome para criar a versão amigável, também seguindo a mesma regra de grafia correta (ex: \"João\").\n\n    Fallback para o nome do e-mail: Se os PDFs não fornecerem um nome claro, utilize o nome extraído do e-mail, ajustando a grafia conforme necessário para garantir que a primeira letra seja maiúscula e o restante minúsculo. Se necessário, extraia o primeiro nome para a versão amigável, mantendo a mesma regra.\n\n    Fallback final para o e-mail: Se nenhuma das fontes fornecer um nome adequado, utilize o e-mail da pessoa para ambas as versões, ajustando a grafia de acordo com a regra estabelecida.\n\n    Formato de saída: A saída deve ser composta por duas linhas, sem comentários ou explicações adicionais:\n\n        Primeira linha: Nome completo da pessoa, com a grafia correta.\n\n        Segunda linha: Nome amigável (apenas o primeiro nome), com a grafia correta.\n\nForneça como saída, estritamente, essas duas linhas.",
+              "role": "system"
+            },
+            {
+              "content": "=Nome advindo do e-mail: {{ $('Loop over e-mails').item.json.from.value[0].name.trim() }}\nEndereço de e-mail: {{ $('Loop over e-mails').item.json.from.value[0].address }}\nConteúdo dos PDFs:\n{{ $json.texts.map((pdf) => `<pdf>\\n${pdf.text}\\n</pdf>`).join(\"\\n\") }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        -112,
+        -336
+      ],
+      "id": "33c37e87-ee21-4859-afe9-8182d73af77a",
+      "name": "Determine proper person name",
+      "credentials": {
+        "openAiApi": {
+          "id": "FUKiKElzoP4Yvxlo",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "pdf",
+        "binaryPropertyName": "={{ Object.keys($binary)[0] }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        -560,
+        -336
+      ],
+      "id": "ae393360-7eb6-485c-baa4-6ab9b24279c0",
+      "name": "Analyze PDF"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "2d7919ac-c05c-4c99-918c-25707ad0f40a",
+              "name": "fullName",
+              "value": "={{ $json.message.content.split(\"\\n\")[0] }}",
+              "type": "string"
+            },
+            {
+              "id": "c9f88a90-3cf1-4ed6-a716-9f4b902f08df",
+              "name": "givenName",
+              "value": "={{ $json.message.content.split(\"\\n\")[1] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        240,
+        -424
+      ],
+      "id": "c4431f8d-cb20-4481-9a9f-d2ca387ae355",
+      "name": "Set person's names"
+    },
+    {
+      "parameters": {
+        "formFields": {
+          "values": [
+            {
+              "fieldType": "html",
+              "html": "<div>\n  {{ $json.index }}/{{ $('Filter out undesired e-mails').all().length }}\n  <br><br>\n  Responda se deseja se o e-mail seja\n  enviado automática ou manualmente.<br>\n  Caso opte pelo envio automático, você pode editar\n  a resposta no campo abaixo, assim como pode, também, deixá-lo\n  em branco para utilizar o e-mail padrão gerado.\n  <br>\n  <b>Título</b>:\n  {{ $('Loop over e-mails').item.json.subject }}\n</div>\n<br>\n\n<b>E-mail automático a ser enviado (pode ser editado abaixo)</b>:\n<div>\n  {{ $('Set e-mail response').item.json.response.replaceAll(\"\\n\", \"<br>\") }}\n</div>\n<br>\n<br>"
+            },
+            {
+              "fieldLabel": "Enviar e-mail (padrão: sim)",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Sim"
+                  },
+                  {
+                    "option": "Não"
+                  }
+                ]
+              }
+            },
+            {
+              "fieldLabel": "E-mail a ser enviado",
+              "fieldType": "textarea",
+              "placeholder": "=Insira a resposta aqui ou deixe em branco para utilizar a padrão"
+            }
+          ]
+        },
+        "limitWaitTime": true,
+        "resumeAmount": 15,
+        "resumeUnit": "minutes",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 1,
+      "position": [
+        912,
+        -552
+      ],
+      "id": "7774994d-ab6f-4326-8e0c-7c00c410d90e",
+      "name": "Request e-mail response",
+      "webhookId": "5fbe52ee-a729-4d92-bc29-8f239a5f93c5"
+    },
+    {
+      "parameters": {
+        "compare": "selectedFields",
+        "fieldsToCompare": "=from.value[0].address",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.removeDuplicates",
+      "typeVersion": 2,
+      "position": [
+        -2576,
+        -208
+      ],
+      "id": "565355f6-3cf8-4f08-9ef5-a8b649741e44",
+      "name": "Remove Duplicates"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "847a4a08-7529-4a82-bb7b-03e01fc62602",
+              "name": "index",
+              "value": "={{ $runIndex + 1 }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        688,
+        -552
+      ],
+      "id": "bbadc3b0-2617-4fa2-aba4-13f7e3552a20",
+      "name": "Set current index"
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "include": "specifiedFields",
+        "options": {
+          "includeBinaries": true
+        }
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        -2352,
+        -280
+      ],
+      "id": "857611fe-409a-40cc-8e6b-d0963fd0a97b",
+      "name": "Aggregate e-mails"
+    },
+    {
+      "parameters": {
+        "defineForm": "json",
+        "jsonOutput": "=[{\n  \"fieldLabel\": \"Candidatos a serem respondidos\",\n  \"fieldType\": \"dropdown\",\n  \"fieldOptions\": {\n    \"values\": {{ JSON.stringify($json.data.map(email => ({ option: `${email.from.value[0].address}${email.from.value[0].name.trim().length > 0 ? \" - \" + email.from.value[0].name.trim() : \"\"}` }))) }}\n  },\n  \"multiselect\": true,\n  \"requiredField\": true\n}]",
+        "limitWaitTime": true,
+        "resumeAmount": 15,
+        "resumeUnit": "minutes",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 1,
+      "position": [
+        -2128,
+        -280
+      ],
+      "id": "206a4f5d-e414-4a0f-b60f-e82d61af532b",
+      "name": "Request users to be replied to",
+      "webhookId": "2a543912-4521-4d5f-8e9d-c85640b5bc0a"
+    },
+    {
+      "parameters": {
+        "resource": "label",
+        "returnAll": true
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        -4368,
+        -208
+      ],
+      "id": "e1fe21a9-4a04-417a-827d-9c0f0cee330d",
+      "name": "Fetch all labels",
+      "webhookId": "933caf4a-7eba-41bb-86f0-f53b307f7140",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "y1cHHwSTNlBKO2KQ",
+          "name": "Gmail: contato@mobiltracker.com.br"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "destinationFieldName": "labels",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        -3920,
+        -208
+      ],
+      "id": "cf70d249-6147-4af7-bae5-2adc11586fd0",
+      "name": "Aggregate labels"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "8ff98c36-8564-434e-b8a4-3996d7bc2b11",
+              "leftValue": "={{ $json.name }}",
+              "rightValue": "estagio-",
+              "operator": {
+                "type": "string",
+                "operation": "startsWith"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        -4144,
+        -208
+      ],
+      "id": "6a304a81-c056-4098-955f-af7a0446039e",
+      "name": "Filter internship labels"
+    },
+    {
+      "parameters": {
+        "defineForm": "json",
+        "jsonOutput": "=[{\n  \"fieldLabel\": \"Rótulos a serem utilizados na busca\",\n  \"fieldType\": \"dropdown\",\n  \"fieldOptions\": {\n    \"values\": {{ JSON.stringify($json.labels.map(label => ({ option: label.name }))) }}\n  },\n  \"multiselect\": true,\n  \"requiredField\": true\n}]",
+        "limitWaitTime": true,
+        "resumeAmount": 15,
+        "resumeUnit": "minutes",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 1,
+      "position": [
+        -3696,
+        -208
+      ],
+      "id": "b83e48e6-689c-4909-85ab-a6d7ffc7927b",
+      "name": "Request desired labels",
+      "webhookId": "7d63169d-69a6-4141-bbe4-563c8e998a17"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "ac50f98f-d2d9-4a5e-bdee-2a39e510f348",
+              "name": "labelIds",
+              "value": "={{ $('Aggregate labels').item.json.labels.filter(label => $json['Rótulos a serem utilizados na busca'].includes(label.name)).map(label => label.id) }}",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -3472,
+        -208
+      ],
+      "id": "59f1b275-c6be-4fcb-b729-223f6f3efdbf",
+      "name": "Set label IDs"
+    },
+    {
+      "parameters": {
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Data de início de recebimento dos currículos",
+              "fieldType": "date",
+              "requiredField": true
+            }
+          ]
+        },
+        "limitWaitTime": true,
+        "resumeAmount": 15,
+        "resumeUnit": "minutes",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 1,
+      "position": [
+        -3248,
+        -208
+      ],
+      "id": "1419d07e-4c11-4e72-88a8-70160b06637f",
+      "name": "Request initial date",
+      "webhookId": "478916bc-2618-4de5-ae5c-562ab6f45755"
+    },
+    {
+      "parameters": {
+        "operation": "subtractFromDate",
+        "magnitude": "={{ $json['Data de início de recebimento dos currículos'] }}",
+        "duration": 1,
+        "outputFieldName": "initialDate",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dateTime",
+      "typeVersion": 2,
+      "position": [
+        -3024,
+        -208
+      ],
+      "id": "70385800-5656-41ed-9f01-033e29b51392",
+      "name": "Subtract a day from date"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "1dbae2d4-5ec5-497b-a49b-4cb2c4283451",
+              "leftValue": "={{ $json['Candidatos a serem respondidos'].map(title => title.split(\" - \")[0]).includes($json.from.value[0].address) }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        -1680,
+        -208
+      ],
+      "id": "e5ec904e-949d-40bc-9075-679c60aaa4eb",
+      "name": "Filter out undesired e-mails"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineAll",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -1904,
+        -208
+      ],
+      "id": "55c30a43-c0c0-4a8c-8c44-f77e30b7b52c",
+      "name": "Merge e-mail data and selected users"
+    },
+    {
+      "parameters": {
+        "formTitle": "Enviador de resposta automática",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Seu nome",
+              "placeholder": "João da Silva",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        -4592,
+        -208
+      ],
+      "id": "fdf1aab8-466b-4d83-b3c4-1659f8ec8c15",
+      "name": "On form submission",
+      "webhookId": "dad970e1-42eb-44a1-95c5-e08683e2cba4"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $binary[Object.keys($binary)[0]].mimeType }}",
+                    "rightValue": "application/pdf",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "a68834d9-8d54-46f6-8234-4b9c0b099abd"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "PDF"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "d32bfc94-a02a-44d9-a38a-f572234f9e7f",
+                    "leftValue": "={{ $binary[Object.keys($binary)[0]].mimeType }}",
+                    "rightValue": "image/",
+                    "operator": {
+                      "type": "string",
+                      "operation": "startsWith"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Image"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra"
+        }
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        -784,
+        -568
+      ],
+      "id": "38580b7a-3fd5-4b36-bb83-64b0789a21c3",
+      "name": "Route based on mimetype"
+    },
+    {
+      "parameters": {
+        "resource": "image",
+        "operation": "analyze",
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "text": "Você é uma IA especializada na análise de imagens de currículos. A partir da imagem fornecida (PNG, JPEG, etc) do currículo de um candidato, execute os seguintes passos:\n\n    Extração e Formatação do Nome Completo:\n\n        Analise a imagem e extraia o nome completo do candidato.\n\n        Converta o nome para que cada palavra tenha a primeira letra em maiúscula e o restante em minúsculo.\n\n    Determinação do Nome de Tratamento:\n\n        Identifique o primeiro nome (o primeiro termo do nome completo) do candidato.\n\n        Assegure-se de que esse nome também esteja com a primeira letra maiúscula e o restante em minúsculo.\n\nSaída:\n\n    Linha 1: Nome completo do candidato.\n\n    Linha 2: Nome de tratamento (primeiro nome).\n\nNão inclua nenhuma informação ou texto adicional na resposta.",
+        "inputType": "base64",
+        "binaryPropertyName": "={{ Object.keys($binary)[0] }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        -48,
+        -528
+      ],
+      "id": "b3ae0726-3257-4695-808f-f482752dca60",
+      "name": "Analyze image",
+      "credentials": {
+        "openAiApi": {
+          "id": "FUKiKElzoP4Yvxlo",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a4066280-aa1d-4482-93bd-c8eecf9fe8d1",
+              "name": "givenName",
+              "value": "={{ $('Loop over e-mails').item.json.from.value[0].name.trim() }}",
+              "type": "string"
+            },
+            {
+              "id": "6b3fd183-fb4d-419e-855c-59bf4c5bcdec",
+              "name": "fullName",
+              "value": "={{ $('Loop over e-mails').item.json.from.value[0].name.trim() }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -560,
+        -720
+      ],
+      "id": "39cb1575-5f23-4998-af77-6e94a1ad7cd1",
+      "name": "Set person's names for unknown mimetype"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "2bb79e76-3b09-4dc5-a803-0e934fe75922",
+              "leftValue": "={{ $binary.isEmpty() }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -1008,
+        -648
+      ],
+      "id": "5531ecb7-04ae-4f10-a422-19a5d7faf1f2",
+      "name": "Are there no files?"
+    }
+  ],
+  "owner": "daLuz109",
+  "path": "https://github.com/daLuz109/test",
+  "pinData": {},
+  "repo": "test",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-07-30T15:15:59.229Z",
+      "createdAt": "2025-07-30T15:15:59.229Z",
+      "role": "workflow:owner",
+      "workflowId": "STndCoLXieq7VnIY",
+      "projectId": "ibRx4KzVa8okoVWI"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2025-09-01T22:52:15.177Z",
+  "versionId": "cb58d64a-25ae-4f82-8233-1f5f3b40cd59"
+}
