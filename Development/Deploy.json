@@ -1,0 +1,2561 @@
+{
+  "active": true,
+  "activeVersion": {
+    "updatedAt": "2026-05-04T20:33:36.184Z",
+    "createdAt": "2026-05-04T20:33:10.081Z",
+    "versionId": "552eb638-c8f6-4fd4-85c3-0b3a5f2ce07d",
+    "workflowId": "7D1jDIwHrRzs4jhU",
+    "nodes": [
+      {
+        "parameters": {
+          "authentication": "basicAuth",
+          "formTitle": "Workflow deploy",
+          "formDescription": "Use this workflow to deploy other workflows to production.\nPress \"Submit\" to select the workflow to be deployed.",
+          "responseMode": "lastNode",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.formTrigger",
+        "typeVersion": 2.2,
+        "position": [
+          -448,
+          -736
+        ],
+        "id": "f32ee228-807d-456f-af5d-85facea87adf",
+        "name": "On form submission",
+        "webhookId": "a9cf8b5e-9cd1-4cbb-8aa0-0aac17d55d7d",
+        "credentials": {
+          "httpBasicAuth": {
+            "id": "oX6J1RdpqttuBfuf",
+            "name": "n8n form credentials"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "aggregate": "aggregateAllItemData",
+          "destinationFieldName": "workflows",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.aggregate",
+        "typeVersion": 1,
+        "position": [
+          1568,
+          -736
+        ],
+        "id": "e7ca8316-b4f7-414b-8e5e-c665e579e6be",
+        "name": "Aggregate workflows"
+      },
+      {
+        "parameters": {
+          "mode": "chooseBranch"
+        },
+        "type": "n8n-nodes-base.merge",
+        "typeVersion": 3.2,
+        "position": [
+          2688,
+          -688
+        ],
+        "id": "ba93a490-0165-46a3-84a5-5290a96c62b5",
+        "name": "Retrieve workflow data for creating"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "adb7093f-ca24-48a1-9a88-111cd766ad7c",
+                "name": "workflow.name",
+                "value": "={{ `[PRODUCTION] ${$json.workflow.name} - ${$json.workflow.id}` }}",
+                "type": "string"
+              }
+            ]
+          },
+          "includeOtherFields": true,
+          "include": "except",
+          "excludeFields": "workflow.id",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          2912,
+          -688
+        ],
+        "id": "54e86498-1b29-4854-8feb-205555b3bef2",
+        "name": "Update workflow name"
+      },
+      {
+        "parameters": {
+          "operation": "create",
+          "workflowObject": "={{ JSON.stringify($json.workflow) }}",
+          "requestOptions": {}
+        },
+        "type": "n8n-nodes-base.n8n",
+        "typeVersion": 1,
+        "position": [
+          3264,
+          -688
+        ],
+        "id": "56f200e4-5498-4ec7-ae0c-afdc665e2589",
+        "name": "Create production workflow",
+        "credentials": {
+          "n8nApi": {
+            "id": "6ePY5C52bgUPHEZr",
+            "name": "n8n account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "update",
+          "workflowId": {
+            "__rl": true,
+            "value": "={{ $json.workflow.id }}",
+            "mode": "id"
+          },
+          "workflowObject": "={{ JSON.stringify($json.workflow) }}",
+          "requestOptions": {}
+        },
+        "type": "n8n-nodes-base.n8n",
+        "typeVersion": 1,
+        "position": [
+          3488,
+          -400
+        ],
+        "id": "b473f81b-9592-4fb1-939c-0471a87edbcf",
+        "name": "Update a workflow",
+        "credentials": {
+          "n8nApi": {
+            "id": "6ePY5C52bgUPHEZr",
+            "name": "n8n account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "mode": "combine",
+          "combineBy": "combineByPosition",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.merge",
+        "typeVersion": 3.2,
+        "position": [
+          2912,
+          -400
+        ],
+        "id": "907bfe1c-d80e-4676-a0c5-924124dd2f15",
+        "name": "Retrieve workflow data for updating"
+      },
+      {
+        "parameters": {
+          "defineForm": "json",
+          "jsonOutput": "=[\n  {\n    \"fieldLabel\": \"Select the workflow to be deployed\",\n    \"fieldType\": \"dropdown\",\n    \"fieldOptions\": {\n        \"values\": {{ JSON.stringify($json.workflows.map(workflow => ({ option: `${workflow.id} - ${workflow.name} - Modificado em: ${new Date(workflow.updatedAt).toLocaleString()}` }))) }}\n    },\n    \"requiredField\": true\n  }\n]",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.form",
+        "typeVersion": 1,
+        "position": [
+          1792,
+          -736
+        ],
+        "id": "d7e38788-aecb-4a34-b921-2ccbee606f2d",
+        "name": "Workflow selection",
+        "webhookId": "d20ad3db-a950-48cb-8885-cc3687d6c16a"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "035b4ae2-5fba-4467-a6a5-940a019faecb",
+                "name": "workflow",
+                "value": "={{ $('Aggregate workflows').item.json.workflows.find(workflow =>workflow.id === $json['Select the workflow to be deployed'].split(\" - \")[0]) }}",
+                "type": "object"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          2016,
+          -736
+        ],
+        "id": "e01e0d18-cf7b-4335-b17f-eac0457f530b",
+        "name": "Retrieve selected workflow"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "3a6a5628-b54c-48e2-843f-dcd5b148610e",
+                "leftValue": "={{ $json.isEmpty() }}",
+                "rightValue": "={{ `[PRODUCTION] ${$('Retrieve selected workflow').item.json.workflow.name}` }}",
+                "operator": {
+                  "type": "boolean",
+                  "operation": "false",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          2464,
+          -528
+        ],
+        "id": "42a7156b-55ab-4bbc-ba20-318448e3bca8",
+        "name": "Are there any production workflows?"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "dc2fd491-ad9b-43c5-926b-c1a67cc6e2c1",
+                "name": "workflow.id",
+                "value": "={{ $json.productionWorkflow.id }}",
+                "type": "string"
+              },
+              {
+                "id": "9331f77e-7baf-4acb-bac2-e2e609e30204",
+                "name": "workflow.name",
+                "value": "={{ `[PRODUCTION] ${$json.workflow.name} - ${$json.workflow.id}` }}",
+                "type": "string"
+              }
+            ]
+          },
+          "includeOtherFields": true,
+          "include": "except",
+          "excludeFields": "workflow.settings.callerPolicy",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          3264,
+          -400
+        ],
+        "id": "c2205707-c0c6-4dd2-8d63-5f5fc0c2fab4",
+        "name": "Modify workflow data"
+      },
+      {
+        "parameters": {
+          "operation": "activate",
+          "workflowId": {
+            "__rl": true,
+            "value": "={{ $json.id }}",
+            "mode": "id"
+          },
+          "additionalFields": {},
+          "requestOptions": {}
+        },
+        "type": "n8n-nodes-base.n8n",
+        "typeVersion": 1,
+        "position": [
+          3696,
+          -528
+        ],
+        "id": "9fe2479c-f021-454f-a55c-886904eb02f8",
+        "name": "Activate workflow",
+        "credentials": {
+          "n8nApi": {
+            "id": "6ePY5C52bgUPHEZr",
+            "name": "n8n account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "completion",
+          "respondWith": "redirect",
+          "redirectUrl": "={{ $('On form submission').item.json.formMode === \"test\" ? \"https://n8n.dev.mobiltk.com.br/form-test/a9cf8b5e-9cd1-4cbb-8aa0-0aac17d55d7d\" : \"https://n8n.dev.mobiltk.com.br/form/a9cf8b5e-9cd1-4cbb-8aa0-0aac17d55d7d\" }}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.form",
+        "typeVersion": 1,
+        "position": [
+          3920,
+          -528
+        ],
+        "id": "2f925f31-6b1a-4736-85df-c58057ae899e",
+        "name": "Redirect back to form beginning",
+        "webhookId": "775324a1-7a1a-4674-ba80-2847cfc25198"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "658b3589-f106-4f9f-8971-e102830acd34",
+                "name": "developmentFolderId",
+                "value": "={{ $('Select root development folder').item.json.id }}",
+                "type": "string"
+              },
+              {
+                "id": "008db6ad-b2f7-4c61-b92b-9085a5168ff3",
+                "name": "productionFolderId",
+                "value": "={{ $json.id }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          1120,
+          -736
+        ],
+        "id": "e9f2ffe0-8f2e-4fea-8fd1-d3d0e5d38b53",
+        "name": "Set folders data"
+      },
+      {
+        "parameters": {
+          "operation": "select",
+          "schema": {
+            "__rl": true,
+            "mode": "list",
+            "value": "public"
+          },
+          "table": {
+            "__rl": true,
+            "value": "folder",
+            "mode": "list",
+            "cachedResultName": "folder"
+          },
+          "limit": 1,
+          "where": {
+            "values": [
+              {
+                "column": "name",
+                "value": "Production"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.postgres",
+        "typeVersion": 2.6,
+        "position": [
+          896,
+          -736
+        ],
+        "id": "d2c8df0d-8f86-4353-8bc6-738489a73394",
+        "name": "Select production folder",
+        "credentials": {
+          "postgres": {
+            "id": "po4G2iVo4exIO9iT",
+            "name": "n8n Postgres"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "select",
+          "schema": {
+            "__rl": true,
+            "mode": "list",
+            "value": "public"
+          },
+          "table": {
+            "__rl": true,
+            "value": "workflow_entity",
+            "mode": "list",
+            "cachedResultName": "workflow_entity"
+          },
+          "limit": 1,
+          "where": {
+            "values": [
+              {
+                "column": "parentFolderId",
+                "value": "={{ $('Select production folder').item.json.id }}"
+              },
+              {
+                "column": "name",
+                "condition": "LIKE",
+                "value": "=%{{ $json.workflow.id }}"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.postgres",
+        "typeVersion": 2.6,
+        "position": [
+          2240,
+          -528
+        ],
+        "id": "7df314a7-db26-4a2c-84a9-e51c6e05d913",
+        "name": "Select production workflow version",
+        "alwaysOutputData": true,
+        "credentials": {
+          "postgres": {
+            "id": "po4G2iVo4exIO9iT",
+            "name": "n8n Postgres"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "mode": "raw",
+          "jsonOutput": "={\n  \"productionWorkflow\": {{ JSON.stringify($json) }}\n}\n",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          2688,
+          -480
+        ],
+        "id": "b3e904b8-7465-4958-a3ff-871ed0d9e776",
+        "name": "Wrap workflow"
+      },
+      {
+        "parameters": {
+          "operation": "update",
+          "schema": {
+            "__rl": true,
+            "mode": "list",
+            "value": "public"
+          },
+          "table": {
+            "__rl": true,
+            "value": "workflow_entity",
+            "mode": "list",
+            "cachedResultName": "workflow_entity"
+          },
+          "columns": {
+            "mappingMode": "defineBelow",
+            "value": {
+              "id": "={{ $json.id }}",
+              "parentFolderId": "={{ $('Select production folder').item.json.id }}"
+            },
+            "matchingColumns": [
+              "id"
+            ],
+            "schema": [
+              {
+                "id": "name",
+                "displayName": "name",
+                "required": true,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": true
+              },
+              {
+                "id": "active",
+                "displayName": "active",
+                "required": true,
+                "defaultMatch": false,
+                "display": true,
+                "type": "boolean",
+                "canBeUsedToMatch": true,
+                "removed": true
+              },
+              {
+                "id": "nodes",
+                "displayName": "nodes",
+                "required": true,
+                "defaultMatch": false,
+                "display": true,
+                "type": "object",
+                "canBeUsedToMatch": true,
+                "removed": true
+              },
+              {
+                "id": "connections",
+                "displayName": "connections",
+                "required": true,
+                "defaultMatch": false,
+                "display": true,
+                "type": "object",
+                "canBeUsedToMatch": true,
+                "removed": true
+              },
+              {
+                "id": "createdAt",
+                "displayName": "createdAt",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "dateTime",
+                "canBeUsedToMatch": true,
+                "removed": true
+              },
+              {
+                "id": "updatedAt",
+                "displayName": "updatedAt",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "dateTime",
+                "canBeUsedToMatch": true,
+                "removed": true
+              },
+              {
+                "id": "settings",
+                "displayName": "settings",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "object",
+                "canBeUsedToMatch": true,
+                "removed": true
+              },
+              {
+                "id": "staticData",
+                "displayName": "staticData",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "object",
+                "canBeUsedToMatch": true,
+                "removed": true
+              },
+              {
+                "id": "pinData",
+                "displayName": "pinData",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "object",
+                "canBeUsedToMatch": true,
+                "removed": true
+              },
+              {
+                "id": "versionId",
+                "displayName": "versionId",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": true
+              },
+              {
+                "id": "triggerCount",
+                "displayName": "triggerCount",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "number",
+                "canBeUsedToMatch": true,
+                "removed": true
+              },
+              {
+                "id": "id",
+                "displayName": "id",
+                "required": true,
+                "defaultMatch": true,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "meta",
+                "displayName": "meta",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "object",
+                "canBeUsedToMatch": true,
+                "removed": true
+              },
+              {
+                "id": "parentFolderId",
+                "displayName": "parentFolderId",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "isArchived",
+                "displayName": "isArchived",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "boolean",
+                "canBeUsedToMatch": true,
+                "removed": true
+              }
+            ],
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": false
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.postgres",
+        "typeVersion": 2.6,
+        "position": [
+          3488,
+          -688
+        ],
+        "id": "a342f910-051f-42f9-82f4-7e1a65da6e4d",
+        "name": "Move workflow to production folder",
+        "credentials": {
+          "postgres": {
+            "id": "po4G2iVo4exIO9iT",
+            "name": "n8n Postgres"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "b45511ea-bacc-4476-8b72-0b84bfe6685a",
+                "leftValue": "={{ $json.workflow.active }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "boolean",
+                  "operation": "true",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          2240,
+          -1072
+        ],
+        "id": "b680128d-618a-488d-8818-c40831758079",
+        "name": "Is development workflow active?"
+      },
+      {
+        "parameters": {
+          "operation": "deactivate",
+          "workflowId": {
+            "__rl": true,
+            "value": "={{ $json.workflow.id }}",
+            "mode": "id"
+          },
+          "requestOptions": {}
+        },
+        "type": "n8n-nodes-base.n8n",
+        "typeVersion": 1,
+        "position": [
+          2464,
+          -1072
+        ],
+        "id": "036e34b7-491c-4664-b6aa-7aea73d24b0b",
+        "name": "Deactivate development workflow",
+        "credentials": {
+          "n8nApi": {
+            "id": "6ePY5C52bgUPHEZr",
+            "name": "n8n account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "select": "channel",
+          "channelId": {
+            "__rl": true,
+            "value": "C05QP8J00DP",
+            "mode": "list",
+            "cachedResultName": "workgroup-automação"
+          },
+          "text": "=------------------------------------------------------\n*DEPLOY n8n*\n- *<http://n8n.inside.mobiltk.com.br/workflow/{{ $json.workflow.id }}|Workflow>*: {{ $json.workflow.name }}\n- *Data*: {{ new Date().toDateTime().setZone(\"America/Sao_Paulo\").format('HH:mm dd/MM') }}",
+          "otherOptions": {
+            "includeLinkToWorkflow": false
+          }
+        },
+        "type": "n8n-nodes-base.slack",
+        "typeVersion": 2.3,
+        "position": [
+          2240,
+          -880
+        ],
+        "id": "3638e5f4-1c27-43b9-99fa-482de8b0e28d",
+        "name": "Notify of deployment",
+        "webhookId": "192fbe4b-f9b5-47e5-a87c-2fdd8311a63b",
+        "credentials": {
+          "slackApi": {
+            "id": "QMoJh8hcmWWspMvU",
+            "name": "Slack account"
+          }
+        },
+        "disabled": true
+      },
+      {
+        "parameters": {
+          "operation": "select",
+          "schema": {
+            "__rl": true,
+            "mode": "list",
+            "value": "public"
+          },
+          "table": {
+            "__rl": true,
+            "value": "folder",
+            "mode": "list",
+            "cachedResultName": "folder"
+          },
+          "limit": 1,
+          "where": {
+            "values": [
+              {
+                "column": "name",
+                "value": "Development"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.postgres",
+        "typeVersion": 2.6,
+        "position": [
+          -224,
+          -736
+        ],
+        "id": "5350a87e-a4b7-4ac6-98ed-cd153639157d",
+        "name": "Select root development folder",
+        "alwaysOutputData": true,
+        "credentials": {
+          "postgres": {
+            "id": "po4G2iVo4exIO9iT",
+            "name": "n8n Postgres"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "586547a1-cd86-4771-8467-1b8b06d452bc",
+                "name": "runIndex",
+                "value": "={{ $runIndex }}",
+                "type": "string"
+              }
+            ]
+          },
+          "includeOtherFields": true,
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          224,
+          -816
+        ],
+        "id": "60d83580-57ad-4d57-847c-4ee89b79faa3",
+        "name": "Set run index"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "6af5cde3-2d7d-4256-9807-83903c5c99c1",
+                "leftValue": "={{ $json.hasField(\"id\") }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "boolean",
+                  "operation": "false",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          448,
+          -736
+        ],
+        "id": "e72f5c8e-f0ab-4deb-ae52-ce92e067be71",
+        "name": "Are there no rows left?"
+      },
+      {
+        "parameters": {
+          "operation": "select",
+          "schema": {
+            "__rl": true,
+            "mode": "list",
+            "value": "public"
+          },
+          "table": {
+            "__rl": true,
+            "value": "folder",
+            "mode": "list",
+            "cachedResultName": "folder"
+          },
+          "returnAll": true,
+          "where": {
+            "values": [
+              {
+                "column": "parentFolderId",
+                "value": "={{ $json.id }}"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.postgres",
+        "typeVersion": 2.6,
+        "position": [
+          0,
+          -736
+        ],
+        "id": "c60998bb-cee4-4803-a40a-a2f1ab9580c2",
+        "name": "Select folders for given parent folder",
+        "alwaysOutputData": true,
+        "credentials": {
+          "postgres": {
+            "id": "po4G2iVo4exIO9iT",
+            "name": "n8n Postgres"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "const result = [$('Select root development folder').first().json.id];\nfor(let i = 0; i < $input.first().json.runIndex; i++) {\n  $('Select folders for given parent folder').all(0, i).forEach(data => result.push(data.json.id));\n}\nreturn {\n  data: result\n}"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          672,
+          -736
+        ],
+        "id": "6e5e6360-16e6-43f7-88e7-dcaf08039a8c",
+        "name": "Merge all valid development folders"
+      },
+      {
+        "parameters": {
+          "operation": "executeQuery",
+          "query": "SELECT * FROM public.workflow_entity WHERE \"parentFolderId\" IN ({{ $('Merge all valid development folders').item.json.data.map(id => `'${id}'`).join(\", \") }}) ORDER BY \"updatedAt\" DESC",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.postgres",
+        "typeVersion": 2.6,
+        "position": [
+          1344,
+          -736
+        ],
+        "id": "dd3b7a4c-c527-4e37-bacb-3c82714685b3",
+        "name": "Select development workflows",
+        "credentials": {
+          "postgres": {
+            "id": "po4G2iVo4exIO9iT",
+            "name": "n8n Postgres"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "ff4032f1-3e18-4f9f-9a1f-1df3d66d88e9",
+                "name": "workflow.settings",
+                "value": "{ \"executionOrder\": \"v1\" }",
+                "type": "object"
+              }
+            ]
+          },
+          "includeOtherFields": true,
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          3088,
+          -688
+        ],
+        "id": "a5244da4-3ca4-49bd-8eb3-4f890fe46d2f",
+        "name": "Edit Fields"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "ff4032f1-3e18-4f9f-9a1f-1df3d66d88e9",
+                "name": "workflow.settings",
+                "value": "{ \"executionOrder\": \"v1\" }",
+                "type": "object"
+              }
+            ]
+          },
+          "includeOtherFields": true,
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          3088,
+          -400
+        ],
+        "id": "ffdf23de-c33f-45c1-a5bc-e1242c021898",
+        "name": "Edit Fields1"
+      }
+    ],
+    "connections": {
+      "On form submission": {
+        "main": [
+          [
+            {
+              "node": "Select root development folder",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Aggregate workflows": {
+        "main": [
+          [
+            {
+              "node": "Workflow selection",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Retrieve workflow data for creating": {
+        "main": [
+          [
+            {
+              "node": "Update workflow name",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Update workflow name": {
+        "main": [
+          [
+            {
+              "node": "Edit Fields",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Retrieve workflow data for updating": {
+        "main": [
+          [
+            {
+              "node": "Edit Fields1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Workflow selection": {
+        "main": [
+          [
+            {
+              "node": "Retrieve selected workflow",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Retrieve selected workflow": {
+        "main": [
+          [
+            {
+              "node": "Retrieve workflow data for updating",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Notify of deployment",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Select production workflow version",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Retrieve workflow data for creating",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Is development workflow active?",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Are there any production workflows?": {
+        "main": [
+          [
+            {
+              "node": "Wrap workflow",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Retrieve workflow data for creating",
+              "type": "main",
+              "index": 1
+            }
+          ]
+        ]
+      },
+      "Modify workflow data": {
+        "main": [
+          [
+            {
+              "node": "Update a workflow",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create production workflow": {
+        "main": [
+          [
+            {
+              "node": "Move workflow to production folder",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Update a workflow": {
+        "main": [
+          [
+            {
+              "node": "Activate workflow",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Activate workflow": {
+        "main": [
+          [
+            {
+              "node": "Redirect back to form beginning",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Select production folder": {
+        "main": [
+          [
+            {
+              "node": "Set folders data",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Set folders data": {
+        "main": [
+          [
+            {
+              "node": "Select development workflows",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Select production workflow version": {
+        "main": [
+          [
+            {
+              "node": "Are there any production workflows?",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Wrap workflow": {
+        "main": [
+          [
+            {
+              "node": "Retrieve workflow data for updating",
+              "type": "main",
+              "index": 1
+            }
+          ]
+        ]
+      },
+      "Move workflow to production folder": {
+        "main": [
+          [
+            {
+              "node": "Activate workflow",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Is development workflow active?": {
+        "main": [
+          [
+            {
+              "node": "Deactivate development workflow",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          []
+        ]
+      },
+      "Deactivate development workflow": {
+        "main": [
+          []
+        ]
+      },
+      "Notify of deployment": {
+        "main": [
+          []
+        ]
+      },
+      "Select root development folder": {
+        "main": [
+          [
+            {
+              "node": "Select folders for given parent folder",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Set run index": {
+        "main": [
+          [
+            {
+              "node": "Are there no rows left?",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Are there no rows left?": {
+        "main": [
+          [
+            {
+              "node": "Merge all valid development folders",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Select folders for given parent folder",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Select folders for given parent folder": {
+        "main": [
+          [
+            {
+              "node": "Set run index",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Merge all valid development folders": {
+        "main": [
+          [
+            {
+              "node": "Select production folder",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Select development workflows": {
+        "main": [
+          [
+            {
+              "node": "Aggregate workflows",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Edit Fields": {
+        "main": [
+          [
+            {
+              "node": "Create production workflow",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Edit Fields1": {
+        "main": [
+          [
+            {
+              "node": "Modify workflow data",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Contato Mobiltracker",
+    "name": "Version 552eb638",
+    "description": "",
+    "autosaved": true
+  },
+  "activeVersionId": "552eb638-c8f6-4fd4-85c3-0b3a5f2ce07d",
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Select root development folder",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate workflows": {
+      "main": [
+        [
+          {
+            "node": "Workflow selection",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Retrieve workflow data for creating": {
+      "main": [
+        [
+          {
+            "node": "Update workflow name",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update workflow name": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Retrieve workflow data for updating": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Workflow selection": {
+      "main": [
+        [
+          {
+            "node": "Retrieve selected workflow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Retrieve selected workflow": {
+      "main": [
+        [
+          {
+            "node": "Retrieve workflow data for updating",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Notify of deployment",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Select production workflow version",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Retrieve workflow data for creating",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Is development workflow active?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Are there any production workflows?": {
+      "main": [
+        [
+          {
+            "node": "Wrap workflow",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Retrieve workflow data for creating",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Modify workflow data": {
+      "main": [
+        [
+          {
+            "node": "Update a workflow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create production workflow": {
+      "main": [
+        [
+          {
+            "node": "Move workflow to production folder",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update a workflow": {
+      "main": [
+        [
+          {
+            "node": "Activate workflow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Activate workflow": {
+      "main": [
+        [
+          {
+            "node": "Redirect back to form beginning",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Select production folder": {
+      "main": [
+        [
+          {
+            "node": "Set folders data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set folders data": {
+      "main": [
+        [
+          {
+            "node": "Select development workflows",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Select production workflow version": {
+      "main": [
+        [
+          {
+            "node": "Are there any production workflows?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wrap workflow": {
+      "main": [
+        [
+          {
+            "node": "Retrieve workflow data for updating",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Move workflow to production folder": {
+      "main": [
+        [
+          {
+            "node": "Activate workflow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is development workflow active?": {
+      "main": [
+        [
+          {
+            "node": "Deactivate development workflow",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    },
+    "Deactivate development workflow": {
+      "main": [
+        []
+      ]
+    },
+    "Notify of deployment": {
+      "main": [
+        []
+      ]
+    },
+    "Select root development folder": {
+      "main": [
+        [
+          {
+            "node": "Select folders for given parent folder",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set run index": {
+      "main": [
+        [
+          {
+            "node": "Are there no rows left?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Are there no rows left?": {
+      "main": [
+        [
+          {
+            "node": "Merge all valid development folders",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Select folders for given parent folder",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Select folders for given parent folder": {
+      "main": [
+        [
+          {
+            "node": "Set run index",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge all valid development folders": {
+      "main": [
+        [
+          {
+            "node": "Select production folder",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Select development workflows": {
+      "main": [
+        [
+          {
+            "node": "Aggregate workflows",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Create production workflow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Modify workflow data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-07-15T14:57:01.295Z",
+  "id": "7D1jDIwHrRzs4jhU",
+  "isArchived": false,
+  "isProd": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Deploy",
+  "nodes": [
+    {
+      "parameters": {
+        "authentication": "basicAuth",
+        "formTitle": "Workflow deploy",
+        "formDescription": "Use this workflow to deploy other workflows to production.\nPress \"Submit\" to select the workflow to be deployed.",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        -448,
+        -736
+      ],
+      "id": "f32ee228-807d-456f-af5d-85facea87adf",
+      "name": "On form submission",
+      "webhookId": "a9cf8b5e-9cd1-4cbb-8aa0-0aac17d55d7d",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "oX6J1RdpqttuBfuf",
+          "name": "n8n form credentials"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "destinationFieldName": "workflows",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        1568,
+        -736
+      ],
+      "id": "e7ca8316-b4f7-414b-8e5e-c665e579e6be",
+      "name": "Aggregate workflows"
+    },
+    {
+      "parameters": {
+        "mode": "chooseBranch"
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        2688,
+        -688
+      ],
+      "id": "ba93a490-0165-46a3-84a5-5290a96c62b5",
+      "name": "Retrieve workflow data for creating"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "adb7093f-ca24-48a1-9a88-111cd766ad7c",
+              "name": "workflow.name",
+              "value": "={{ `[PRODUCTION] ${$json.workflow.name} - ${$json.workflow.id}` }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "include": "except",
+        "excludeFields": "workflow.id",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2912,
+        -688
+      ],
+      "id": "54e86498-1b29-4854-8feb-205555b3bef2",
+      "name": "Update workflow name"
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "workflowObject": "={{ JSON.stringify($json.workflow) }}",
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-base.n8n",
+      "typeVersion": 1,
+      "position": [
+        3264,
+        -688
+      ],
+      "id": "56f200e4-5498-4ec7-ae0c-afdc665e2589",
+      "name": "Create production workflow",
+      "credentials": {
+        "n8nApi": {
+          "id": "6ePY5C52bgUPHEZr",
+          "name": "n8n account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "workflowId": {
+          "__rl": true,
+          "value": "={{ $json.workflow.id }}",
+          "mode": "id"
+        },
+        "workflowObject": "={{ JSON.stringify($json.workflow) }}",
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-base.n8n",
+      "typeVersion": 1,
+      "position": [
+        3488,
+        -400
+      ],
+      "id": "b473f81b-9592-4fb1-939c-0471a87edbcf",
+      "name": "Update a workflow",
+      "credentials": {
+        "n8nApi": {
+          "id": "6ePY5C52bgUPHEZr",
+          "name": "n8n account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        2912,
+        -400
+      ],
+      "id": "907bfe1c-d80e-4676-a0c5-924124dd2f15",
+      "name": "Retrieve workflow data for updating"
+    },
+    {
+      "parameters": {
+        "defineForm": "json",
+        "jsonOutput": "=[\n  {\n    \"fieldLabel\": \"Select the workflow to be deployed\",\n    \"fieldType\": \"dropdown\",\n    \"fieldOptions\": {\n        \"values\": {{ JSON.stringify($json.workflows.map(workflow => ({ option: `${workflow.id} - ${workflow.name} - Modificado em: ${new Date(workflow.updatedAt).toLocaleString()}` }))) }}\n    },\n    \"requiredField\": true\n  }\n]",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 1,
+      "position": [
+        1792,
+        -736
+      ],
+      "id": "d7e38788-aecb-4a34-b921-2ccbee606f2d",
+      "name": "Workflow selection",
+      "webhookId": "d20ad3db-a950-48cb-8885-cc3687d6c16a"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "035b4ae2-5fba-4467-a6a5-940a019faecb",
+              "name": "workflow",
+              "value": "={{ $('Aggregate workflows').item.json.workflows.find(workflow =>workflow.id === $json['Select the workflow to be deployed'].split(\" - \")[0]) }}",
+              "type": "object"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2016,
+        -736
+      ],
+      "id": "e01e0d18-cf7b-4335-b17f-eac0457f530b",
+      "name": "Retrieve selected workflow"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "3a6a5628-b54c-48e2-843f-dcd5b148610e",
+              "leftValue": "={{ $json.isEmpty() }}",
+              "rightValue": "={{ `[PRODUCTION] ${$('Retrieve selected workflow').item.json.workflow.name}` }}",
+              "operator": {
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2464,
+        -528
+      ],
+      "id": "42a7156b-55ab-4bbc-ba20-318448e3bca8",
+      "name": "Are there any production workflows?"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "dc2fd491-ad9b-43c5-926b-c1a67cc6e2c1",
+              "name": "workflow.id",
+              "value": "={{ $json.productionWorkflow.id }}",
+              "type": "string"
+            },
+            {
+              "id": "9331f77e-7baf-4acb-bac2-e2e609e30204",
+              "name": "workflow.name",
+              "value": "={{ `[PRODUCTION] ${$json.workflow.name} - ${$json.workflow.id}` }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "include": "except",
+        "excludeFields": "workflow.settings.callerPolicy",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3264,
+        -400
+      ],
+      "id": "c2205707-c0c6-4dd2-8d63-5f5fc0c2fab4",
+      "name": "Modify workflow data"
+    },
+    {
+      "parameters": {
+        "operation": "activate",
+        "workflowId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        },
+        "additionalFields": {},
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-base.n8n",
+      "typeVersion": 1,
+      "position": [
+        3696,
+        -528
+      ],
+      "id": "9fe2479c-f021-454f-a55c-886904eb02f8",
+      "name": "Activate workflow",
+      "credentials": {
+        "n8nApi": {
+          "id": "6ePY5C52bgUPHEZr",
+          "name": "n8n account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "completion",
+        "respondWith": "redirect",
+        "redirectUrl": "={{ $('On form submission').item.json.formMode === \"test\" ? \"https://n8n.dev.mobiltk.com.br/form-test/a9cf8b5e-9cd1-4cbb-8aa0-0aac17d55d7d\" : \"https://n8n.dev.mobiltk.com.br/form/a9cf8b5e-9cd1-4cbb-8aa0-0aac17d55d7d\" }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 1,
+      "position": [
+        3920,
+        -528
+      ],
+      "id": "2f925f31-6b1a-4736-85df-c58057ae899e",
+      "name": "Redirect back to form beginning",
+      "webhookId": "775324a1-7a1a-4674-ba80-2847cfc25198"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "658b3589-f106-4f9f-8971-e102830acd34",
+              "name": "developmentFolderId",
+              "value": "={{ $('Select root development folder').item.json.id }}",
+              "type": "string"
+            },
+            {
+              "id": "008db6ad-b2f7-4c61-b92b-9085a5168ff3",
+              "name": "productionFolderId",
+              "value": "={{ $json.id }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1120,
+        -736
+      ],
+      "id": "e9f2ffe0-8f2e-4fea-8fd1-d3d0e5d38b53",
+      "name": "Set folders data"
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "folder",
+          "mode": "list",
+          "cachedResultName": "folder"
+        },
+        "limit": 1,
+        "where": {
+          "values": [
+            {
+              "column": "name",
+              "value": "Production"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        896,
+        -736
+      ],
+      "id": "d2c8df0d-8f86-4353-8bc6-738489a73394",
+      "name": "Select production folder",
+      "credentials": {
+        "postgres": {
+          "id": "po4G2iVo4exIO9iT",
+          "name": "n8n Postgres"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "workflow_entity",
+          "mode": "list",
+          "cachedResultName": "workflow_entity"
+        },
+        "limit": 1,
+        "where": {
+          "values": [
+            {
+              "column": "parentFolderId",
+              "value": "={{ $('Select production folder').item.json.id }}"
+            },
+            {
+              "column": "name",
+              "condition": "LIKE",
+              "value": "=%{{ $json.workflow.id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        2240,
+        -528
+      ],
+      "id": "7df314a7-db26-4a2c-84a9-e51c6e05d913",
+      "name": "Select production workflow version",
+      "alwaysOutputData": true,
+      "credentials": {
+        "postgres": {
+          "id": "po4G2iVo4exIO9iT",
+          "name": "n8n Postgres"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={\n  \"productionWorkflow\": {{ JSON.stringify($json) }}\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2688,
+        -480
+      ],
+      "id": "b3e904b8-7465-4958-a3ff-871ed0d9e776",
+      "name": "Wrap workflow"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "workflow_entity",
+          "mode": "list",
+          "cachedResultName": "workflow_entity"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "id": "={{ $json.id }}",
+            "parentFolderId": "={{ $('Select production folder').item.json.id }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "name",
+              "displayName": "name",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "active",
+              "displayName": "active",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "boolean",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "nodes",
+              "displayName": "nodes",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "object",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "connections",
+              "displayName": "connections",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "object",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "createdAt",
+              "displayName": "createdAt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "updatedAt",
+              "displayName": "updatedAt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "settings",
+              "displayName": "settings",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "object",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "staticData",
+              "displayName": "staticData",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "object",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "pinData",
+              "displayName": "pinData",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "object",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "versionId",
+              "displayName": "versionId",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "triggerCount",
+              "displayName": "triggerCount",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": true,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "meta",
+              "displayName": "meta",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "object",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "parentFolderId",
+              "displayName": "parentFolderId",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "isArchived",
+              "displayName": "isArchived",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "boolean",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        3488,
+        -688
+      ],
+      "id": "a342f910-051f-42f9-82f4-7e1a65da6e4d",
+      "name": "Move workflow to production folder",
+      "credentials": {
+        "postgres": {
+          "id": "po4G2iVo4exIO9iT",
+          "name": "n8n Postgres"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "b45511ea-bacc-4476-8b72-0b84bfe6685a",
+              "leftValue": "={{ $json.workflow.active }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2240,
+        -1072
+      ],
+      "id": "b680128d-618a-488d-8818-c40831758079",
+      "name": "Is development workflow active?"
+    },
+    {
+      "parameters": {
+        "operation": "deactivate",
+        "workflowId": {
+          "__rl": true,
+          "value": "={{ $json.workflow.id }}",
+          "mode": "id"
+        },
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-base.n8n",
+      "typeVersion": 1,
+      "position": [
+        2464,
+        -1072
+      ],
+      "id": "036e34b7-491c-4664-b6aa-7aea73d24b0b",
+      "name": "Deactivate development workflow",
+      "credentials": {
+        "n8nApi": {
+          "id": "6ePY5C52bgUPHEZr",
+          "name": "n8n account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "C05QP8J00DP",
+          "mode": "list",
+          "cachedResultName": "workgroup-automação"
+        },
+        "text": "=------------------------------------------------------\n*DEPLOY n8n*\n- *<http://n8n.inside.mobiltk.com.br/workflow/{{ $json.workflow.id }}|Workflow>*: {{ $json.workflow.name }}\n- *Data*: {{ new Date().toDateTime().setZone(\"America/Sao_Paulo\").format('HH:mm dd/MM') }}",
+        "otherOptions": {
+          "includeLinkToWorkflow": false
+        }
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.3,
+      "position": [
+        2240,
+        -880
+      ],
+      "id": "3638e5f4-1c27-43b9-99fa-482de8b0e28d",
+      "name": "Notify of deployment",
+      "webhookId": "192fbe4b-f9b5-47e5-a87c-2fdd8311a63b",
+      "credentials": {
+        "slackApi": {
+          "id": "QMoJh8hcmWWspMvU",
+          "name": "Slack account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "folder",
+          "mode": "list",
+          "cachedResultName": "folder"
+        },
+        "limit": 1,
+        "where": {
+          "values": [
+            {
+              "column": "name",
+              "value": "Development"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -224,
+        -736
+      ],
+      "id": "5350a87e-a4b7-4ac6-98ed-cd153639157d",
+      "name": "Select root development folder",
+      "alwaysOutputData": true,
+      "credentials": {
+        "postgres": {
+          "id": "po4G2iVo4exIO9iT",
+          "name": "n8n Postgres"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "586547a1-cd86-4771-8467-1b8b06d452bc",
+              "name": "runIndex",
+              "value": "={{ $runIndex }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        224,
+        -816
+      ],
+      "id": "60d83580-57ad-4d57-847c-4ee89b79faa3",
+      "name": "Set run index"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "6af5cde3-2d7d-4256-9807-83903c5c99c1",
+              "leftValue": "={{ $json.hasField(\"id\") }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        448,
+        -736
+      ],
+      "id": "e72f5c8e-f0ab-4deb-ae52-ce92e067be71",
+      "name": "Are there no rows left?"
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "folder",
+          "mode": "list",
+          "cachedResultName": "folder"
+        },
+        "returnAll": true,
+        "where": {
+          "values": [
+            {
+              "column": "parentFolderId",
+              "value": "={{ $json.id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        0,
+        -736
+      ],
+      "id": "c60998bb-cee4-4803-a40a-a2f1ab9580c2",
+      "name": "Select folders for given parent folder",
+      "alwaysOutputData": true,
+      "credentials": {
+        "postgres": {
+          "id": "po4G2iVo4exIO9iT",
+          "name": "n8n Postgres"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const result = [$('Select root development folder').first().json.id];\nfor(let i = 0; i < $input.first().json.runIndex; i++) {\n  $('Select folders for given parent folder').all(0, i).forEach(data => result.push(data.json.id));\n}\nreturn {\n  data: result\n}"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        672,
+        -736
+      ],
+      "id": "6e5e6360-16e6-43f7-88e7-dcaf08039a8c",
+      "name": "Merge all valid development folders"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT * FROM public.workflow_entity WHERE \"parentFolderId\" IN ({{ $('Merge all valid development folders').item.json.data.map(id => `'${id}'`).join(\", \") }}) ORDER BY \"updatedAt\" DESC",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1344,
+        -736
+      ],
+      "id": "dd3b7a4c-c527-4e37-bacb-3c82714685b3",
+      "name": "Select development workflows",
+      "credentials": {
+        "postgres": {
+          "id": "po4G2iVo4exIO9iT",
+          "name": "n8n Postgres"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "ff4032f1-3e18-4f9f-9a1f-1df3d66d88e9",
+              "name": "workflow.settings",
+              "value": "{ \"executionOrder\": \"v1\" }",
+              "type": "object"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3088,
+        -688
+      ],
+      "id": "a5244da4-3ca4-49bd-8eb3-4f890fe46d2f",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "ff4032f1-3e18-4f9f-9a1f-1df3d66d88e9",
+              "name": "workflow.settings",
+              "value": "{ \"executionOrder\": \"v1\" }",
+              "type": "object"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3088,
+        -400
+      ],
+      "id": "ffdf23de-c33f-45c1-a5bc-e1242c021898",
+      "name": "Edit Fields1"
+    }
+  ],
+  "owner": "daLuz109",
+  "path": "https://github.com/daLuz109/test",
+  "pinData": {},
+  "repo": "test",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-07-15T14:57:01.295Z",
+      "createdAt": "2025-07-15T14:57:01.295Z",
+      "role": "workflow:owner",
+      "workflowId": "7D1jDIwHrRzs4jhU",
+      "projectId": "ibRx4KzVa8okoVWI"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2026-05-04T20:33:10.080Z",
+  "versionId": "552eb638-c8f6-4fd4-85c3-0b3a5f2ce07d"
+}
