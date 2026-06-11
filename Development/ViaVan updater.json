@@ -1,0 +1,375 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "Geocoding reverse request": {
+      "main": [
+        [
+          {
+            "node": "Set user fields to be updated based on reverse geocoding",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set user fields to be updated based on reverse geocoding": {
+      "main": [
+        [
+          {
+            "node": "Update user address",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Select parents with incomplete address",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Select schools without address",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Select parents with incomplete address": {
+      "main": [
+        [
+          {
+            "node": "Geocoding reverse request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Select schools without address": {
+      "main": [
+        [
+          {
+            "node": "Geocoding reverse request for schools",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Geocoding reverse request for schools": {
+      "main": [
+        [
+          {
+            "node": "Set school address",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set school address": {
+      "main": [
+        [
+          {
+            "node": "Update school address",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-08-13T18:47:27.315Z",
+  "id": "B6IRAMV8aucgwao4",
+  "isArchived": false,
+  "isProd": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "ViaVan updater",
+  "nodes": [
+    {
+      "parameters": {
+        "url": "https://maps.googleapis.com/maps/api/geocode/json",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpQueryAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "latlng",
+              "value": "={{ $json.LatAddress }}, {{ $json.LonAddress }}"
+            },
+            {
+              "name": "language",
+              "value": "pt-BR"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        448,
+        -416
+      ],
+      "id": "9e83b11a-738d-4085-af5c-ed6d507cdf85",
+      "name": "Geocoding reverse request",
+      "credentials": {
+        "httpQueryAuth": {
+          "id": "aU0jZzLnR6A5g81t",
+          "name": "Google Geocoding API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0c0f8730-8a8d-4b5d-8e88-18c74f3e1656",
+              "name": "UserId",
+              "value": "={{ $('Select parents with incomplete address').item.json.UserId }}",
+              "type": "string"
+            },
+            {
+              "id": "fb62929d-1db3-4919-8105-c8f557931d53",
+              "name": "City",
+              "value": "={{ $json.results[0].address_components.find(address => address.types.includes(\"administrative_area_level_2\")).short_name }}",
+              "type": "string"
+            },
+            {
+              "id": "2153cab0-b163-47a1-8bb2-0e5a672b92bc",
+              "name": "State",
+              "value": "={{ $json.results[0].address_components.find(address => address.types.includes(\"administrative_area_level_1\")).long_name }}",
+              "type": "string"
+            },
+            {
+              "id": "ad6dc553-6109-44ef-8a1c-d3730a01610d",
+              "name": "District",
+              "value": "={{ $json.results[0].address_components.find(address => address.types.includes(\"sublocality\"))?.long_name ?? \"\" }}",
+              "type": "string"
+            },
+            {
+              "id": "e3e5d81d-a4a0-4379-a6c1-729c1eabbd0a",
+              "name": "Street",
+              "value": "={{ $json.results[0].address_components.find(address => address.types.includes(\"route\")).long_name }}",
+              "type": "string"
+            },
+            {
+              "id": "25e91036-278b-4550-806d-35b3a86cc0b9",
+              "name": "AddressNumber",
+              "value": "={{ $json.results[0].address_components.find(address => address.types.includes(\"street_number\")).long_name }}",
+              "type": "string"
+            },
+            {
+              "id": "24d7fb59-07cd-44ca-b4f8-36afd593472a",
+              "name": "ZipCode",
+              "value": "={{ $json.results[0].address_components.find(address => address.types.includes(\"postal_code\")).long_name.replace(\"-\", \"\") }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        672,
+        -416
+      ],
+      "id": "3757441a-c921-4ae4-8ee2-b26dfbb3886b",
+      "name": "Set user fields to be updated based on reverse geocoding"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        -320
+      ],
+      "id": "dc35851a-7686-4026-9eed-7d3682bda79c",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT Parents.UserId, LatAddress, LonAddress\nFROM VanEscola.dbo.Parents\n         JOIN VanEscola.dbo.Users ON Parents.UserId = Users.UserId\n         JOIN VanEscola.dbo.ParentStudents ON Parents.UserId = ParentStudents.ParentUserId\n         JOIN VanEscola.dbo.Students\n              ON ParentStudents.StudentId = Students.StudentId AND temp_migration_viavan IS NOT NULL\nWHERE (State IS NULL OR State = 'NULL')\n  AND (City IS NULL OR City = 'NULL')\n  AND (District IS NULL OR District = 'NULL')\n  AND (Street IS NULL OR Street = 'NULL')\n  AND (AddressNumber IS NULL OR AddressNumber = 'NULL')\n  AND LatAddress IS NOT NULL\n  AND LonAddress IS NOT NULL"
+      },
+      "type": "n8n-nodes-base.microsoftSql",
+      "typeVersion": 1.1,
+      "position": [
+        224,
+        -416
+      ],
+      "id": "93eba267-ff63-46ad-8f3c-df24263fecd5",
+      "name": "Select parents with incomplete address",
+      "credentials": {
+        "microsoftSql": {
+          "id": "q8QnAyDOfZ8HwqL2",
+          "name": "SQLServer account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "table": "[VanEscola].[dbo].[Users]",
+        "updateKey": "UserId",
+        "columns": "State, City, District, Street, AddressNumber, ZipCode"
+      },
+      "type": "n8n-nodes-base.microsoftSql",
+      "typeVersion": 1.1,
+      "position": [
+        896,
+        -416
+      ],
+      "id": "3065b441-4a44-4053-8f9f-499cb367eac7",
+      "name": "Update user address",
+      "credentials": {
+        "microsoftSql": {
+          "id": "q8QnAyDOfZ8HwqL2",
+          "name": "SQLServer account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT SchoolId, Lat, Lon\nFROM VanEscola.dbo.Schools\n         JOIN VanEscola.dbo.UsersVanOwner ON VanOwnerUserId = UserId\n         JOIN VanEscola.dbo.Users ON UsersVanOwner.UserId = Users.UserId\nWHERE IsCanceled = 0\n  AND (Address IS NULL OR Address = 'NULL')\n  AND Lat IS NOT NULL\n  AND Lon IS NOT NULL\n  AND Lat <> 0\n  AND Lon <> 0"
+      },
+      "type": "n8n-nodes-base.microsoftSql",
+      "typeVersion": 1.1,
+      "position": [
+        224,
+        -224
+      ],
+      "id": "998b44f5-c149-4012-802b-64ce658ba504",
+      "name": "Select schools without address",
+      "credentials": {
+        "microsoftSql": {
+          "id": "q8QnAyDOfZ8HwqL2",
+          "name": "SQLServer account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://maps.googleapis.com/maps/api/geocode/json",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpQueryAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "latlng",
+              "value": "={{ $json.Lat }}, {{ $json.Lon }}"
+            },
+            {
+              "name": "language",
+              "value": "pt-BR"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        448,
+        -224
+      ],
+      "id": "278bced5-d0a4-445a-bfb8-8e59339ff53a",
+      "name": "Geocoding reverse request for schools",
+      "credentials": {
+        "httpQueryAuth": {
+          "id": "aU0jZzLnR6A5g81t",
+          "name": "Google Geocoding API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0c0f8730-8a8d-4b5d-8e88-18c74f3e1656",
+              "name": "SchoolId",
+              "value": "={{ $('Select schools without address').item.json.SchoolId }}",
+              "type": "string"
+            },
+            {
+              "id": "24d7fb59-07cd-44ca-b4f8-36afd593472a",
+              "name": "Address",
+              "value": "={{ $json.results[0].formatted_address }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        672,
+        -224
+      ],
+      "id": "d92966ab-8b2e-419e-a3f8-1d642f7c3eb9",
+      "name": "Set school address"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "table": "[VanEscola].[dbo].[Schools]",
+        "updateKey": "SchoolId",
+        "columns": "Address"
+      },
+      "type": "n8n-nodes-base.microsoftSql",
+      "typeVersion": 1.1,
+      "position": [
+        896,
+        -224
+      ],
+      "id": "74469ffe-05ec-4718-8ca6-6cd6501ac251",
+      "name": "Update school address",
+      "credentials": {
+        "microsoftSql": {
+          "id": "q8QnAyDOfZ8HwqL2",
+          "name": "SQLServer account"
+        }
+      }
+    }
+  ],
+  "owner": "daLuz109",
+  "path": "https://github.com/daLuz109/test",
+  "pinData": {},
+  "repo": "test",
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "timezone": "America/Sao_Paulo"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-08-13T18:47:27.315Z",
+      "createdAt": "2025-08-13T18:47:27.315Z",
+      "role": "workflow:owner",
+      "workflowId": "B6IRAMV8aucgwao4",
+      "projectId": "ibRx4KzVa8okoVWI"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-08-29T13:22:39.155Z",
+  "versionId": "e8382852-25f3-4f36-94b9-55a343aec224"
+}
