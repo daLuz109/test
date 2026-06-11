@@ -1,0 +1,328 @@
+{
+  "active": true,
+  "activeVersion": {
+    "updatedAt": "2025-11-27T16:50:56.963Z",
+    "createdAt": "2025-11-27T16:50:56.963Z",
+    "versionId": "4ba7a7aa-cd40-4dd4-9572-c0a8ac17bc4c",
+    "workflowId": "rOdsM6CxuzxBLwXS",
+    "nodes": [
+      {
+        "parameters": {
+          "workflowInputs": {
+            "values": [
+              {
+                "name": "email"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.executeWorkflowTrigger",
+        "typeVersion": 1.1,
+        "position": [
+          0,
+          -72
+        ],
+        "id": "d9d8993a-c1be-441a-8549-8bafdad447d1",
+        "name": "When Executed by Another Workflow"
+      },
+      {
+        "parameters": {
+          "operation": "executeQuery",
+          "query": "SELECT UserId FROM Mobiltracker.dbo.Memberships\n  WHERE Email = '{{ $json.email }}'"
+        },
+        "type": "n8n-nodes-base.microsoftSql",
+        "typeVersion": 1.1,
+        "position": [
+          224,
+          -72
+        ],
+        "id": "cf207a3b-179f-4bd3-8ba4-43e2235548ac",
+        "name": "Select user ID for e-mail",
+        "alwaysOutputData": true,
+        "credentials": {
+          "microsoftSql": {
+            "id": "q8QnAyDOfZ8HwqL2",
+            "name": "SQLServer account"
+          }
+        },
+        "onError": "continueErrorOutput"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "6bf4d231-57fb-44a5-bf46-b84fa5608bff",
+                "name": "error",
+                "value": "Failed to fetch user ID. Please make sure you provided a valid e-mail address.",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          672,
+          -72
+        ],
+        "id": "825e8c27-2793-4794-a792-4bc33a04d4d9",
+        "name": "Set error message"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "79ac2e5f-585f-41f0-bc8f-412eeb0fed99",
+                "leftValue": "={{ $json.isNotEmpty() }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "boolean",
+                  "operation": "true",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          448,
+          -144
+        ],
+        "id": "95507287-577e-4176-bf80-35e6fe150879",
+        "name": "Was it successful?"
+      }
+    ],
+    "connections": {
+      "When Executed by Another Workflow": {
+        "main": [
+          [
+            {
+              "node": "Select user ID for e-mail",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Select user ID for e-mail": {
+        "main": [
+          [
+            {
+              "node": "Was it successful?",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Set error message",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Was it successful?": {
+        "main": [
+          [],
+          [
+            {
+              "node": "Set error message",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "system migration",
+    "name": null,
+    "description": null,
+    "autosaved": false
+  },
+  "activeVersionId": "4ba7a7aa-cd40-4dd4-9572-c0a8ac17bc4c",
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Select user ID for e-mail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Select user ID for e-mail": {
+      "main": [
+        [
+          {
+            "node": "Was it successful?",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Set error message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Was it successful?": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Set error message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-09-23T17:33:28.591Z",
+  "id": "rOdsM6CxuzxBLwXS",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "User ID for e-mail fetcher",
+  "nodes": [
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "email"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        -72
+      ],
+      "id": "d9d8993a-c1be-441a-8549-8bafdad447d1",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT UserId FROM Mobiltracker.dbo.Memberships\n  WHERE Email = '{{ $json.email }}'"
+      },
+      "type": "n8n-nodes-base.microsoftSql",
+      "typeVersion": 1.1,
+      "position": [
+        224,
+        -72
+      ],
+      "id": "cf207a3b-179f-4bd3-8ba4-43e2235548ac",
+      "name": "Select user ID for e-mail",
+      "alwaysOutputData": true,
+      "credentials": {
+        "microsoftSql": {
+          "id": "q8QnAyDOfZ8HwqL2",
+          "name": "SQLServer account"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "6bf4d231-57fb-44a5-bf46-b84fa5608bff",
+              "name": "error",
+              "value": "Failed to fetch user ID. Please make sure you provided a valid e-mail address.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        672,
+        -72
+      ],
+      "id": "825e8c27-2793-4794-a792-4bc33a04d4d9",
+      "name": "Set error message"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "79ac2e5f-585f-41f0-bc8f-412eeb0fed99",
+              "leftValue": "={{ $json.isNotEmpty() }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        448,
+        -144
+      ],
+      "id": "95507287-577e-4176-bf80-35e6fe150879",
+      "name": "Was it successful?"
+    }
+  ],
+  "owner": "daLuz109",
+  "path": "https://github.com/daLuz109/test",
+  "pinData": {},
+  "repo": "test",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-09-23T17:33:28.591Z",
+      "createdAt": "2025-09-23T17:33:28.591Z",
+      "role": "workflow:owner",
+      "workflowId": "rOdsM6CxuzxBLwXS",
+      "projectId": "ibRx4KzVa8okoVWI"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-10-09T14:40:06.635Z",
+  "versionId": "4ba7a7aa-cd40-4dd4-9572-c0a8ac17bc4c"
+}
