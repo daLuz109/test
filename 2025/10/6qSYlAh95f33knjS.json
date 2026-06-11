@@ -1,0 +1,1174 @@
+{
+  "active": true,
+  "activeVersion": {
+    "updatedAt": "2025-11-27T16:50:56.963Z",
+    "createdAt": "2025-11-27T16:50:56.963Z",
+    "versionId": "4fcd8b51-2cc3-4a1e-9236-5ee324052c41",
+    "workflowId": "6qSYlAh95f33knjS",
+    "nodes": [
+      {
+        "parameters": {
+          "authentication": "serviceAccount",
+          "operation": "query",
+          "projectId": "parents-poc-app-jc45n7",
+          "query": "={\n  \"structuredQuery\": {\n    \"select\": {\n      \"fields\": [\n        {\n          \"fieldPath\": \"external_id\"\n        },\n        {\n          \"fieldPath\": \"driver\"\n        },\n        {\n          \"fieldPath\": \"item\"\n        },\n        {\n          \"fieldPath\": \"provider\"\n        }\n      ]\n    },\n    \"from\": [\n      {\n        \"collectionId\": \"saas_subscriptions\"\n      }\n    ],\n    \"where\": {\n      \"fieldFilter\": {\n        \"field\": {\n          \"fieldPath\": \"status\"\n        },\n        \"op\": \"EQUAL\",\n        \"value\": {\n          \"stringValue\": \"active\"\n        }\n      }\n    }\n  }\n}",
+          "simple": false
+        },
+        "type": "n8n-nodes-base.googleFirebaseCloudFirestore",
+        "typeVersion": 1.1,
+        "position": [
+          -208,
+          -96
+        ],
+        "id": "e938af24-90bc-4416-ae45-fb111fd78d7c",
+        "name": "Retrieve saas_subscriptions",
+        "credentials": {
+          "googleApi": {
+            "id": "Z0IQAyI3uZ3a8hmL",
+            "name": "ViaVan Firestore"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "ce388cd9-ca79-42c8-97a9-5c061553f31e",
+                "leftValue": "={{ $json.document.fields.provider.stringValue }}",
+                "rightValue": "stripe",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals",
+                  "name": "filter.operator.equals"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.filter",
+        "typeVersion": 2.2,
+        "position": [
+          16,
+          -96
+        ],
+        "id": "5ff14bdb-0ee7-49b2-a5b3-0be81695a82d",
+        "name": "Keep only Stripe subscriptions"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "6be72e1d-bb38-4afa-9271-d1fb413c8b54",
+                "name": "stripeViaVanSubscriptionId",
+                "value": "={{ $('Loop Over Items').item.json.document.fields.external_id.stringValue }}",
+                "type": "string"
+              },
+              {
+                "id": "880c68b0-19b1-47eb-a2e3-692d39a74ccf",
+                "name": "stripeMtkPriceId",
+                "value": "={{ $json.data[0].id }}",
+                "type": "string"
+              },
+              {
+                "id": "47eda602-e109-4056-ab91-6a246bdff6bc",
+                "name": "stripeViaVanItemId",
+                "value": "={{ $('Loop Over Items').item.json.document.fields.item.mapValue.fields.id.stringValue }}",
+                "type": "string"
+              },
+              {
+                "id": "3540c402-d694-4d96-ae4f-2937a7e87d4b",
+                "name": "stripeViaVanPriceId",
+                "value": "={{ $('Loop Over Items').item.json.document.fields.item.mapValue.fields.plan.mapValue.fields.id.stringValue }}",
+                "type": "string"
+              },
+              {
+                "id": "d64fdcdd-7fc9-4643-a54b-78761687b1c7",
+                "name": "driverReference",
+                "value": "={{ $('Loop Over Items').item.json.document.fields.driver.referenceValue }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          912,
+          -384
+        ],
+        "id": "d83e818b-1e16-42bc-9981-000cb6cf7b1b",
+        "name": "Set subscription variables"
+      },
+      {
+        "parameters": {
+          "authentication": "serviceAccount",
+          "projectId": "parents-poc-app-jc45n7",
+          "collection": "drivers",
+          "documentId": "={{ $('Set subscription variables').item.json.driverReference.split(\"/\").pop() }}",
+          "simple": false
+        },
+        "type": "n8n-nodes-base.googleFirebaseCloudFirestore",
+        "typeVersion": 1.1,
+        "position": [
+          1136,
+          -384
+        ],
+        "id": "e481703f-b945-4854-bd38-172375584519",
+        "name": "Get driver",
+        "credentials": {
+          "googleApi": {
+            "id": "Z0IQAyI3uZ3a8hmL",
+            "name": "ViaVan Firestore"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "6ca30b87-345e-48b1-80ff-72e4ecdcc7d5",
+                "name": "stripeCustomerId",
+                "value": "={{ $json.found.fields.external_references.mapValue.fields.stripe_customer_id.stringValue }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          1360,
+          -384
+        ],
+        "id": "26c91c28-3340-4fe7-a8d1-37f551137b90",
+        "name": "Set driver's Stripe customer ID"
+      },
+      {
+        "parameters": {
+          "options": {}
+        },
+        "type": "n8n-nodes-base.splitInBatches",
+        "typeVersion": 3,
+        "position": [
+          240,
+          -96
+        ],
+        "id": "f7e0227c-d2a2-480b-9d7a-0206a64afc80",
+        "name": "Loop Over Items"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "2f1735e8-32cc-4dcf-adc1-81119c3aa64d",
+                "leftValue": "={{ $json.data }}",
+                "rightValue": 1,
+                "operator": {
+                  "type": "array",
+                  "operation": "lengthEquals",
+                  "rightType": "number"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          688,
+          -384
+        ],
+        "id": "2023e567-c323-47df-aff4-942fabefc7e0",
+        "name": "Is this a ViaVan subscription?"
+      },
+      {
+        "parameters": {
+          "url": "https://api.stripe.com/v1/subscriptions",
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "stripeApi",
+          "sendBody": true,
+          "contentType": "form-urlencoded",
+          "bodyParameters": {
+            "parameters": [
+              {
+                "name": "customer",
+                "value": "={{ $json.stripeCustomerId }}"
+              },
+              {
+                "name": "price",
+                "value": "={{ $('Set subscription variables').item.json.stripeMtkPriceId }}"
+              },
+              {
+                "name": "status",
+                "value": "active"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          1584,
+          -384
+        ],
+        "id": "20c3dba0-7065-46f6-8dcc-613243e07722",
+        "name": "Fetch MTK subscription",
+        "credentials": {
+          "stripeApi": {
+            "id": "jiWINJh4psKsBV0A",
+            "name": "MTK Stripe"
+          }
+        },
+        "onError": "continueErrorOutput"
+      },
+      {
+        "parameters": {
+          "mode": "raw",
+          "jsonOutput": "={\n  \"item\": {\n    \"plan\": {\n      \"id\": {{ $('Set subscription variables').item.json.stripeMtkPriceId.toJsonString() }},\n      \"metadata\": {\n        \"price_category\": \"standard\"\n      }\n    },\n    \"seats\": {{ $('Fetch MTK subscription').item.json.data[0].items.data[0].quantity }}\n  },\n  \"external_id\": {{ $('Is there a subscription in MTK Stripe?').item.json.data[0].id.toJsonString() }},\n  \"due_at\": {{ $json.dueAt.toJsonString() }},\n  \"document_id\": {{ $('Retrieve saas_subscriptions').item.json.document.id.toJsonString() }}\n}\n",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          2256,
+          -384
+        ],
+        "id": "6873f02a-d29e-4c35-b4fb-75d7628b4555",
+        "name": "Set new Firestore params"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "0442de8f-0f8c-4209-8201-067ecd06fbd1",
+                "leftValue": "={{ $json.data.length }}",
+                "rightValue": 1,
+                "operator": {
+                  "type": "number",
+                  "operation": "equals"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          1808,
+          -384
+        ],
+        "id": "d7a496d1-2663-427d-9413-e1ccb69f2bc8",
+        "name": "Is there a subscription in MTK Stripe?"
+      },
+      {
+        "parameters": {
+          "operation": "addToDate",
+          "magnitude": "={{ new Date($json.data[0].items.data[0].current_period_end * 1000) }}",
+          "duration": 5,
+          "outputFieldName": "dueAt",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.dateTime",
+        "typeVersion": 2,
+        "position": [
+          2032,
+          -384
+        ],
+        "id": "38d25932-f1ec-4584-81de-d4bf0d16cdaa",
+        "name": "Add five days to end date"
+      },
+      {
+        "parameters": {
+          "rule": {
+            "interval": [
+              {
+                "field": "hours"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.scheduleTrigger",
+        "typeVersion": 1.2,
+        "position": [
+          -432,
+          -96
+        ],
+        "id": "a378c310-de2e-487c-aa98-fefd13236c68",
+        "name": "Schedule Trigger"
+      },
+      {
+        "parameters": {
+          "url": "=https://api.stripe.com/v1/prices/search",
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "stripeApi",
+          "sendBody": true,
+          "contentType": "form-urlencoded",
+          "bodyParameters": {
+            "parameters": [
+              {
+                "name": "query",
+                "value": "=metadata[\"viavan_price_id\"]:\"{{ $json.document.fields.item.mapValue.fields.plan.mapValue.fields.id.stringValue }}\""
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          464,
+          -384
+        ],
+        "id": "4379b8f1-0337-4feb-ac30-2f93b2117014",
+        "name": "Fetch new price",
+        "credentials": {
+          "stripeApi": {
+            "id": "jiWINJh4psKsBV0A",
+            "name": "MTK Stripe"
+          }
+        },
+        "onError": "continueErrorOutput"
+      },
+      {
+        "parameters": {
+          "method": "DELETE",
+          "url": "=https://api.stripe.com/v1/subscriptions/{{ $('Set subscription variables').item.json.stripeViaVanSubscriptionId }}",
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "stripeApi",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          2480,
+          -312
+        ],
+        "id": "68f1c780-6c83-4d83-9db7-1a6330e29f83",
+        "name": "Cancel ViaVan subscription",
+        "credentials": {
+          "stripeApi": {
+            "id": "yw2prZ456LC91VwT",
+            "name": "ViaVan Stripe"
+          }
+        }
+      }
+    ],
+    "connections": {
+      "Retrieve saas_subscriptions": {
+        "main": [
+          [
+            {
+              "node": "Keep only Stripe subscriptions",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Keep only Stripe subscriptions": {
+        "main": [
+          [
+            {
+              "node": "Loop Over Items",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Set subscription variables": {
+        "main": [
+          [
+            {
+              "node": "Get driver",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get driver": {
+        "main": [
+          [
+            {
+              "node": "Set driver's Stripe customer ID",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Set driver's Stripe customer ID": {
+        "main": [
+          [
+            {
+              "node": "Fetch MTK subscription",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Loop Over Items": {
+        "main": [
+          [],
+          [
+            {
+              "node": "Fetch new price",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Is this a ViaVan subscription?": {
+        "main": [
+          [
+            {
+              "node": "Set subscription variables",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Loop Over Items",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Fetch MTK subscription": {
+        "main": [
+          [
+            {
+              "node": "Is there a subscription in MTK Stripe?",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Loop Over Items",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Is there a subscription in MTK Stripe?": {
+        "main": [
+          [
+            {
+              "node": "Add five days to end date",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Loop Over Items",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Add five days to end date": {
+        "main": [
+          [
+            {
+              "node": "Set new Firestore params",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Set new Firestore params": {
+        "main": [
+          [
+            {
+              "node": "Cancel ViaVan subscription",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Schedule Trigger": {
+        "main": [
+          [
+            {
+              "node": "Retrieve saas_subscriptions",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Fetch new price": {
+        "main": [
+          [
+            {
+              "node": "Is this a ViaVan subscription?",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Loop Over Items",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Cancel ViaVan subscription": {
+        "main": [
+          [
+            {
+              "node": "Loop Over Items",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "system migration",
+    "name": null,
+    "description": null,
+    "autosaved": false
+  },
+  "activeVersionId": "4fcd8b51-2cc3-4a1e-9236-5ee324052c41",
+  "connections": {
+    "Retrieve saas_subscriptions": {
+      "main": [
+        [
+          {
+            "node": "Keep only Stripe subscriptions",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Keep only Stripe subscriptions": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set subscription variables": {
+      "main": [
+        [
+          {
+            "node": "Get driver",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get driver": {
+      "main": [
+        [
+          {
+            "node": "Set driver's Stripe customer ID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set driver's Stripe customer ID": {
+      "main": [
+        [
+          {
+            "node": "Fetch MTK subscription",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Fetch new price",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is this a ViaVan subscription?": {
+      "main": [
+        [
+          {
+            "node": "Set subscription variables",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch MTK subscription": {
+      "main": [
+        [
+          {
+            "node": "Is there a subscription in MTK Stripe?",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is there a subscription in MTK Stripe?": {
+      "main": [
+        [
+          {
+            "node": "Add five days to end date",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add five days to end date": {
+      "main": [
+        [
+          {
+            "node": "Set new Firestore params",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set new Firestore params": {
+      "main": [
+        [
+          {
+            "node": "Cancel ViaVan subscription",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Retrieve saas_subscriptions",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch new price": {
+      "main": [
+        [
+          {
+            "node": "Is this a ViaVan subscription?",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cancel ViaVan subscription": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-10-03T19:56:12.784Z",
+  "id": "6qSYlAh95f33knjS",
+  "isArchived": false,
+  "meta": null,
+  "name": "[PRODUCTION] ViaVan FS updater - YLcMOZy2vsiMRx7q",
+  "nodes": [
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "operation": "query",
+        "projectId": "parents-poc-app-jc45n7",
+        "query": "={\n  \"structuredQuery\": {\n    \"select\": {\n      \"fields\": [\n        {\n          \"fieldPath\": \"external_id\"\n        },\n        {\n          \"fieldPath\": \"driver\"\n        },\n        {\n          \"fieldPath\": \"item\"\n        },\n        {\n          \"fieldPath\": \"provider\"\n        }\n      ]\n    },\n    \"from\": [\n      {\n        \"collectionId\": \"saas_subscriptions\"\n      }\n    ],\n    \"where\": {\n      \"fieldFilter\": {\n        \"field\": {\n          \"fieldPath\": \"status\"\n        },\n        \"op\": \"EQUAL\",\n        \"value\": {\n          \"stringValue\": \"active\"\n        }\n      }\n    }\n  }\n}",
+        "simple": false
+      },
+      "type": "n8n-nodes-base.googleFirebaseCloudFirestore",
+      "typeVersion": 1.1,
+      "position": [
+        -208,
+        -96
+      ],
+      "id": "e938af24-90bc-4416-ae45-fb111fd78d7c",
+      "name": "Retrieve saas_subscriptions",
+      "credentials": {
+        "googleApi": {
+          "id": "Z0IQAyI3uZ3a8hmL",
+          "name": "ViaVan Firestore"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "ce388cd9-ca79-42c8-97a9-5c061553f31e",
+              "leftValue": "={{ $json.document.fields.provider.stringValue }}",
+              "rightValue": "stripe",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        16,
+        -96
+      ],
+      "id": "5ff14bdb-0ee7-49b2-a5b3-0be81695a82d",
+      "name": "Keep only Stripe subscriptions"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "6be72e1d-bb38-4afa-9271-d1fb413c8b54",
+              "name": "stripeViaVanSubscriptionId",
+              "value": "={{ $('Loop Over Items').item.json.document.fields.external_id.stringValue }}",
+              "type": "string"
+            },
+            {
+              "id": "880c68b0-19b1-47eb-a2e3-692d39a74ccf",
+              "name": "stripeMtkPriceId",
+              "value": "={{ $json.data[0].id }}",
+              "type": "string"
+            },
+            {
+              "id": "47eda602-e109-4056-ab91-6a246bdff6bc",
+              "name": "stripeViaVanItemId",
+              "value": "={{ $('Loop Over Items').item.json.document.fields.item.mapValue.fields.id.stringValue }}",
+              "type": "string"
+            },
+            {
+              "id": "3540c402-d694-4d96-ae4f-2937a7e87d4b",
+              "name": "stripeViaVanPriceId",
+              "value": "={{ $('Loop Over Items').item.json.document.fields.item.mapValue.fields.plan.mapValue.fields.id.stringValue }}",
+              "type": "string"
+            },
+            {
+              "id": "d64fdcdd-7fc9-4643-a54b-78761687b1c7",
+              "name": "driverReference",
+              "value": "={{ $('Loop Over Items').item.json.document.fields.driver.referenceValue }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        912,
+        -384
+      ],
+      "id": "d83e818b-1e16-42bc-9981-000cb6cf7b1b",
+      "name": "Set subscription variables"
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "projectId": "parents-poc-app-jc45n7",
+        "collection": "drivers",
+        "documentId": "={{ $('Set subscription variables').item.json.driverReference.split(\"/\").pop() }}",
+        "simple": false
+      },
+      "type": "n8n-nodes-base.googleFirebaseCloudFirestore",
+      "typeVersion": 1.1,
+      "position": [
+        1136,
+        -384
+      ],
+      "id": "e481703f-b945-4854-bd38-172375584519",
+      "name": "Get driver",
+      "credentials": {
+        "googleApi": {
+          "id": "Z0IQAyI3uZ3a8hmL",
+          "name": "ViaVan Firestore"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "6ca30b87-345e-48b1-80ff-72e4ecdcc7d5",
+              "name": "stripeCustomerId",
+              "value": "={{ $json.found.fields.external_references.mapValue.fields.stripe_customer_id.stringValue }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1360,
+        -384
+      ],
+      "id": "26c91c28-3340-4fe7-a8d1-37f551137b90",
+      "name": "Set driver's Stripe customer ID"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        240,
+        -96
+      ],
+      "id": "f7e0227c-d2a2-480b-9d7a-0206a64afc80",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "2f1735e8-32cc-4dcf-adc1-81119c3aa64d",
+              "leftValue": "={{ $json.data }}",
+              "rightValue": 1,
+              "operator": {
+                "type": "array",
+                "operation": "lengthEquals",
+                "rightType": "number"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        688,
+        -384
+      ],
+      "id": "2023e567-c323-47df-aff4-942fabefc7e0",
+      "name": "Is this a ViaVan subscription?"
+    },
+    {
+      "parameters": {
+        "url": "https://api.stripe.com/v1/subscriptions",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "stripeApi",
+        "sendBody": true,
+        "contentType": "form-urlencoded",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "customer",
+              "value": "={{ $json.stripeCustomerId }}"
+            },
+            {
+              "name": "price",
+              "value": "={{ $('Set subscription variables').item.json.stripeMtkPriceId }}"
+            },
+            {
+              "name": "status",
+              "value": "active"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1584,
+        -384
+      ],
+      "id": "20c3dba0-7065-46f6-8dcc-613243e07722",
+      "name": "Fetch MTK subscription",
+      "credentials": {
+        "stripeApi": {
+          "id": "jiWINJh4psKsBV0A",
+          "name": "MTK Stripe"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={\n  \"item\": {\n    \"plan\": {\n      \"id\": {{ $('Set subscription variables').item.json.stripeMtkPriceId.toJsonString() }},\n      \"metadata\": {\n        \"price_category\": \"standard\"\n      }\n    },\n    \"seats\": {{ $('Fetch MTK subscription').item.json.data[0].items.data[0].quantity }}\n  },\n  \"external_id\": {{ $('Is there a subscription in MTK Stripe?').item.json.data[0].id.toJsonString() }},\n  \"due_at\": {{ $json.dueAt.toJsonString() }},\n  \"document_id\": {{ $('Retrieve saas_subscriptions').item.json.document.id.toJsonString() }}\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2256,
+        -384
+      ],
+      "id": "6873f02a-d29e-4c35-b4fb-75d7628b4555",
+      "name": "Set new Firestore params"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "0442de8f-0f8c-4209-8201-067ecd06fbd1",
+              "leftValue": "={{ $json.data.length }}",
+              "rightValue": 1,
+              "operator": {
+                "type": "number",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1808,
+        -384
+      ],
+      "id": "d7a496d1-2663-427d-9413-e1ccb69f2bc8",
+      "name": "Is there a subscription in MTK Stripe?"
+    },
+    {
+      "parameters": {
+        "operation": "addToDate",
+        "magnitude": "={{ new Date($json.data[0].items.data[0].current_period_end * 1000) }}",
+        "duration": 5,
+        "outputFieldName": "dueAt",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dateTime",
+      "typeVersion": 2,
+      "position": [
+        2032,
+        -384
+      ],
+      "id": "38d25932-f1ec-4584-81de-d4bf0d16cdaa",
+      "name": "Add five days to end date"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -432,
+        -96
+      ],
+      "id": "a378c310-de2e-487c-aa98-fefd13236c68",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "url": "=https://api.stripe.com/v1/prices/search",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "stripeApi",
+        "sendBody": true,
+        "contentType": "form-urlencoded",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "query",
+              "value": "=metadata[\"viavan_price_id\"]:\"{{ $json.document.fields.item.mapValue.fields.plan.mapValue.fields.id.stringValue }}\""
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        464,
+        -384
+      ],
+      "id": "4379b8f1-0337-4feb-ac30-2f93b2117014",
+      "name": "Fetch new price",
+      "credentials": {
+        "stripeApi": {
+          "id": "jiWINJh4psKsBV0A",
+          "name": "MTK Stripe"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "method": "DELETE",
+        "url": "=https://api.stripe.com/v1/subscriptions/{{ $('Set subscription variables').item.json.stripeViaVanSubscriptionId }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "stripeApi",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2480,
+        -312
+      ],
+      "id": "68f1c780-6c83-4d83-9db7-1a6330e29f83",
+      "name": "Cancel ViaVan subscription",
+      "credentials": {
+        "stripeApi": {
+          "id": "yw2prZ456LC91VwT",
+          "name": "ViaVan Stripe"
+        }
+      }
+    }
+  ],
+  "owner": "daLuz109",
+  "path": "https://github.com/daLuz109/test",
+  "pinData": null,
+  "repo": "test",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-10-03T19:56:12.784Z",
+      "createdAt": "2025-10-03T19:56:12.784Z",
+      "role": "workflow:owner",
+      "workflowId": "6qSYlAh95f33knjS",
+      "projectId": "ibRx4KzVa8okoVWI"
+    }
+  ],
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrenceRules": []
+    }
+  },
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2025-10-14T15:01:55.403Z",
+  "versionId": "4fcd8b51-2cc3-4a1e-9236-5ee324052c41"
+}
