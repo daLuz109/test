@@ -1,0 +1,597 @@
+{
+  "active": true,
+  "activeVersion": {
+    "updatedAt": "2025-11-27T16:50:56.963Z",
+    "createdAt": "2025-11-27T16:50:56.963Z",
+    "versionId": "a2cccb65-5eec-4920-885e-8008a1248b27",
+    "workflowId": "JjLMXKHrOQrZjsrF",
+    "nodes": [
+      {
+        "parameters": {
+          "notice": "",
+          "noticeTemplateExample": "",
+          "description": "Call this tool to test if a certain tracker (determined by its tracker ID) is currently properly receiving SMS messages. The success output message is not relevant, but is imperative to respond with the exact failure message in case of fail.",
+          "executeNotice": "",
+          "source": "database",
+          "workflowId": {
+            "__rl": true,
+            "value": "3IZzgHVS3XeOo5yh",
+            "mode": "list",
+            "cachedResultName": "Tracker SMS tester"
+          },
+          "workflowInputs": {
+            "mappingMode": "defineBelow",
+            "value": {
+              "trackerId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('trackerId', `Tracker ID (number) which shall be SMS tested.`, 'number') }}",
+              "phoneNumber": "={{ $('Start').item.json.body_data_key_remoteJid }}",
+              "evolutionInstanceName": "={{ $('Start').item.json.body_instance }}"
+            },
+            "matchingColumns": [
+              "trackerId"
+            ],
+            "schema": [
+              {
+                "id": "trackerId",
+                "displayName": "trackerId",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true,
+                "type": "number",
+                "removed": false
+              },
+              {
+                "id": "evolutionInstanceName",
+                "displayName": "evolutionInstanceName",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true,
+                "type": "string",
+                "removed": false
+              },
+              {
+                "id": "phoneNumber",
+                "displayName": "phoneNumber",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true,
+                "type": "string",
+                "removed": false
+              }
+            ],
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": false
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+        "typeVersion": 2.2,
+        "position": [
+          1472,
+          240
+        ],
+        "id": "259fefe0-db85-43a5-b615-1b416683dcad",
+        "name": "SMS tester"
+      },
+      {
+        "parameters": {
+          "notice": "",
+          "noticeTemplateExample": "",
+          "description": "Call this tool to retrieve the SMS operations texts to ask the user if it is all right for those to be sent to their tracker.",
+          "executeNotice": "",
+          "source": "database",
+          "workflowId": {
+            "__rl": true,
+            "value": "beJkGyRsiOiq6Fej",
+            "mode": "list",
+            "cachedResultName": "Retrieve tracker operation texts"
+          },
+          "workflowInputs": {
+            "mappingMode": "defineBelow",
+            "value": {
+              "trackerId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('trackerId', `Tracker ID (number) for which SMS texts will be retrieved.`, 'number') }}"
+            },
+            "matchingColumns": [
+              "trackerId"
+            ],
+            "schema": [
+              {
+                "id": "trackerId",
+                "displayName": "trackerId",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true,
+                "type": "number",
+                "removed": false
+              }
+            ],
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": false
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+        "typeVersion": 2.2,
+        "position": [
+          1600,
+          240
+        ],
+        "id": "f292d642-29a5-4478-86dc-a278d0c853ae",
+        "name": "SMS texts retriever"
+      },
+      {
+        "parameters": {
+          "notice": "",
+          "noticeTemplateExample": "",
+          "description": "Call this tool ONLY with user confirmation that it is okay to proceed with the configuration of their tracker. This tool will create operations that will configure their tracker automatically.",
+          "executeNotice": "",
+          "source": "database",
+          "workflowId": {
+            "__rl": true,
+            "value": "2L3Lr1vlRJf21SHO",
+            "mode": "list",
+            "cachedResultName": "Tracker operation creator"
+          },
+          "workflowInputs": {
+            "mappingMode": "defineBelow",
+            "value": {
+              "trackerId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('trackerId', `Tracker ID (number) for which operations will be created.`, 'number') }}"
+            },
+            "matchingColumns": [
+              "trackerId"
+            ],
+            "schema": [
+              {
+                "id": "trackerId",
+                "displayName": "trackerId",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true,
+                "type": "number",
+                "removed": false
+              }
+            ],
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": false
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+        "typeVersion": 2.2,
+        "position": [
+          1728,
+          240
+        ],
+        "id": "489cd566-1f2a-4b47-9ad5-d5ec383cdda1",
+        "name": "Operation creator"
+      },
+      {
+        "parameters": {
+          "notice": "",
+          "sessionIdType": "fromInput",
+          "sessionKey": "={{ $json.sessionId }}",
+          "contextWindowLength": 5
+        },
+        "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+        "typeVersion": 1.3,
+        "position": [
+          1344,
+          240
+        ],
+        "id": "6d97338f-8719-47d4-88ed-513c70cb997b",
+        "name": "SMS agent memory"
+      },
+      {
+        "parameters": {
+          "toolDescription": "An AI agent which purpose is handling SMS related functions, such as retrieving the operation texts for a certain tracker ID or creating SMS operations for trackers.",
+          "text": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Prompt__User_Message_', `A good description that helps the SMS agent determine what is needed to be done or what information is required.`, 'string') }}",
+          "hasOutputParser": false,
+          "needsFallback": false,
+          "options": {
+            "systemMessage": "You are a specialized SMS Operations Agent. Your sole purpose is to execute a single, specified SMS-related function for a given tracker and return its output directly to the supervising system.\n\nYour Capabilities (Functions):\n\n    sms_text_retriever(tracker_id): Retrieves the configuration SMS commands for a given tracker.\n\n    sms_tester(tracker_id): Tests SMS communication with a given tracker.\n\n    operation_creator(tracker_id): Creates the backend configuration operations for a given tracker.\n\nYour Directive:\n\nYou will receive a request from a supervisor that specifies which operation to perform and the tracker_id to use. You must execute exactly one function based on the following strict rules:\n\n    If the requested operation is to retrieve SMS text, you MUST call the sms_text_retriever function with the provided tracker_id.\n\n    If the requested operation is to test a tracker's SMS, you MUST call the sms_tester function with the provided tracker_id.\n\n    If the requested operation is to create operations, you MUST call the operation_creator function with the provided tracker_id.\n\nAfter the function executes, you must return its output directly and without any modification, formatting, or additional text. Do not interpret the results or chain functions. Your task is only to execute the requested command and return its result."
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.agentTool",
+        "typeVersion": 2.2,
+        "position": [
+          1392,
+          32
+        ],
+        "id": "ceb5cf80-e5fd-4ddb-b462-8fc7db8f61dd",
+        "name": "SMS agent"
+      },
+      {
+        "id": "5d14236d-9b8e-4b21-b46c-1001033dcf9f",
+        "typeVersion": 1.1,
+        "name": "Start",
+        "type": "n8n-nodes-base.executeWorkflowTrigger",
+        "position": [
+          1184,
+          32
+        ],
+        "parameters": {
+          "workflowInputs": {
+            "values": [
+              {
+                "name": "body_data_key_remoteJid",
+                "type": "any"
+              },
+              {
+                "name": "body_instance",
+                "type": "any"
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "connections": {
+      "SMS tester": {
+        "ai_tool": [
+          [
+            {
+              "node": "SMS agent",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "SMS texts retriever": {
+        "ai_tool": [
+          [
+            {
+              "node": "SMS agent",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Operation creator": {
+        "ai_tool": [
+          [
+            {
+              "node": "SMS agent",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "SMS agent memory": {
+        "ai_memory": [
+          [
+            {
+              "node": "SMS agent",
+              "type": "ai_memory",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "SMS agent": {
+        "ai_tool": [
+          [
+            {
+              "node": "AI Agent",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "system migration",
+    "name": null,
+    "description": null,
+    "autosaved": false
+  },
+  "activeVersionId": "a2cccb65-5eec-4920-885e-8008a1248b27",
+  "connections": {
+    "SMS tester": {
+      "ai_tool": [
+        [
+          {
+            "node": "SMS agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SMS texts retriever": {
+      "ai_tool": [
+        [
+          {
+            "node": "SMS agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Operation creator": {
+      "ai_tool": [
+        [
+          {
+            "node": "SMS agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SMS agent memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "SMS agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SMS agent": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-09-19T13:27:09.660Z",
+  "id": "JjLMXKHrOQrZjsrF",
+  "isArchived": true,
+  "isProd": false,
+  "meta": null,
+  "name": "SMS agent",
+  "nodes": [
+    {
+      "parameters": {
+        "notice": "",
+        "noticeTemplateExample": "",
+        "description": "Call this tool to test if a certain tracker (determined by its tracker ID) is currently properly receiving SMS messages. The success output message is not relevant, but is imperative to respond with the exact failure message in case of fail.",
+        "executeNotice": "",
+        "source": "database",
+        "workflowId": {
+          "__rl": true,
+          "value": "3IZzgHVS3XeOo5yh",
+          "mode": "list",
+          "cachedResultName": "Tracker SMS tester"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "trackerId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('trackerId', `Tracker ID (number) which shall be SMS tested.`, 'number') }}",
+            "phoneNumber": "={{ $('Start').item.json.body_data_key_remoteJid }}",
+            "evolutionInstanceName": "={{ $('Start').item.json.body_instance }}"
+          },
+          "matchingColumns": [
+            "trackerId"
+          ],
+          "schema": [
+            {
+              "id": "trackerId",
+              "displayName": "trackerId",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "number",
+              "removed": false
+            },
+            {
+              "id": "evolutionInstanceName",
+              "displayName": "evolutionInstanceName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "phoneNumber",
+              "displayName": "phoneNumber",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        1472,
+        240
+      ],
+      "id": "259fefe0-db85-43a5-b615-1b416683dcad",
+      "name": "SMS tester"
+    },
+    {
+      "parameters": {
+        "notice": "",
+        "noticeTemplateExample": "",
+        "description": "Call this tool to retrieve the SMS operations texts to ask the user if it is all right for those to be sent to their tracker.",
+        "executeNotice": "",
+        "source": "database",
+        "workflowId": {
+          "__rl": true,
+          "value": "beJkGyRsiOiq6Fej",
+          "mode": "list",
+          "cachedResultName": "Retrieve tracker operation texts"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "trackerId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('trackerId', `Tracker ID (number) for which SMS texts will be retrieved.`, 'number') }}"
+          },
+          "matchingColumns": [
+            "trackerId"
+          ],
+          "schema": [
+            {
+              "id": "trackerId",
+              "displayName": "trackerId",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "number",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        1600,
+        240
+      ],
+      "id": "f292d642-29a5-4478-86dc-a278d0c853ae",
+      "name": "SMS texts retriever"
+    },
+    {
+      "parameters": {
+        "notice": "",
+        "noticeTemplateExample": "",
+        "description": "Call this tool ONLY with user confirmation that it is okay to proceed with the configuration of their tracker. This tool will create operations that will configure their tracker automatically.",
+        "executeNotice": "",
+        "source": "database",
+        "workflowId": {
+          "__rl": true,
+          "value": "2L3Lr1vlRJf21SHO",
+          "mode": "list",
+          "cachedResultName": "Tracker operation creator"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "trackerId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('trackerId', `Tracker ID (number) for which operations will be created.`, 'number') }}"
+          },
+          "matchingColumns": [
+            "trackerId"
+          ],
+          "schema": [
+            {
+              "id": "trackerId",
+              "displayName": "trackerId",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "number",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        1728,
+        240
+      ],
+      "id": "489cd566-1f2a-4b47-9ad5-d5ec383cdda1",
+      "name": "Operation creator"
+    },
+    {
+      "parameters": {
+        "notice": "",
+        "sessionIdType": "fromInput",
+        "sessionKey": "={{ $json.sessionId }}",
+        "contextWindowLength": 5
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        1344,
+        240
+      ],
+      "id": "6d97338f-8719-47d4-88ed-513c70cb997b",
+      "name": "SMS agent memory"
+    },
+    {
+      "parameters": {
+        "toolDescription": "An AI agent which purpose is handling SMS related functions, such as retrieving the operation texts for a certain tracker ID or creating SMS operations for trackers.",
+        "text": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Prompt__User_Message_', `A good description that helps the SMS agent determine what is needed to be done or what information is required.`, 'string') }}",
+        "hasOutputParser": false,
+        "needsFallback": false,
+        "options": {
+          "systemMessage": "You are a specialized SMS Operations Agent. Your sole purpose is to execute a single, specified SMS-related function for a given tracker and return its output directly to the supervising system.\n\nYour Capabilities (Functions):\n\n    sms_text_retriever(tracker_id): Retrieves the configuration SMS commands for a given tracker.\n\n    sms_tester(tracker_id): Tests SMS communication with a given tracker.\n\n    operation_creator(tracker_id): Creates the backend configuration operations for a given tracker.\n\nYour Directive:\n\nYou will receive a request from a supervisor that specifies which operation to perform and the tracker_id to use. You must execute exactly one function based on the following strict rules:\n\n    If the requested operation is to retrieve SMS text, you MUST call the sms_text_retriever function with the provided tracker_id.\n\n    If the requested operation is to test a tracker's SMS, you MUST call the sms_tester function with the provided tracker_id.\n\n    If the requested operation is to create operations, you MUST call the operation_creator function with the provided tracker_id.\n\nAfter the function executes, you must return its output directly and without any modification, formatting, or additional text. Do not interpret the results or chain functions. Your task is only to execute the requested command and return its result."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agentTool",
+      "typeVersion": 2.2,
+      "position": [
+        1392,
+        32
+      ],
+      "id": "ceb5cf80-e5fd-4ddb-b462-8fc7db8f61dd",
+      "name": "SMS agent"
+    },
+    {
+      "id": "5d14236d-9b8e-4b21-b46c-1001033dcf9f",
+      "typeVersion": 1.1,
+      "name": "Start",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "position": [
+        1184,
+        32
+      ],
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "body_data_key_remoteJid",
+              "type": "any"
+            },
+            {
+              "name": "body_instance",
+              "type": "any"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "owner": "daLuz109",
+  "path": "https://github.com/daLuz109/test",
+  "pinData": null,
+  "repo": "test",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-09-19T13:27:09.660Z",
+      "createdAt": "2025-09-19T13:27:09.660Z",
+      "role": "workflow:owner",
+      "workflowId": "JjLMXKHrOQrZjsrF",
+      "projectId": "ibRx4KzVa8okoVWI"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-09-19T13:27:51.595Z",
+  "versionId": "a2cccb65-5eec-4920-885e-8008a1248b27"
+}
